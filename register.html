@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Login | Quang Huy </title>
+    <link rel="stylesheet" href="main3d.css">
+    <style>
+        body {
+            background: linear-gradient(to right, #463b5c, #3b6c5d);
+            font-family: 'Calibri', sans-serif;
+        }
+        .auth-page {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            position: relative;
+        }
+        .auth-container {
+            width: 100%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.15);
+            background: transparent;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            z-index: 2;
+        }
+        .auth-container:hover {
+            transform: translateY(-5px);
+        }
+        .auth-logo i {
+            font-size: 60px;
+            color: #fff;
+        }
+        .auth-container h5 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #d1d1d1;
+            margin-top: 15px;
+        }
+        .auth-container p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+        }
+        /* Form Styles */
+        .custom-form input {
+            width: 100%;
+            height: 25px;
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            outline: none;
+            transition: 0.3s;
+        }
+        .custom-form input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .custom-form input:focus {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.03);
+        }
+        .input-group {
+            position: relative;
+        }
+        .input-group button {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        .btn-primary {
+            width: 105%;
+            padding: 13px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            color: #fff;
+            font-size: 13px;
+            font-weight: 1600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-primary:hover {
+            background: rgba(65, 91, 88, 0.3);
+        }
+        .btn-primary:disabled {
+            background: #aaa;
+            cursor: not-allowed;
+        }
+        .signin-link {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .signin-link a {
+            color: #fff;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .signin-link a:hover {
+            text-decoration: underline;
+        }
+
+        /* Toastr Custom */
+        #toast-container > .toast {
+            opacity: 1 !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-page">
+        <div class="auth-container">
+            <div class="text-center">
+                <a href="index.html" class="auth-logo">
+                    <i class="mdi mdi-server-network"></i>
+                </a>
+            </div>
+            <h5>Xin chào </h5>
+            <p>Đăng ký để tiếp tục ! </p>
+            <form class="custom-form" method="post">
+                <div class="mb-3">
+                    <input type="text" id="username" placeholder="Tên tài khoản">
+                </div>
+                <div class="mb-3 input-group">
+                    <input type="password" id="password" placeholder="Mật khẩu">
+                    <button type="button" id="toggle-password">
+                        <i class="mdi mdi-eye-outline"></i>
+                    </button>
+                </div>
+                <div class="mb-3">
+                    <button class="btn-primary" id="submit" type="button" onclick="register()">Đăng ký</button>
+                </div>
+            </form>
+            <div class="signin-link">
+                <p>Bạn đã có tài khoản ? <a href="index.html">Đăng nhập</a></p>
+            </div>
+        </div>
+    </div>
+    <div class="network-grid">
+        <!-- Main JavaScript -->
+    </div>
+    <script src="main3d.js" type="module"></script>
+</body>
+</html>

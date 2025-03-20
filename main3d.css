@@ -1,0 +1,40 @@
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #000;
+}
+
+.network-grid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.dot {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background-color: #9481e6;
+    border-radius: 50%;
+    opacity: 0.8;
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+.network-grid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1; /* Đặt phía sau các phần tử khác */
+    width: 100vw;
+    height: 100vh;
+}

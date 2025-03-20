@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+    <title>404 Not Found</title>
+    <meta name="keywords" content="404,Quang Huy">
+    <meta name="description" content="404 Not Found - Không Tìm Thấy">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link type="text/css" media="all" href="bootstrap.min.css" rel="stylesheet">
+    <link type="text/css" media="all" href="quanghuy.main.css" rel="stylesheet">
+    <link type="text/css" media="all" href="respons.css" rel="stylesheet">      
+</head>
+<body>
+    <div class="animationload">
+        <div class="loader">
+        </div>
+    </div>
+    <div id="wrapper">
+        <div class="container">
+            <div class="col-xs-12 col-sm-7 col-lg-7">               
+                <div class="info">
+                    <h1>404</h1>
+                    <h2>Máy chủ gặp sự cố!</h2>
+                    <p>Trang bạn đang tìm đã bị di chuyển, xóa, đổi tên hoặc không tồn tại.</p>
+                    <p>Nếu không có điều gì diễn ra, sẽ tự động về trang chủ trong <span id="countdown"></span>s</p>
+                    <a href="main.html" class="btn">Trở về trang chủ</a>
+                    <a href="https://zalo.me/g/0327221005" class="btn btn-light-blue">liên hệ cho Huy</a>
+                </div>              
+            </div>
+            <div class="col-xs-12 col-sm-5 col-lg-5 text-center">                
+                <div class="guardian">
+                    <img src="pethun.webp" alt="Fighting">
+                </div>                
+            </div>
+        </div>
+    </div>
+    <!-- Scripts -->
+    <script src="jquery-2.1.1.min.js" type="text/javascript"></script>
+    <script src="bootstrap.min.js" type="text/javascript"></script>
+    <script src="modernizr.custom.js" type="text/javascript"></script>
+    <script src="jquery.nicescroll.min.js" type="text/javascript"></script>
+    <script src="scripts.js" type="text/javascript"></script>
+    <script>
+        function countdown(time) {
+           if (time > 0) {
+               time--;
+               document.getElementById('countdown').textContent = time;
+               setTimeout(function() {
+                   countdown(time);
+               }, 1000);
+           } else {
+               window.location.href = 'main.html';
+           }
+       }
+       countdown(16);</script>
+</body>
+</html>
