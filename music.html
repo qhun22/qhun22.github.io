@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> MusicMusic | Quang Huy </title>
+    <link rel="stylesheet" href="main3d.css">
+    <style>
+        body {
+            background: linear-gradient(to right, #463b5c, #3b6c5d);
+            font-family: 'Calibri', sans-serif;
+        }
+        .auth-page {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            position: relative;
+        }
+        .auth-container {
+            width: 100%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.15);
+            background: transparent;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            z-index: 2;
+        }
+        .auth-container:hover {
+            transform: translateY(-5px);
+        }
+        .auth-logo i {
+            font-size: 60px;
+            color: #fff;
+        }
+        .auth-container h5 {
+            font-size: 22px;
+            font-weight: 600;
+            color: #d1d1d1;
+            margin-top: 15px;
+        }
+        .auth-container p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+        }
+        .custom-form input {
+            width: 100%;
+            height: 25px;
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            outline: none;
+            transition: 0.3s;
+        }
+        .custom-form input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .custom-form input:focus {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.03);
+        }
+        .input-group {
+            position: relative;
+        }
+        .input-group button {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        .btn-primary {
+            width: 105%;
+            padding: 13px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            color: #fff;
+            font-size: 13px;
+            font-weight: 1600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-primary:hover {
+            background: rgba(65, 91, 88, 0.3);
+        }
+        .btn-primary:disabled {
+            background: #aaa;
+            cursor: not-allowed;
+        }
+        .signup-link {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .signup-link a {
+            color: #fff;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+        #toast-container > .toast {
+            opacity: 1 !important;
+        }
+        .music-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin: 20px 0;
+        }
+        .music-item {
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 5px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            color: #fff;
+            transition: background 0.3s;
+        }
+        .music-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        .music-item.active {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .music-list::-webkit-scrollbar {
+    display: none; /* Ẩn thanh cuộn trên Chrome, Safari */
+}
+.music-list {
+    -ms-overflow-style: none;  /* Ẩn thanh cuộn trên IE và Edge */
+    scrollbar-width: none;  /* Ẩn thanh cuộn trên Firefox */
+}
+#randomPlay {
+      background-color: #507a98;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      box-shadow: 2px 2px 5px rgba(136, 134, 226, 0.2);
+  }
+
+  #randomPlay:hover {
+      background-color: #7873de;
+      transform: scale(1.05);
+      box-shadow: 3px 3px 8px rgba(152, 143, 234, 0.3);
+  }
+  
+    </style>
+</head>
+<body>
+    <div class="auth-page">
+        <div class="auth-container">
+            <div class="text-center">
+                <a href="index.html" class="auth-logo">
+                    <i class="mdi mdi-server-network"></i>
+                </a>
+            </div>
+            <h5>Xin chào </h5>
+            <div class="flex items-center space-x-4">
+                <nav class="flex space-x-4">
+                    <a href="main.html">
+                        <img src="musics/images/meo40x40.jpg" alt="Home" class="h-8 w-8 hover:underline">
+                    </a>
+                </nav>
+            </div>
+            
+            <!-- Danh sách nhạc -->
+            <div class="music-list" id="musicList"></div>
+            
+            <div class="flex items-center space-x-4">
+                <button id="randomPlay" class="bg-orange-500 text-white px-4 py-1 rounded">Phát ngẫu nhiên</button>
+            </div>
+            <div class="fixed bottom-0 left-0 right-0 bg-gray-100 border-t border-gray-300 p-4 flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <p class="font-bold" id="currentSong">Chưa có bài hát</p>
+                </div>
+                <audio id="audioPlayer" controls></audio>
+                <div class="flex space-x-2">
+                    <button id="playPauseBtn" class="bg-blue-500 text-white px-4 py-1 rounded"><i class="fas fa-play"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="network-grid"></div>
+    <script src="main3d.js"></script>
+    <script>
+        // Danh sách nhạc mẫu (bạn có thể thay bằng file thực tế trong thư mục musics)
+        const musicFiles = [
+    { name: "Ai Đâu Hay", path: "musicsv1/2aidau.mp3" },
+    { name: "Một Đời", path: "musics/motdoi.mp3" },
+    { name: "Không Yêu Xin Đừng Nói", path: "musicsv1/1koiu.mp3" },
+    { name: "Hư Không", path: "musicsv1/3xuan.mp3" },
+    { name: "1000 Ánh Mắt", path: "musicsv1/1kmem.mp3" },
+    { name: "24H", path: "musicsv1/24hn.mp3" },
+    { name: "2AM", path: "musicsv1/2ammm.mp3" },
+    { name: "Nắng Có Mang Em Về", path: "musicsv1/3nang.mp3" },
+    { name: "Ai Rồi Cũng Bỏ Anh Đi", path: "musicsv1/ard.mp3" },
+    { name: "Ai Đó Không Phải Anh", path: "musicsv1/1aidokopanh.mp3" },
+    { name: "Anh Chẳng Thể", path: "musicsv1/1achagthe.mp3" },
+    { name: "Anh Là Ngoại Lệ Của Em", path: "musicsv1/1alamngoai.mp3" },
+    { name: "Anh Sai Rồi", path: "musicsv1/1asair.mp3" },
+    { name: "Anh đã lớn hơn thế nhiều", path: "musicsv1/1adalon.mp3" },
+    { name: "Bình Yên Nơi Đâu", path: "musicsv1/1bigyen.mp3" },
+    { name: "Bước Qua Mùa Cô Đơn", path: "musicsv1/1bcqua.mp3" },
+    { name: "Bầu Trời Mới", path: "musicsv1/1bautroimoi.mp3" },
+    { name: "Cause I Love You", path: "musicsv1/3cause.mp3" },
+    { name: "Em Không Hiểu", path: "musicsv1/5ekoko.mp3" },
+    { name: "Anh Không Sao Đâu", path: "musicsv1/8akosao.mp3" },
+    { name: "A Thousand Years", path: "musicsv1/9athou.mp3" },
+    { name: "Chuyện Chúng Ta Sau Này", path: "musicsv1/12chyen.mp3" },
+    { name: "Chuyện Đôi Ta", path: "musicsv1/13chueyndoi.mp3" },
+    { name: "Chàng Trai Bất Tử", path: "musicsv1/4battu.mp3" },
+    { name: "Chúng Ta Chỉ Giống Tình Yêu", path: "musicsv1/10chugta.mp3" },
+    { name: "Chúng Ta Không Thuộc Về Nhau", path: "musicsv1/11kothupc.mp3" },
+    { name: "Chạy Khỏi Thế Giới Này", path: "musicsv1/6chaykhoi.mp3" },
+    { name: "Chỉ Cần Được Ngồi Đây Với Em", path: "musicsv1/7chican.mp3" },
+    { name: "Sau Cơn Mưa", path: "musicsv1/14saucom.mp3" },
+    { name: "Cùng Anh", path: "musicsv1/15cuga.mp3" },
+    { name: "Cảm Ơn Vì Đã Yêu", path: "musicsv1/2camonvj.mp3" },
+    { name: "Nha", path: "musicsv1/6hdabsjj.mp3" },
+    { name: "Dù Cho Mai Về Sau", path: "musicsv1/7dunenen.mp3" },
+    { name: "Dừng Thương", path: "musicsv1/9dugthuf.mp3" },
+    { name: "Em Vội Quên", path: "musicsv1/13evoeq.mp3" },
+    { name: "Em Đừng Khóc", path: "musicsv1/12edugkhot.mp3" },
+    { name: "Dù Cho Tận Thế Vẫn Yêu Em", path: "musicsv1/14ducho.mp3" },
+    { name: "Ghé Qua", path: "musicsv1/15gehq.mp3" },
+    { name: "Giá Như Em Nhìn Lại", path: "musics/Giá như em nhìn lại.mp3" },
+    { name: "Dự Báo Thời Tiết Hôm Nay Mưa", path: "musics/GREY D - dự báo thời tiết hôm nay mưa _ official visualizer-yt.savetube.me.mp3" },
+    { name: "Hai Mươi Hai", path: "musics/hai mươi hai - hứa kim tuyền x amee (from album 'Colours') (lyrics video)-yt.savetube.me.mp3" },
+    { name: "Exit Sign", path: "musics/HIEUTHUHAI - Exit Sign (prod. by Kewtiie) ft. marzuz [Official Lyric Video]-yt.savetube.me.mp3" },
+    { name: "Can You Hear My Heart", path: "musics/Hit EPIK HIGH _ Can you hear my heart 1Hour-yt.savetube.me.mp3" },
+    { name: "Em Có Nhớ Anh Không", path: "musicsv1/econhoako.mp3" },
+    { name: "Hoa Nở Bên Đường", path: "musicsv1/hoanobenduog.mp3" },
+    { name: "Hoàng Hôn Nhớ", path: "musicsv1/hoanghonnho.mp3" },
+    { name: "Hãy Tin Anh Lần Nữa", path: "musics/Hãy Tin Anh Lần Nữa - Chu Bin (MV)-yt.savetube.me.mp3" },
+    { name: "Hơn Cả Mây Trời", path: "musicsv1/honcamaytroi.mp3" },
+    { name: "Hẹn Em Ở Lần Yêu Thứ 2", path: "musics/Hẹn Em Ở Lần Yêu Thứ 2 - Nguyenn x @Dangtuanvu.Original  _ Official MV _ Anh phải làm gì để em...-yt.savetube.me.mp3" },
+    { name: "Hộp Thư Thoại Số 1", path: "musicsv1/hopthuthoaiso1.mp3" },
+    { name: "Thiên Lý Ơi", path: "musics/thienlyoi.mp3" },
+    { name: "Đom Đóm", path: "musicsv1/3domdom.mp3" },
+    { name: "Bạn Đời", path: "musicsv1/bandoi.mp3" },
+    { name: "Kembali Pulang", path: "musicsv1/KembaliPulang.mp3" },
+    { name: "Yên Bình Có Quá Đắt Không", path: "musicsv1/yenbinhcoquadat.mp3" },
+    { name: "Kẻ Mộng Mơ", path: "musicsv1/kemongmo.mp3" },
+    { name: "Lan Man", path: "musicsv1/lanman.mp3" },
+    { name: "Lao Tâm Khổ Tứ", path: "musicsv1/laotamkhotu.mp3" },
+    { name: "Từ Em Mà Ra", path: "musics/tuemmara.mp3" },
+    { name: "Ngày Đẹp Trời Để Nói Lời Chia Tay", path: "musics/ngaydeptroidenoichiatay.mp3" },
+    { name: "Love Again Instrumental", path: "musicsv1/loveagainment.mp3" },
+    { name: "Là Từ Lúc", path: "musicsv1/latuluc.mp3" },
+    { name: "Lời Tạm Biệt Chưa Nói", path: "musicsv1/loitambietchuanoi.mp3" },
+    { name: "Miên Man", path: "musics/Minh Huy - Miên Man (OFFICIAL MV)-yt.savetube.me.mp3" },
+    { name: "Mùi Hương", path: "musics/Mùi Hương - Anh Khang x Quanvrox「Lo - Fi Ver」_ Official Lyrics Video-yt.savetube.me.mp3" },
+    { name: "Mưa Tháng Sáu", path: "musics/MƯA THÁNG SÁU _ VĂN MAI HƯƠNG (feat. GREY D, TRUNG QUÂN) (prod. by HỨA KIM TUYỀN)-yt.savetube.me.mp3" },
+    { name: "Nghe Kể Năm 90s", path: "musics/Nghe kể năm 90s _ Ân ngờ ft. Suzie MK [ EP_ Này Hay ]-yt.savetube.me.mp3" },
+    { name: "Ngày Chưa Giông Bão", path: "musics/Ngày Chưa Giông Bão (OST Người Bất Tử) _ Bùi Lan Hương [ Official MV ]-yt.savetube.me.mp3" },
+    { name: "Ngày KHông Có Em", path: "musics/NGÀY KHÔNG CÓ EM - ĐẶNG VĨNH THỊNH (Century Official)-yt.savetube.me.mp3" },
+    { name: "Ngày Mai Người Ta Lấy Chồng", path: "musics/NGÀY MAI NGƯỜI TA LẤY CHỒNG - THÀNH ĐẠT x ĐÔNG THIÊN ĐỨC _ OFFICIAL MV _ Ngày Hôm Ấy Em Đi Trong Mưa-yt.savetube.me.mp3" },
+    { name: "Ngày Đầu Sau Chia Tay", path: "musics/NGÀY ĐẦU SAU CHIA TAY - ĐỨC PHÚC x THUỲ TIÊN x KHẮC HƯNG _ OFFICIAL MUSIC VIDEO-yt.savetube.me.mp3" },
+    { name: "Người Bán Nỗi Buồn", path: "musics/người bán nỗi buồn - Trung Quân x Phí Phương Anh x RIN9 _ Official Music Video-yt.savetube.me.mp3" },
+    { name: "Người Bình Thường", path: "musics/NGƯỜI BÌNH THƯỜNG - VŨ CÁT TƯỜNG _ OFFICIAL VISUALIZER-yt.savetube.me.mp3" },
+    { name: "Người Âm Phủ", path: "musics/Người âm phủ.mp3" },
+    { name: "Luyến", path: "musics/NHA - Luyến _ ft. MDr  (Official audio)-yt.savetube.me.mp3" },
+    { name: "Nhắn Nhủ", path: "musics/Nhắn nhủ _ Ronboogz (Lyrics video)-yt.savetube.me.mp3" },
+    { name: "Những Lời Hứa Bỏ Quên", path: "musics/NHỮNG LỜI HỨA BỎ QUÊN _ VŨ. x DEAR JANE (Official MV) từ Album _Bảo Tàng Của Nuối Tiếc_-yt.savetube.me.mp3" },
+    { name: "Những Ngày Mùa Hạ Đi Qua", path: "musics/Những ngày mùa hạ đi qua có cơn mưa rào - Chí-yt.savetube.me.mp3" },
+    { name: "Những ngày sau", path: "musics/Những ngày sau - En _ Nhạc Hot Tiktok [Lyrics]-yt.savetube.me.mp3" },
+    { name: "Năm Ấy", path: "musics/namay.mp3" },
+    { name: "Nơi Mình Từng", path: "musics/Nơi Mình Từng - Vmosc x Lộc Nhỏ x Chu3isme x KTuen (Prod. m r x) _ OFFICIAL MV-yt.savetube.me.mp3" },
+    { name: "Nơi Này Có Anh", path: "musics/NƠI NÀY CÓ ANH _ OFFICIAL MUSIC VIDEO _ SƠN TÙNG M-TP-yt.savetube.me.mp3" },
+    { name: "Nước Mắt Em Lau Bằng Tình Yêu Mới", path: "musics/Nước Mắt Em Lau Bằng Tình Yêu Mới - Da LAB ft. Tóc Tiên (Official MV)-yt.savetube.me.mp3" },
+    { name: "Nếu Ngày Ấy", path: "musics/NẾU NGÀY ẤY _ SOOBIN HOÀNG SƠN [Official Lyric Video]-yt.savetube.me.mp3" },
+    { name: "One Last Time", path: "musics/One Last Time x Coral Sea - Ariana Grande (Lyrics + Vietsub) ♫-yt.savetube.me.mp3" },
+    { name: "10 Ngàn Năm", path: "musics/PC - 10 Ngàn Năm ( Prod. Duckie ) [Official Audio]-yt.savetube.me.mp3" },
+    { name: "Như Anh Mơ", path: "musics/PC - Như Anh Mơ (Prod. by Momo) [Official Audio]-yt.savetube.me.mp3" },
+    { name: "Sự Nghiệp Chướng", path: "musics/Pháo _ SỰ NGHIỆP CHƯỚNG-yt.savetube.me.mp3" },
+    { name: "Phép Màu", path: "musics/Phép Màu (Đàn Cá Gỗ OST) - MAYDAYs ft. Minh Tốc _ Official MV-yt.savetube.me.mp3" },
+    { name: "Phố Không Em", path: "musics/Phố Không Em _ Thái Đinh _ Official Audio _ 2016-yt.savetube.me.mp3" },
+    { name: "Wrong Times", path: "musics/puppy & @Dangrangto  - Wrong Times ( ft. FOWLEX Snowz ) [OFFICIAL LYRICS VIDEO]-yt.savetube.me.mp3" },
+    { name: "Qua Khung Cửa Sổ", path: "musics/Qua Khung Cửa Sổ - Chillies [Official Music Video]-yt.savetube.me.mp3" },
+    { name: "Rồi Em Sẽ Gặp Một Chàng Trai Khác", path: "musics/QUÂN A.P _ RỒI EM SẼ GẶP MỘT CHÀNG TRAI KHÁC _ SÓNG 25 _ LYRIC VIDEO-yt.savetube.me.mp3" },
+    { name: "Quên Đặt Tên", path: "musics/Quên đặt tên.mp3" },
+    { name: "Rồi Ta Sẽ Ngắm Pháo Hoa Cùng Nhau", path: "musics/RỒI TA SẼ NGẮM PHÁO HOA CÙNG NHAU _ MV OFFICIAL _ O.lew-yt.savetube.me.mp3" },
+    { name: "She Neva Knows", path: "musics/She Neva Knows (CM1X REMIX) - JustaTee-yt.savetube.me.mp3" },
+    { name: "Có Đôi Điều", path: "musics/Shiki - Có Đôi Điều ('Lặng' EP)-yt.savetube.me.mp3" },
+    { name: "Giá Như", path: "musics/SOOBIN - giá như _ 'BẬT NÓ LÊN' Album (Official MV)-yt.savetube.me.mp3" },
+    { name: "Xin Đừng Lặng Im", path: "musics/SOOBIN HOÀNG SƠN - XIN ĐỪNG LẶNG IM _ Lyrics Video-yt.savetube.me.mp3" },
+    { name: "Ai Mà Biết Được", path: "musics/SOOBIN, tlinh - Ai Mà Biết Được (ft. Touliver) _ 'BẬT NÓ LÊN' Album (Official MV)-yt.savetube.me.mp3" },
+    { name: "Suýt Nữa Thì", path: "musics/SUÝT NỮA THÌ _ OFFICIAL OST _ CHUYẾN ĐI CỦA THANH XUÂN _ ANDIEZ x BITI'S HUNTER _ LYRIC VIDEO-yt.savetube.me.mp3" },
+    { name: "Open Arms", path: "musics/SZA - Open Arms (Official Audio) ft. Travis Scott-yt.savetube.me.mp3" },
+    { name: "Sài Gòn Hôm Nay Mưa", path: "musics/SÀI GÒN HÔM NAY MƯA - JSOL x HOÀNG DUYÊN _ Official MV-yt.savetube.me.mp3" },
+    { name: "Chắc Ai Đó Sẽ Về", path: "musics/Sơn Tùng M-TP - Chắc Ai Đó Sẽ Về-yt.savetube.me.mp3" },
+    { name: "Đừng Làm Trái Tim Anh Đau", path: "musics/SƠN TÙNG M-TP _ ĐỪNG LÀM TRÁI TIM ANH ĐAU _ OFFICIAL MUSIC VIDEO-yt.savetube.me.mp3" },
+    { name: "Bản Tình Ca Không Hoàn Thiện", path: "musics/TaynguyenSound - Bản tình ca không hoàn thiện-yt.savetube.me.mp3" },
+    { name: "This Love Instrumental", path: "musics/This Love Instrumental (이 사랑 Instrumental)-yt.savetube.me.mp3" },
+    { name: "Those Time", path: "musics/those time (piano)-yt.savetube.me.mp3" },
+    { name: "Thương Em Là Điều Anh Không Thể Ngờ", path: "musics/teee.mp3" },
+    { name: "Chưa Được Yêu Như Thế", path: "musics/TRANG - 'Chưa Được Yêu Như Thế' (OFFICIAL MUSIC VIDEO)-yt.savetube.me.mp3" },
+    { name: "Tình Yêu Buông Tha Cho Chúng Ta", path: "musics/Trungg I.U x Lâm Bảo Ngọc - 'TÌNH YÊU BUÔNG THA CHO CHÚNG TA (TikTok Ver)' - Official Lyric Video-yt.savetube.me.mp3" },
+    { name: "Trời Giấu Trời Mang Đi", path: "musics/Trời giấu trời mang đi.mp3" },
+    { name: "Tình Cờ", path: "musics/TÌNH CỜ - Trại Tình Cờ _ Space Jam Album Vol. 2 (Official Visualizer)-yt.savetube.me.mp3" },
+    { name: "Tình Yêu Chậm Trễ", path: "musics/tình yêu chậm trễ-yt.savetube.me.mp3" },
+    { name: "Tôi Gặp Em Vào Mùa Hạ", path: "musics/Tôi gặp em vào mùa hạ-yt.savetube.me.mp3" },
+    { name: "Mây Lang Thang", path: "musics/Tùng TeA & PC - Mây Lang Thang ft. New$oulZ (Official MV)-yt.savetube.me.mp3" },
+    { name: "Hôm Nay Con Bận Rồi", path: "musics/TĂNG PHÚC ft BÙI CÔNG NAM _ _ Hôm Nay Con Bận Rồi_ ( Bùi Công Nam) _ Live in THE ROOFTOP SHOW-yt.savetube.me.mp3" },
+    { name: "Tận Cùng Nỗi Nhớ", path: "musics/Tận Cùng Nỗi Nhớ (TCNN) _ Will x Han Sara _ Official Music Video-yt.savetube.me.mp3" },
+    { name: "Tội Cho Em", path: "musics/TỘI CHO EM _ MV OST LIÊN & ĐẠT OFFICIAL-yt.savetube.me.mp3" },
+    { name: "Từng Là", path: "musics/TỪNG LÀ - VŨ CÁT TƯỜNG _ OFFICIAL-yt.savetube.me.mp3" },
+    { name: "Mơ", path: "musics/Vu Cat Tuong - Mơ (Dreaming) _ Official MV-yt.savetube.me.mp3" },
+    { name: "Vì Anh Đâu Có Biết", path: "musics/Vì Anh Đâu Có Biết - Madihu (Feat. Vũ.) _ Official MV-yt.savetube.me.mp3" },
+    { name: "Vương", path: "musics/Vương-yt.savetube.me.mp3" },
+    { name: "Thu Đợi", path: "musics/thudoi.mp3" },
+    { name: "Từng Quen", path: "musics/tugquen.mp3" },
+    { name: "LONELY STONIE", path: "musics/Wxrdie - LONELY STONIE [prod. by Dustin Ngo]-yt.savetube.me.mp3" },
+    { name: "3107", path: "musics/W_n - ‘3107’ full album_ ft. ( 267, Nâu ,Dươngg )-yt.savetube.me.mp3" },
+    { name: "Xe Đạp", path: "musics/XE ĐẠP (CM1X Lofi Ver.) _ Charles Cover-yt.savetube.me.mp3" },
+    { name: "Yêu Không Cần Hứa", path: "musics/YÊU KHÔNG CẦN HỨA - VƯƠNG ANH TÚ-yt.savetube.me.mp3" },
+    { name: "Yêu Người Có Ước Mơ", path: "musicsv1/1yeungcouocmo.mp3" },
+    { name: "Cánh Đồng Yêu Thương", path: "musicsv1/1canhdongiu.mp3" },
+    { name: "Ánh Thiều Tàn", path: "musicsv1/anhchieutan.mp3" },
+    { name: "Âm Thầm Bên Em", path: "musicsv1/1amthambene.mp3" },
+    { name: "Điều Vô Tri Nhất", path: "musicsv1/1dieuvotri.mp3" },
+    { name: "Đơn Phuơng Mình Anh", path: "musicsv1/4donp.mp3" },
+    { name: "Đưa Em Về Nhà", path: "musicsv1/8duae.mp3" },
+    { name: "Đường Một Chiều", path: "musicsv1/10dg1ch.mp3" },
+    { name: "Đợi Đến Tháng 13", path: "musicsv1/2doit13.mp3" },
+    { name: "人狼の為の子守唄", path: "musicsv1/qqqq.mp3" },
+    { name: "いちばんすきな花", path: "musicsv1/qqhh.mp3" },
+    { name: "Anh Sẽ Đến Cùng Cơn Mưa", path: "musicsv1/1aseden.mp3" }
+        ];
+
+        const audioPlayer = document.getElementById('audioPlayer');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const currentSong = document.getElementById('currentSong');
+        const randomPlay = document.getElementById('randomPlay');
+        const musicList = document.getElementById('musicList');
+        let isPlaying = false;
+        let currentTrack = 0;
+
+        // Hiển thị danh sách nhạc
+        function loadMusicList() {
+            musicFiles.forEach((song, index) => {
+                const musicItem = document.createElement('div');
+                musicItem.classList.add('music-item');
+                musicItem.textContent = song.name;
+                musicItem.addEventListener('click', () => playSong(index));
+                musicList.appendChild(musicItem);
+            });
+        }
+
+        // Phát bài hát
+        function playSong(index) {
+            currentTrack = index;
+            audioPlayer.src = musicFiles[index].path;
+            currentSong.textContent = musicFiles[index].name;
+            audioPlayer.play();
+            isPlaying = true;
+            playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            updateActiveSong();
+        }
+
+        // Cập nhật bài hát đang phát trong danh sách
+        function updateActiveSong() {
+            const items = document.querySelectorAll('.music-item');
+            items.forEach((item, index) => {
+                item.classList.toggle('active', index === currentTrack);
+            });
+        }
+
+        // Toggle play/pause
+        playPauseBtn.addEventListener('click', () => {
+            if (isPlaying) {
+                audioPlayer.pause();
+                playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            } else {
+                audioPlayer.play();
+                playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // Phát ngẫu nhiên
+        randomPlay.addEventListener('click', () => {
+            const randomIndex = Math.floor(Math.random() * musicFiles.length);
+            playSong(randomIndex);
+        });
+
+        // Khi bài hát kết thúc, tự động phát bài tiếp theo
+        audioPlayer.addEventListener('ended', () => {
+            currentTrack = (currentTrack + 1) % musicFiles.length;
+            playSong(currentTrack);
+        });
+
+        // Load danh sách nhạc khi trang được tải
+        window.onload = loadMusicList;
+    </script>
+</body>
+</html>
