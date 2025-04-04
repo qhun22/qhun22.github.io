@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Thi Trắc Nghiệm - Tuần 3</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .result {
+            margin-top: 10px;
+            font-weight: bold;
+            color: green;
+        }
+        .wrong {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Đề Thi Trắc Nghiệm - Tuần 3</h1>
+
+<div id="quiz">
+    <!-- Ex1 -->
+    <div class="question">
+        <p>1.1: Before going on a trip, you should ________ to learn about your destination.</p>
+        <label><input type="radio" name="q1" value="A" onchange="checkAnswers()"> A. buy some souvenirs</label><br>
+        <label><input type="radio" name="q1" value="B" onchange="checkAnswers()"> B. pack your suitcase</label><br>
+        <label><input type="radio" name="q1" value="C" onchange="checkAnswers()"> C. read a guidebook</label><br>
+        <div class="result" id="result-q1"></div>
+    </div>
+
+    <div class="question">
+        <p>1.2: You should ________ your flight ticket and hotel in advance to avoid last-minute problems.</p>
+        <label><input type="radio" name="q2" value="A" onchange="checkAnswers()"> A. buy</label><br>
+        <label><input type="radio" name="q2" value="B" onchange="checkAnswers()"> B. book</label><br>
+        <label><input type="radio" name="q2" value="C" onchange="checkAnswers()"> C. pack</label><br>
+        <div class="result" id="result-q2"></div>
+    </div>
+
+    <div class="question">
+        <p>1.3: If you're lost and can't find the bus station, you should...</p>
+        <label><input type="radio" name="q3" value="A" onchange="checkAnswers()"> A. take some photos</label><br>
+        <label><input type="radio" name="q3" value="B" onchange="checkAnswers()"> B. plan a new journey</label><br>
+        <label><input type="radio" name="q3" value="C" onchange="checkAnswers()"> C. ask at the tourist information centre</label><br>
+        <div class="result" id="result-q3"></div>
+    </div>
+
+    <div class="question">
+        <p>1.4: If you want to know the best places to visit, you can...</p>
+        <label><input type="radio" name="q4" value="A" onchange="checkAnswers()"> A. listen to the tour guide</label><br>
+        <label><input type="radio" name="q4" value="B" onchange="checkAnswers()"> B. pack your luggage</label><br>
+        <label><input type="radio" name="q4" value="C" onchange="checkAnswers()"> C. try a local dish</label><br>
+        <div class="result" id="result-q4"></div>
+    </div>
+
+    <div class="question">
+        <p>1.5: After we arrived in Berlin, we _______ and got some rest. It was very nice.</p>
+        <label><input type="radio" name="q5" value="A" onchange="checkAnswers()"> A. rented a car</label><br>
+        <label><input type="radio" name="q5" value="B" onchange="checkAnswers()"> B. looked at a map</label><br>
+        <label><input type="radio" name="q5" value="C" onchange="checkAnswers()"> C. stayed in a hotel</label><br>
+        <div class="result" id="result-q5"></div>
+    </div>
+
+    <!-- Ex2 -->
+    <div class="question">
+        <p>2.1: While I _______ at the beach yesterday, it started to rain.</p>
+        <label><input type="radio" name="q6" value="A" onchange="checkAnswers()"> A. were sunbathing</label><br>
+        <label><input type="radio" name="q6" value="B" onchange="checkAnswers()"> B. sunbathed</label><br>
+        <label><input type="radio" name="q6" value="C" onchange="checkAnswers()"> C. was sunbathing</label><br>
+        <div class="result" id="result-q6"></div>
+    </div>
+
+    <div class="question">
+        <p>2.2: Sarah _______ to the museum when she saw an interesting street performance.</p>
+        <label><input type="radio" name="q7" value="A" onchange="checkAnswers()"> A. was walking</label><br>
+        <label><input type="radio" name="q7" value="B" onchange="checkAnswers()"> B. walked</label><br>
+        <label><input type="radio" name="q7" value="C" onchange="checkAnswers()"> C. have walked</label><br>
+        <div class="result" id="result-q7"></div>
+    </div>
+
+    <div class="question">
+        <p>2.3: Last summer, we _______ to Italy for a family holiday.</p>
+        <label><input type="radio" name="q8" value="A" onchange="checkAnswers()"> A. travelled</label><br>
+        <label><input type="radio" name="q8" value="B" onchange="checkAnswers()"> B. have travelled</label><br>
+        <label><input type="radio" name="q8" value="C" onchange="checkAnswers()"> C. was travelling</label><br>
+        <div class="result" id="result-q8"></div>
+    </div>
+
+    <div class="question">
+        <p>2.4: My friends _______ their journey last week, and they've already visited two countries.</p>
+        <label><input type="radio" name="q9" value="A" onchange="checkAnswers()"> A. have started</label><br>
+        <label><input type="radio" name="q9" value="B" onchange="checkAnswers()"> B. were starting</label><br>
+        <label><input type="radio" name="q9" value="C" onchange="checkAnswers()"> C. started</label><br>
+        <div class="result" id="result-q9"></div>
+    </div>
+
+    <div class="question">
+        <p>2.5: _______ they _______ to the airport when they saw a huge traffic jam?</p>
+        <label><input type="radio" name="q10" value="A" onchange="checkAnswers()"> A. Did / drive</label><br>
+        <label><input type="radio" name="q10" value="B" onchange="checkAnswers()"> B. Were / driving</label><br>
+        <label><input type="radio" name="q10" value="C" onchange="checkAnswers()"> C. Did / driving</label><br>
+        <div class="result" id="result-q10"></div>
+    </div>
+
+    <!-- Ex3 -->
+    <div class="question">
+        <p>3.1: After only an hour the plane landed. We looked out of the window. It was a very small airport. We walked to the information desk and I showed our tickets to the woman. "When is our next flight?" I asked. She looked at our tickets. "The next flight? This is the end of your journey. Where did you want to go?" "Where are we?" I asked.
+            <br> 
+            <br>What was the travellers’ first action after landing?</p>
+        <label><input type="radio" name="q11" value="A" onchange="checkAnswers()"> A. They looked out of the window.</label><br>
+        <label><input type="radio" name="q11" value="B" onchange="checkAnswers()"> B. They went to the restroom.</label><br>
+        <label><input type="radio" name="q11" value="C" onchange="checkAnswers()"> C. They waited for their luggage.</label><br>
+        <div class="result" id="result-q11"></div>
+    </div>
+
+    <div class="question">
+        <p>3.2: Last April, two British teenagers wanted to go to Australia for their summer holiday. However, a 24-hour journey by plane and tickets were very expensive. So, Raoul Sebastian and Emma Nunn, aged 19, searched for cheap tickets on the Internet. They were fortunate and booked two tickets to Sydney.
+            <br> 
+            <br> Why did Raoul and Emma want to go to Australia?</p>
+        <label><input type="radio" name="q12" value="A" onchange="checkAnswers()"> A. To visit their friends</label><br>
+        <label><input type="radio" name="q12" value="B" onchange="checkAnswers()"> B. For their summer holiday</label><br>
+        <label><input type="radio" name="q12" value="C" onchange="checkAnswers()"> C. To study abroad</label><br>
+        <div class="result" id="result-q12"></div>
+    </div>
+
+    <div class="question">
+        <p>3.3: Last April two British teenagers wanted to go to Australia for their summer holiday. But it was a 24-hour journey by plane and tickets were very expensive. So, Raoul Sebastian and Emma Nunn, aged 19, looked for cheap tickets on the 1 Internet. They were lucky, and they booked two tickets to 2 Sydney.   
+            <br> 
+            <br>How did Raoul and Emma find tickets to Australia?</p>
+        <label><input type="radio" name="q13" value="A" onchange="checkAnswers()"> A. They looked for cheap tickets on the Internet</label><br>
+        <label><input type="radio" name="q13" value="B" onchange="checkAnswers()"> B. They won free tickets in a competition</label><br>
+        <label><input type="radio" name="q13" value="C" onchange="checkAnswers()"> C. They bought expensive tickets at the airport</label><br>
+        <div class="result" id="result-q13"></div>
+    </div>
+
+    <div class="question">
+        <p>3.4: We had a fantastic day at the hotel yesterday. At 11 o'clock, the sun was shining and it wasn't raining. My mum and dad were reading their books, my little brother was playing with his new friend and my cousin and I were learning how to sail. After a few hours, we all met by the pool for lunch. The food was delicious, and we enjoyed the time together. It was such a relaxing and fun day!
+            <br> 
+            <br> What did the family do after a few hours?</p>
+        <label><input type="radio" name="q14" value="A" onchange="checkAnswers()"> A. They went to the beach.</label><br>
+        <label><input type="radio" name="q14" value="B" onchange="checkAnswers()"> B. They met by the pool for a meal.</label><br>
+        <label><input type="radio" name="q14" value="C" onchange="checkAnswers()"> C. They went sailing together.</label><br>
+        <div class="result" id="result-q14"></div>
+    </div>
+
+    <div class="question">
+        <p>3.5: After only an hour the plane landed. We looked out of the window. It was a very small airport. We walked to the information desk and I showed our tickets to the woman. "When is our next flight?" I asked. She looked at our tickets. "The next flight? This is the end of your journey. Where did you want to go?" "Where are we?" I asked. 
+            <br> 
+            <br>How long did it take for the plane to land?</p>
+        <label><input type="radio" name="q15" value="A" onchange="checkAnswers()"> A. Sixty minutes</label><br>
+        <label><input type="radio" name="q15" value="B" onchange="checkAnswers()"> B. Two hours</label><br>
+        <label><input type="radio" name="q15" value="C" onchange="checkAnswers()"> C. Thirty minutes</label><br>
+        <div class="result" id="result-q15"></div>
+    </div>
+
+    <!-- Ex4 -->
+    <div class="question">
+        <p>4.1:  Sarah and her friends spent the day on the beach, enjoying the sunshine and swimming in the clear blue water. The sand was warm under their feet, and they played beach volleyball and relaxed with cold drinks. In the evening, they went home to change into something nicer, and then they went out to a club to dance and have fun.
+            <br> 
+            <br>They had dinner at the club before dancing and having fun.</p>
+        <label><input type="radio" name="q16" value="A" onchange="checkAnswers()"> A. True</label><br>
+        <label><input type="radio" name="q16" value="B" onchange="checkAnswers()"> B. False</label><br>
+        <label><input type="radio" name="q16" value="C" onchange="checkAnswers()"> C. Not given</label><br>
+        <div class="result" id="result-q16"></div>
+    </div>
+
+    <div class="question">
+        <p>4.2: This morning, when Lily was eating breakfast, her friend Jo said that she wanted to stay at the hotel for the rest of the holidays, so they weren't going back to the campsite! After that, they went shopping and bought some souvenirs. They were really enjoying their holiday.
+            
+            <br> 
+            <br>Lily and her friend were going back to the campsite after breakfast.</p>
+        <label><input type="radio" name="q17" value="A" onchange="checkAnswers()"> A. True</label><br>
+        <label><input type="radio" name="q17" value="B" onchange="checkAnswers()"> B. False</label><br>
+        <label><input type="radio" name="q17" value="C" onchange="checkAnswers()"> C. Not given</label><br>
+        <div class="result" id="result-q17"></div>
+    </div>
+
+    <div class="question">
+        <p>4.3: Yesterday, we went for a long walk in the mountains. We carried everything with us on our backs. I had to carry a big backpack with all the food and I hated it! In the evening, when we were cooking our dinner we saw lots of sheep. They were coming down the mountain towards our campsite. They damaged the tents so badly that we decided to stay at a hotel.
+            <br> 
+            <br>The sheep caused some damage to the tents at the campsite.</p>
+        <label><input type="radio" name="q18" value="A" onchange="checkAnswers()"> A. True</label><br>
+        <label><input type="radio" name="q18" value="B" onchange="checkAnswers()"> B. False</label><br>
+        <label><input type="radio" name="q18" value="C" onchange="checkAnswers()"> C. Not given</label><br>
+        <div class="result" id="result-q18"></div>
+    </div>
+
+    <div class="question">
+        <p>4.4: Yesterday, we went for a long walk in the mountains. We carried everything with us on our backs. I had to carry a big backpack with all the food and I hated it! In the evening, when we were cooking our dinner we saw lots of sheep. They were coming down the mountain towards our campsite. They damaged the tents so badly that we decided to stay at a hotel.
+            <br> 
+            <br>The writer enjoyed carrying the backpack with food during the walk.</p>
+        <label><input type="radio" name="q19" value="A" onchange="checkAnswers()"> A. True</label><br>
+        <label><input type="radio" name="q19" value="B" onchange="checkAnswers()"> B. False</label><br>
+        <label><input type="radio" name="q19" value="C" onchange="checkAnswers()"> C. Not given</label><br>
+        <div class="result" id="result-q19"></div>
+    </div>
+
+    <div class="question">
+        <p>4.5: Sarah and her friends spent the day on the beach, enjoying the sunshine and swimming in the clear blue water. The sand was warm under their feet, and they played beach volleyball and relaxed with cold drinks. In the evening, they went home to change into something nicer, and then they went out to a club to dance and have fun.
+            <br> 
+            <br> They played beach volleyball and relaxed with cold drinks on the warm sand.</p>
+        <label><input type="radio" name="q20" value="A" onchange="checkAnswers()"> A. True</label><br>
+        <label><input type="radio" name="q20" value="B" onchange="checkAnswers()"> B. False</label><br>
+        <label><input type="radio" name="q20" value="C" onchange="checkAnswers()"> C. Not given</label><br>
+        <div class="result" id="result-q20"></div>
+    </div>
+</div>
+
+<script>
+    const correctAnswers = {
+        q1: 'C',
+        q2: 'B',
+        q3: 'C',
+        q4: 'A',
+        q5: 'C',
+        q6: 'C',
+        q7: 'A',
+        q8: 'A',
+        q9: 'C',
+        q10: 'B',
+        q11: 'A',
+        q12: 'B',
+        q13: 'A',
+        q14: 'B',
+        q15: 'A',
+        q16: 'C',
+        q17: 'B',
+        q18: 'A',
+        q19: 'B',
+        q20: 'A'
+    };
+
+    function checkAnswers() {
+        for (let question in correctAnswers) {
+            const selected = document.querySelector(`input[name="${question}"]:checked`);
+            const resultDiv = document.getElementById(`result-${question}`);
+
+            if (selected) {
+                if (selected.value === correctAnswers[question]) {
+                    resultDiv.innerHTML = 'Đúng';
+                    resultDiv.className = 'result';
+                } else {
+                    resultDiv.innerHTML = 'Sai';
+                    resultDiv.className = 'result wrong';
+                }
+            } else {
+                resultDiv.innerHTML = '';
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
