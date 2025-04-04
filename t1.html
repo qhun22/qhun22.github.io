@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Thi Trắc Nghiệm</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .result {
+            margin-top: 10px;
+            font-weight: bold;
+            color: green;
+        }
+        .wrong {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Đề Thi Trắc Nghiệm</h1>
+
+<div id="quiz">
+    <!-- Ex1 -->
+    <div class="question">
+        <p>1.1: Young students often ride .................. to the school every day.</p>
+        <label><input type="radio" name="q1" value="A" onchange="checkAnswers()"> A. bicycles</label><br>
+        <label><input type="radio" name="q1" value="B" onchange="checkAnswers()"> B. undergrounds</label><br>
+        <label><input type="radio" name="q1" value="C" onchange="checkAnswers()"> C. cars</label><br>
+        <div class="result" id="result-q1"></div>
+    </div>
+
+    <div class="question">
+        <p>1.2: A/An .......... is a special vehicle used to take sick or injured people to hospital.</p>
+        <label><input type="radio" name="q2" value="A" onchange="checkAnswers()"> A. motorbike</label><br>
+        <label><input type="radio" name="q2" value="B" onchange="checkAnswers()"> B. ambulance</label><br>
+        <label><input type="radio" name="q2" value="C" onchange="checkAnswers()"> C. airplane</label><br>
+        <div class="result" id="result-q2"></div>
+    </div>
+
+    <div class="question">
+        <p>1.3: A .......... is a motor vehicle with two wheels which is smaller than a motorcycle.</p>
+        <label><input type="radio" name="q3" value="A" onchange="checkAnswers()"> A. scooter</label><br>
+        <label><input type="radio" name="q3" value="B" onchange="checkAnswers()"> B. motorbike</label><br>
+        <label><input type="radio" name="q3" value="C" onchange="checkAnswers()"> C. bicycle</label><br>
+        <div class="result" id="result-q3"></div>
+    </div>
+
+    <div class="question">
+        <p>1.4: A .......... is a vehicle with 2 wheels and engines.</p>
+        <label><input type="radio" name="q4" value="A" onchange="checkAnswers()"> A. car</label><br>
+        <label><input type="radio" name="q4" value="B" onchange="checkAnswers()"> B. bicycle</label><br>
+        <label><input type="radio" name="q4" value="C" onchange="checkAnswers()"> C. motorbike</label><br>
+        <div class="result" id="result-q4"></div>
+    </div>
+
+    <div class="question">
+        <p>1.5: A/An ________ is a vehicle with wings which can fly.</p>
+        <label><input type="radio" name="q5" value="A" onchange="checkAnswers()"> A. motorbike</label><br>
+        <label><input type="radio" name="q5" value="B" onchange="checkAnswers()"> B. airplane</label><br>
+        <label><input type="radio" name="q5" value="C" onchange="checkAnswers()"> C. ambulance</label><br>
+        <div class="result" id="result-q5"></div>
+    </div>
+
+    <!-- Ex2 -->
+    <div class="question">
+        <p>2.1: This shirt isn't... for her to wear.</p>
+        <label><input type="radio" name="q6" value="A" onchange="checkAnswers()"> A. enough large</label><br>
+        <label><input type="radio" name="q6" value="B" onchange="checkAnswers()"> B. too large enough</label><br>
+        <label><input type="radio" name="q6" value="C" onchange="checkAnswers()"> C. large enough</label><br>
+        <div class="result" id="result-q6"></div>
+    </div>
+
+    <div class="question">
+        <p>2.2: It was... so we didn't buy it.</p>
+        <label><input type="radio" name="q7" value="A" onchange="checkAnswers()"> A. too expensive</label><br>
+        <label><input type="radio" name="q7" value="B" onchange="checkAnswers()"> B. enough expensive</label><br>
+        <label><input type="radio" name="q7" value="C" onchange="checkAnswers()"> C. to expensive</label><br>
+        <div class="result" id="result-q7"></div>
+    </div>
+
+    <div class="question">
+        <p>2.3: This taxi isn't... for all of us.</p>
+        <label><input type="radio" name="q8" value="A" onchange="checkAnswers()"> A. too bigs</label><br>
+        <label><input type="radio" name="q8" value="B" onchange="checkAnswers()"> B. big enough</label><br>
+        <label><input type="radio" name="q8" value="C" onchange="checkAnswers()"> C. enough big</label><br>
+        <div class="result" id="result-q8"></div>
+    </div>
+
+    <div class="question">
+        <p>2.4: It's ______ to read. I don't understand it at all.</p>
+        <label><input type="radio" name="q9" value="A" onchange="checkAnswers()"> A. too difficult</label><br>
+        <label><input type="radio" name="q9" value="B" onchange="checkAnswers()"> B. difficulty enough</label><br>
+        <label><input type="radio" name="q9" value="C" onchange="checkAnswers()"> C. enough difficult</label><br>
+        <div class="result" id="result-q9"></div>
+    </div>
+
+    <div class="question">
+        <p>2.5: It's ______ to walk. I'll take the bus.</p>
+        <label><input type="radio" name="q10" value="A" onchange="checkAnswers()"> A. fry enough</label><br>
+        <label><input type="radio" name="q10" value="B" onchange="checkAnswers()"> B. too far</label><br>
+        <label><input type="radio" name="q10" value="C" onchange="checkAnswers()"> C. enough far</label><br>
+        <div class="result" id="result-q10"></div>
+    </div>
+
+    <!-- Ex3 -->
+    <div class="question">
+        <p>3.1: While flying can be the fastest way to reach your destination, it can also be expensive. If you don't have much money, consider driving to your destination. But always make sure to calculate the cost and time involved in different modes of transportation before making a decision.
+            <br>
+            <br>     Which way of travelling costs you lots of money?</p>
+        <label><input type="radio" name="q11" value="A" onchange="checkAnswers()"> A. by plane</label><br>
+        <label><input type="radio" name="q11" value="B" onchange="checkAnswers()"> B. by car</label><br>
+        <label><input type="radio" name="q11" value="C" onchange="checkAnswers()"> C. by train</label><br>
+        <div class="result" id="result-q11"></div>
+    </div>
+
+    <div class="question">
+        <p>3.2: Lucas took the train to the airport. His flight to Rome was not too long and quite comfortable. After arriving in Rome, a taxi took him to his hotel. The next day he started to explore the area and see all the sights he had read about. Lucas spent his days walking through the ancient streets, admiring the art and architecture of the city, and trying traditional Italian dishes.
+            <br>
+            <br>   How did Lucas get to Rome?</p>
+        <label><input type="radio" name="q12" value="A" onchange="checkAnswers()"> A. by plane</label><br>
+        <label><input type="radio" name="q12" value="B" onchange="checkAnswers()"> B. by train</label><br>
+        <label><input type="radio" name="q12" value="C" onchange="checkAnswers()"> C. by taxi</label><br>
+        <div class="result" id="result-q12"></div>
+    </div>
+
+    <div class="question">
+        <p>3.3: You can easily get to all places in the city with 12 metro lines, 230 bus lines, trams and night buses. The system is not too expensive, which is why most of the people in the city use it on a daily basis. The best thing about the Barcelona public transportation system is that if you miss a bus, there will be another one along soon. Delays sometimes happen, though, especially with buses.
+            <br>
+            <br>   What mean of transport is cheap enough for people in the city use it every day?</p>
+        <label><input type="radio" name="q13" value="A" onchange="checkAnswers()"> A. bus</label><br>
+        <label><input type="radio" name="q13" value="B" onchange="checkAnswers()"> B. bicycle</label><br>
+        <label><input type="radio" name="q13" value="C" onchange="checkAnswers()"> C. motorbike</label><br>
+        <div class="result" id="result-q13"></div>
+    </div>
+
+    <div class="question">
+        <p>3.4: New York City's subway system has some serious issues. There are a lot of delays, especially with the trains. But it's hard to deny that New York remains an extremely easy city to get around via public transit - so much so that most people in the city don't own a car. The McKinsey report lists New York City's public transit system as one of the best in the world.
+            <br>
+            <br>   What mean of transport don't people use to travel around the city?</p>
+        <label><input type="radio" name="q14" value="A" onchange="checkAnswers()"> A. train</label><br>
+        <label><input type="radio" name="q14" value="B" onchange="checkAnswers()"> B. car</label><br>
+        <label><input type="radio" name="q14" value="C" onchange="checkAnswers()"> C. subway</label><br>
+        <div class="result" id="result-q14"></div>
+    </div>
+
+    <div class="question">
+        <p>3.5:   On the day of her trip, Maria and her family took a taxi to the airport and after a long flight, they arrived in Paris. The weather was hot and sunny, but Maria was excited to explore the city. She spent her days walking along the Seine River, admiring the architecture, and trying delicious French pastries.
+            <br>
+            <br>  How did Maria get to Paris?</p>
+        <label><input type="radio" name="q15" value="A" onchange="checkAnswers()"> A. By plane</label><br>
+        <label><input type="radio" name="q15" value="B" onchange="checkAnswers()"> B. By taxi</label><br>
+        <label><input type="radio" name="q15" value="C" onchange="checkAnswers()"> C. By car</label><br>
+        <div class="result" id="result-q15"></div>
+    </div>
+
+    <!-- Ex4 -->
+    <div class="question">
+        <p>4.1: Many people in London don’t drive to work because it takes a very long time. Most people choose to travel by train, underground, or tram because they are much quicker. If people are travelling from outside of London, they often have to catch a train to one of the big stations and then go by underground to their office. It can be very expensive, but with the traffic problems, it’s the only and the quickest way. 
+            <br>
+            <br> The fastest way to get to work in London is by train and underground.</p>
+        <label><input type="radio" name="q16" value="A" onchange="checkAnswers()"> A. True</label><br>
+        <label><input type="radio" name="q16" value="B" onchange="checkAnswers()"> B. False</label><br>
+        <label><input type="radio" name="q16" value="C" onchange="checkAnswers()"> C. Not Given</label><br>
+        <div class="result" id="result-q16"></div>
+    </div>
+
+    <div class="question">
+        <p>4.2: My home city, London, is always full of traffic and often, in the centre of the city, the traffic is not moving. This makes it very difficult for our parents to drive us to school. London is a very old city and the streets are often small, which means it can also be difficult for ambulances, school buses and police cars to get through. 
+            <br>
+            <br> It is not easy for drivers to move in London.</p>
+        <label><input type="radio" name="q17" value="A" onchange="checkAnswers()"> A. True</label><br>
+        <label><input type="radio" name="q17" value="B" onchange="checkAnswers()"> B. False</label><br>
+        <label><input type="radio" name="q17" value="C" onchange="checkAnswers()"> C. Not Given</label><br>
+        <div class="result" id="result-q17"></div>
+    </div>
+
+    <div class="question">
+        <p>4.3: I went on a sailing trip to the Caribbean with my partner. The weather was perfect for sailing, with warm winds and clear blue skies. We visited different islands and explored the beaches and towns. We spent a lot of time on the boat, enjoying the peace and quiet. We also read a guidebook to learn about the different islands and their histories. The trip was a once-in-a-lifetime experience.
+            <br>
+            <br> They found information about their destination by reading a book.</p>
+        <label><input type="radio" name="q18" value="A" onchange="checkAnswers()"> A. True</label><br>
+        <label><input type="radio" name="q18" value="B" onchange="checkAnswers()"> B. False</label><br>
+        <label><input type="radio" name="q18" value="C" onchange="checkAnswers()"> C. Not Given</label><br>
+        <div class="result" id="result-q18"></div>
+    </div>
+
+    <div class="question">
+        <p>4.4: Sebastian Clover is a 15-year-old boy who lives in the south of England. In January, he became the youngest person ever to travel from one side of the Atlantic Ocean to the other, all alone in a sailing boat. It took Sebastian 25 days to sail from Tenerife to the island of Antigua in the Caribbean. This isn't very fast, but it is a long way for someone so young !
+            <br>
+            <br>Sebastian travelled to Antigua in the Caribbean by coach.</p>
+        <label><input type="radio" name="q19" value="A" onchange="checkAnswers()"> A. True</label><br>
+        <label><input type="radio" name="q19" value="B" onchange="checkAnswers()"> B. False</label><br>
+        <label><input type="radio" name="q19" value="C" onchange="checkAnswers()"> C. Not Given</label><br>
+        <div class="result" id="result-q19"></div>
+    </div>
+
+    <div class="question">
+        <p>4.5: Our city council has been trying to improve the traffic, but there are still too many cars. A few years ago, they stopped lorries going into the centre between 1 8 a.m and 6 p.m. This helped a little bit, but not enough. They then made every car driver pay to drive in London between 8.30 a.m and 6 p.m. This didn't make the traffic better because unfortunately people paid to drive in London and there was still the same number of cars as before. 
+            <br>
+            <br>The city council asked many people to limit their cars in London to improve the traffic.</p>
+        <label><input type="radio" name="q20" value="A" onchange="checkAnswers()"> A. Not Given</label><br>
+        <label><input type="radio" name="q20" value="B" onchange="checkAnswers()"> B. True</label><br>
+        <label><input type="radio" name="q20" value="C" onchange="checkAnswers()"> C. False</label><br>
+        <div class="result" id="result-q20"></div>
+    </div>
+</div>
+
+<script>
+    const correctAnswers = {
+        q1: 'A',
+        q2: 'B',
+        q3: 'A',
+        q4: 'C',
+        q5: 'B',
+        q6: 'C',
+        q7: 'A',
+        q8: 'B',
+        q9: 'A',
+        q10: 'B',
+        q11: 'A',
+        q12: 'A',
+        q13: 'A',
+        q14: 'B',
+        q15: 'A',
+        q16: 'A',
+        q17: 'A',
+        q18: 'A',
+        q19: 'B',
+        q20: 'A'
+    };
+
+    function checkAnswers() {
+        for (let question in correctAnswers) {
+            const selected = document.querySelector(`input[name="${question}"]:checked`);
+            const resultDiv = document.getElementById(`result-${question}`);
+
+            if (selected) {
+                if (selected.value === correctAnswers[question]) {
+                    resultDiv.innerHTML = 'Đúng';
+                    resultDiv.className = 'result';
+                } else {
+                    resultDiv.innerHTML = 'Sai';
+                    resultDiv.className = 'result wrong';
+                }
+            } else {
+                resultDiv.innerHTML = '';
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
