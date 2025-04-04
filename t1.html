@@ -210,6 +210,42 @@
         <label><input type="radio" name="q20" value="C" onchange="checkAnswers()"> C. False</label><br>
         <div class="result" id="result-q20"></div>
     </div>
+
+    <div id="dientu">
+        <h2>Viết đủ từ bên dưới sẽ tự đúng nhé @@</h2>
+        
+        <div class="qhun">
+            <p>5.1: Today, the music ________ for me to dance. (exciting / enough)</p>
+            <input type="text" id="q21" oninput="checkAnswer('q21', 'is exciting enough')">
+            <div class="result" id="result-q21"></div>
+        </div>
+    
+        <div class="qhunqhun">
+            <p>5.2: It ________ for her to catch the train yesterday. (too / late) </p>
+            <input type="text" id="q22" oninput="checkAnswer('q22', 'was too late')">
+            <div class="result" id="result-q22"></div>
+        </div>
+    
+        <div class="qhun">
+            <p>5.3:The coffee is ________ enough for me to drink. (not hot / enough)</p>
+            <input type="text" id="q23" oninput="checkAnswer('q23', 'not hot enough')">
+            <div class="result" id="result-q23"></div>
+        </div>
+    
+        <div class="qhun">
+            <p>5.4: They have ________ buy this car. (enough / money).</p>
+            <input type="text" id="q24" oninput="checkAnswer('q24', 'enough money to')">
+            <div class="result" id="result-q24"></div>
+        </div>
+    
+        <div class="qhun">
+            <p>5.5: The backpack is________me to carry for long.(too / heavy)</p>
+            <input type="text" id="q25" oninput="checkAnswer('q25', 'too heavy')">
+            <div class="result" id="result-q25"></div>
+        </div>
+    </div>
+    
+    <div id="word-order">
 </div>
 
 <script>
@@ -233,7 +269,12 @@
         q17: 'A',
         q18: 'A',
         q19: 'B',
-        q20: 'A'
+        q20: 'A',
+        q21: 'is exciting enough',
+        q22: 'was too late',
+        q23: 'not hot enough',
+        q24: 'enough money to',
+        q25: 'too heavy',
     };
 
     function checkAnswers() {
@@ -254,6 +295,19 @@
             }
         }
     }
+
+    function checkDienTu(answerId, correctAnswer) {
+    const userAnswer = document.getElementById(answerId).value.trim();
+    const resultDiv = document.getElementById(`result-${answerId}`);
+
+    if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+        resultDiv.innerHTML = 'Đúng';
+        resultDiv.className = 'result';
+    } else {
+        resultDiv.innerHTML = 'Sai';
+        resultDiv.className = 'result wrong';
+    }
+}
 </script>
 
 </body>
