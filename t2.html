@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Thi Trắc Nghiệm - Tuần 2</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .result {
+            margin-top: 10px;
+            font-weight: bold;
+            color: green;
+        }
+        .wrong {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Đề Thi Trắc Nghiệm - Tuần 2</h1>
+
+<div id="quiz">
+    <!-- Ex1 -->
+    <div class="question">
+        <p>1.1: You can look at the interesting old things in the....................</p>
+        <label><input type="radio" name="q1" value="A" onchange="checkAnswers()"> A. classroom</label><br>
+        <label><input type="radio" name="q1" value="B" onchange="checkAnswers()"> B. museum</label><br>
+        <label><input type="radio" name="q1" value="C" onchange="checkAnswers()"> C. theatre</label><br>
+        <div class="result" id="result-q1"></div>
+    </div>
+
+    <div class="question">
+        <p>1.2: If you don't want to eat at home, you can go to the....................</p>
+        <label><input type="radio" name="q2" value="A" onchange="checkAnswers()"> A. restaurant</label><br>
+        <label><input type="radio" name="q2" value="B" onchange="checkAnswers()"> B. shop</label><br>
+        <label><input type="radio" name="q2" value="C" onchange="checkAnswers()"> C. market</label><br>
+        <div class="result" id="result-q2"></div>
+    </div>
+
+    <div class="question">
+        <p>1.3: You can go to the ______________ to catch a train.</p>
+        <label><input type="radio" name="q3" value="A" onchange="checkAnswers()"> A. station</label><br>
+        <label><input type="radio" name="q3" value="B" onchange="checkAnswers()"> B. travel agency</label><br>
+        <label><input type="radio" name="q3" value="C" onchange="checkAnswers()"> C. airport</label><br>
+        <div class="result" id="result-q3"></div>
+    </div>
+
+    <div class="question">
+        <p>1.4: You can buy all your vegetables in the .....................</p>
+        <label><input type="radio" name="q4" value="A" onchange="checkAnswers()"> A. airport</label><br>
+        <label><input type="radio" name="q4" value="B" onchange="checkAnswers()"> B. market</label><br>
+        <label><input type="radio" name="q4" value="C" onchange="checkAnswers()"> C. restaurant</label><br>
+        <div class="result" id="result-q4"></div>
+    </div>
+
+    <div class="question">
+        <p>1.5: You buy a ticket to watch a play in the ___________.</p>
+        <label><input type="radio" name="q5" value="A" onchange="checkAnswers()"> A. museum</label><br>
+        <label><input type="radio" name="q5" value="B" onchange="checkAnswers()"> B. theatre</label><br>
+        <label><input type="radio" name="q5" value="C" onchange="checkAnswers()"> C. classroom</label><br>
+        <div class="result" id="result-q5"></div>
+    </div>
+
+    <!-- Ex2 -->
+    <div class="question">
+        <p>2.1: Don't worry about.................. your room. I'll do it for you.</p>
+        <label><input type="radio" name="q6" value="A" onchange="checkAnswers()"> A. to clean</label><br>
+        <label><input type="radio" name="q6" value="B" onchange="checkAnswers()"> B. cleaning</label><br>
+        <label><input type="radio" name="q6" value="C" onchange="checkAnswers()"> C. clean</label><br>
+        <div class="result" id="result-q6"></div>
+    </div>
+
+    <div class="question">
+        <p>2.2: Would you like.................. to a concert with us?</p>
+        <label><input type="radio" name="q7" value="A" onchange="checkAnswers()"> A. coming</label><br>
+        <label><input type="radio" name="q7" value="B" onchange="checkAnswers()"> B. come</label><br>
+        <label><input type="radio" name="q7" value="C" onchange="checkAnswers()"> C. to come</label><br>
+        <div class="result" id="result-q7"></div>
+    </div>
+
+    <div class="question">
+        <p>2.3: They decided.................. to the airport early to avoid any delays.</p>
+        <label><input type="radio" name="q8" value="A" onchange="checkAnswers()"> A. go</label><br>
+        <label><input type="radio" name="q8" value="B" onchange="checkAnswers()"> B. to go</label><br>
+        <label><input type="radio" name="q8" value="C" onchange="checkAnswers()"> C. going</label><br>
+        <div class="result" id="result-q8"></div>
+    </div>
+
+    <div class="question">
+        <p>2.4: Thank you for _____________ me.</p>
+        <label><input type="radio" name="q9" value="A" onchange="checkAnswers()"> A. help</label><br>
+        <label><input type="radio" name="q9" value="B" onchange="checkAnswers()"> B. helping</label><br>
+        <label><input type="radio" name="q9" value="C" onchange="checkAnswers()"> C. to help</label><br>
+        <div class="result" id="result-q9"></div>
+    </div>
+
+    <div class="question">
+        <p>2.5: Carol doesn't mind ................ up early.</p>
+        <label><input type="radio" name="q10" value="A" onchange="checkAnswers()"> A. getting</label><br>
+        <label><input type="radio" name="q10" value="B" onchange="checkAnswers()"> B. get</label><br>
+        <label><input type="radio" name="q10" value="C" onchange="checkAnswers()"> C. to get</label><br>
+        <div class="result" id="result-q10"></div>
+    </div>
+
+    <!-- Ex3 -->
+    <div class="question">
+        <p>3.1: Lucas had always been fascinated by the ancient history and architecture of Italy. He went to the travel agency to book a trip to Rome, the capital of Italy. Lucas borrowed a guidebook from the library and read about the city's famous tourist attractions. He also went online to search for videos about popular restaurants and cafes there.
+            <br>
+            <br> How did Lucas find out about the popular restaurants in Rome?</p>
+        <label><input type="radio" name="q11" value="A" onchange="checkAnswers()"> A. He went to a travel agency.</label><br>
+        <label><input type="radio" name="q11" value="B" onchange="checkAnswers()"> B. He used the internet.</label><br>
+        <label><input type="radio" name="q11" value="C" onchange="checkAnswers()"> C. He asked a friend.</label><br>
+        <div class="result" id="result-q11"></div>
+    </div>
+
+    <div class="question">
+        <p>3.2: One day, Samantha decided to take a day trip to Mount Fuji. She and a group of tourists took a bus to the mountain and spent the day hiking. Although the trip cost a lot of money, Samantha felt pleased because it was worth every penny. She had learned so much about Japanese culture, tried new things, and made unforgettable memories. As her trip came to an end, Samantha felt grateful for the opportunity to explore such a beautiful country and promised to come back someday.
+            <br>
+            <br>How did Samantha feel about the cost of the trip?</p>
+        <label><input type="radio" name="q12" value="A" onchange="checkAnswers()"> A. unsatisfied</label><br>
+        <label><input type="radio" name="q12" value="B" onchange="checkAnswers()"> B. unhappy</label><br>
+        <label><input type="radio" name="q12" value="C" onchange="checkAnswers()"> C. happy</label><br>
+        <div class="result" id="result-q12"></div>
+    </div>
+
+    <div class="question">
+        <p>3.3: Living in a big city can be very exciting, but it also means dealing with a lot of traffic. Rush hour traffic is the worst. That's when people are trying to get to work in the morning and then trying to get back home in the evening. It can take hours to get anywhere during these times.
+            <br>
+            <br> What is rush hour traffic?</p>
+        <label><input type="radio" name="q13" value="A" onchange="checkAnswers()"> A. The time when the traffic is the heaviest</label><br>
+        <label><input type="radio" name="q13" value="B" onchange="checkAnswers()"> B. The time when people go to work in the morning</label><br>
+        <label><input type="radio" name="q13" value="C" onchange="checkAnswers()"> C. The time when people go home in the evening</label><br>
+        <div class="result" id="result-q13"></div>
+    </div>
+
+    <div class="question">
+        <p>3.4:  Maria had always loved the beautiful city of Paris and wanted to visit the city. She decided to book a holiday there with her family. She borrowed a guidebook from a friend and read about the city's famous landmarks, art museums, and food, and made a list of all the places she wanted to visit.
+            <br>
+            <br> How did Maria find information about Paris?</p>
+        <label><input type="radio" name="q14" value="A" onchange="checkAnswers()"> A. She asked a friend.</label><br>
+        <label><input type="radio" name="q14" value="B" onchange="checkAnswers()"> B. She asked her family.</label><br>
+        <label><input type="radio" name="q14" value="C" onchange="checkAnswers()"> C. She read a guidebook.</label><br>
+        <div class="result" id="result-q14"></div>
+    </div>
+
+    <div class="question">
+        <p>3.5: Last year, when I was surfing the internet to look for some videos for my homework, I accidentally clicked on a video about Guadeloupe, a group of islands located in the Caribbean Sea and an overseas department of France. I was fascinated by the beauty of the islands and decided to make a trip there.
+            <br>
+            <br>Where is Guadeloupe?</p>
+        <label><input type="radio" name="q15" value="A" onchange="checkAnswers()"> A. In some videos</label><br>
+        <label><input type="radio" name="q15" value="B" onchange="checkAnswers()"> B. In national islands</label><br>
+        <label><input type="radio" name="q15" value="C" onchange="checkAnswers()"> C. In the Caribbean Sea</label><br>
+        <div class="result" id="result-q15"></div>
+    </div>
+
+    <!-- Ex4 -->
+    <div class="question">
+        <p>4.1: I drove to the beach in Hawaii for a holiday with my family. It was extremely hot and humid, but we enjoyed swimming in the ocean and lounging on the sand. I spent some time alone exploring different parts of the island, read a guidebook to learn about the history and culture of Hawaii. It was a great trip, but we were sad that we couldn't stay longer.
+            <br>
+            <br> They were unhappy because they had to leave early.</p>
+        <label><input type="radio" name="q16" value="A" onchange="checkAnswers()"> A. Not given</label><br>
+        <label><input type="radio" name="q16" value="B" onchange="checkAnswers()"> B. True</label><br>
+        <label><input type="radio" name="q16" value="C" onchange="checkAnswers()"> C. False</label><br>
+        <div class="result" id="result-q16"></div>
+    </div>
+
+    <div class="question">
+        <p>4.2: Jake was so excited when his parents told him that they were going to Hawaii for a holiday. He spent days researching the island online. When the day of the holiday came, he was eager to pack his bags. Jake woke up early and headed to the airport with his family. They were all so excited to go on this adventure together.
+            <br>
+            <br>Jake looked for information about Hawaii in a bookshop.</p>
+        <label><input type="radio" name="q17" value="A" onchange="checkAnswers()"> A. True</label><br>
+        <label><input type="radio" name="q17" value="B" onchange="checkAnswers()"> B. Not given</label><br>
+        <label><input type="radio" name="q17" value="C" onchange="checkAnswers()"> C. False</label><br>
+        <div class="result" id="result-q17"></div>
+    </div>
+
+    <div class="question">
+        <p>4.3: : I took a flight to the Rocky Mountains for a skiing trip with a group of friends. The weather was perfect for skiing. We visited different ski resorts and tried different slopes. I spent some time alone taking in the stunning mountain views. We found the trip to be a little bit expensive, but it was worth it for the experience.
+            <br>
+            <br>The writer went on a trip with a group of friends by car.</p>
+        <label><input type="radio" name="q18" value="A" onchange="checkAnswers()"> A. True</label><br>
+        <label><input type="radio" name="q18" value="B" onchange="checkAnswers()"> B. False</label><br>
+        <label><input type="radio" name="q18" value="C" onchange="checkAnswers()"> C. Not Given</label><br>
+        <div class="result" id="result-q18"></div>
+    </div>
+
+    <div class="question">
+        <p>4.4: Birmingham is seen as the second-most populous city in England, so the subway and buses can get too crowded here. However, the system is always on time. American travelers are also pleased to learn that the system has plenty of English signs. You don't need to speak a Chinese dialect to get to all tourist areas in the city relatively quickly.
+            <br>
+            <br>There are many people on the undergrounds and buses.</p>
+        <label><input type="radio" name="q19" value="A" onchange="checkAnswers()"> A. Not given</label><br>
+        <label><input type="radio" name="q19" value="B" onchange="checkAnswers()"> B. True</label><br>
+        <label><input type="radio" name="q19" value="C" onchange="checkAnswers()"> C. False</label><br>
+        <div class="result" id="result-q19"></div>
+    </div>
+
+    <div class="question">
+        <p>4.5: Maria had always loved the beautiful city of Paris and wanted to visit the city. She decided to book a holiday there with her family. She borrowed a guidebook from a friend and read about the city's famous landmarks, art museums, and food, and made a list of all the places she wanted to visit.
+            <br>
+            <br> Paris is famous for old buildings.</p>
+        <label><input type="radio" name="q20" value="A" onchange="checkAnswers()"> A. Not given</label><br>
+        <label><input type="radio" name="q20" value="B" onchange="checkAnswers()"> B. False</label><br>
+        <label><input type="radio" name="q20" value="C" onchange="checkAnswers()"> C. True</label><br>
+        <div class="result" id="result-q20"></div>
+    </div>
+</div>
+
+<script>
+    const correctAnswers = {
+        q1: 'B',
+        q2: 'A',
+        q3: 'A',
+        q4: 'B',
+        q5: 'B',
+        q6: 'B',
+        q7: 'C',
+        q8: 'B',
+        q9: 'B',
+        q10: 'A',
+        q11: 'B',
+        q12: 'C',
+        q13: 'A',
+        q14: 'C',
+        q15: 'C',
+        q16: 'B',
+        q17: 'C',
+        q18: 'B',
+        q19: 'B',
+        q20: 'A'
+    };
+
+    function checkAnswers() {
+        for (let question in correctAnswers) {
+            const selected = document.querySelector(`input[name="${question}"]:checked`);
+            const resultDiv = document.getElementById(`result-${question}`);
+
+            if (selected) {
+                if (selected.value === correctAnswers[question]) {
+                    resultDiv.innerHTML = 'Đúng';
+                    resultDiv.className = 'result';
+                } else {
+                    resultDiv.innerHTML = 'Sai';
+                    resultDiv.className = 'result wrong';
+                }
+            } else {
+                resultDiv.innerHTML = '';
+            }
+        }
+    }
+</script>
+
+</body>
+</html>
