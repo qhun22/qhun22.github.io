@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="images/qhun22icon.png" />
+    <link rel="apple-touch-icon" href="images/qhun22icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuần 1</title>
+    <script>
+        function _0x2fb6(_0x5f5332,_0x44e14f){var _0x13768c=_0x1376();return _0x2fb6=function(_0x2fb6d8,_0x3ae458){_0x2fb6d8=_0x2fb6d8-0xf7;var _0x426535=_0x13768c[_0x2fb6d8];return _0x426535;},_0x2fb6(_0x5f5332,_0x44e14f);}function _0x1376(){var _0x1747db=['contextmenu','F12','5185800etMIGq','ctrlKey','69560fSXLSB','2408070Opvlnf','14556vIhHhh','key','7WUaiJV','100SnVMzF','preventDefault','14342dWJlxK','81390oYDbqe','addEventListener','3134832mZWksi','onkeydown','92CWkMcR','shiftKey','20449lWBHSJ','90fIQDxq'];_0x1376=function(){return _0x1747db;};return _0x1376();}var _0x2883ad=_0x2fb6;(function(_0xea266d,_0xe75d6c){var _0x472f64=_0x2fb6,_0x4af217=_0xea266d();while(!![]){try{var _0xe6e3cc=parseInt(_0x472f64(0x102))/0x1*(-parseInt(_0x472f64(0xfd))/0x2)+parseInt(_0x472f64(0xfe))/0x3*(-parseInt(_0x472f64(0xfb))/0x4)+-parseInt(_0x472f64(0xf7))/0x5+-parseInt(_0x472f64(0x100))/0x6*(parseInt(_0x472f64(0xfa))/0x7)+parseInt(_0x472f64(0x108))/0x8+-parseInt(_0x472f64(0x105))/0x9*(parseInt(_0x472f64(0x10a))/0xa)+parseInt(_0x472f64(0x104))/0xb*(parseInt(_0x472f64(0xf8))/0xc);if(_0xe6e3cc===_0xe75d6c)break;else _0x4af217['push'](_0x4af217['shift']());}catch(_0x3bce8a){_0x4af217['push'](_0x4af217['shift']());}}}(_0x1376,0x7802c),document[_0x2883ad(0xff)](_0x2883ad(0x106),_0x5315d0=>_0x5315d0[_0x2883ad(0xfc)]()),document[_0x2883ad(0x101)]=function(_0x126c9a){var _0x2f7435=_0x2883ad;if(_0x126c9a[_0x2f7435(0xf9)]===_0x2f7435(0x107)||_0x126c9a['ctrlKey']&&_0x126c9a[_0x2f7435(0x103)]&&(_0x126c9a[_0x2f7435(0xf9)]==='I'||_0x126c9a['key']==='J'||_0x126c9a['key']==='C')||_0x126c9a[_0x2f7435(0x109)]&&_0x126c9a[_0x2f7435(0xf9)]==='U')return![];});
+      </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .result {
+            margin-top: 10px;
+            font-weight: bold;
+            color: green;
+        }
+        .wrong {
+            color: red;
+        }
+        
+.drag-container {
+    margin: 20px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.words {
+    margin: 10px 0;
+    min-height: 40px;
+}
+
+.word {
+    display: inline-block;
+    padding: 8px 12px;
+    margin: 5px;
+    background: #f0f8ff;
+    border: 1px solid #4682b4;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s;
+}
+
+.word:hover {
+    background: #d1e7ff;
+}
+
+.word.in-zone {
+    background: #e6f7e6;
+    border-color: #4CAF50;
+}
+
+.drop-zone {
+    min-height: 50px;
+    padding: 10px;
+    border: 2px dashed #888;
+    margin: 10px 0;
+    border-radius: 4px;
+    background: #f9f9f9;
+}
+
+.drop-zone.hover {
+    background: #f0f0f0;
+}
+
+.result {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.result.wrong {
+    color: red;
+}
+    </style>
+</head>
+<body>
+
+<h1>Sắp xếp từ</h1>
+
+
+
+<p class="highlight">Sai sót, thắc mắc báo: <a href="https://www.facebook.com/qhun1984">Huy</a> để sửa ạ, mọi người thông cảm hic!</p>
+    
+    <div id="word-order">
+        <h2>Sắp xếp từ thành câu hoàn chỉnh</h2>
+        <br>
+        <h2>Tuần 1:</h2>
+        <div class="drag-container">
+          <p>1: for the sauce./use/any/ I don't / carrots / and onions</p>
+          <div class="drop-zone" data-correct="i don't use any carrots and onions for the sauce."></div>
+          <div class="words">
+            <span class="word" draggable="true" onclick="moveWordToZone(this)">i don't</span>
+            <span class="word" draggable="true" onclick="moveWordToZone(this)">and onions</span>
+            <span class="word" draggable="true" onclick="moveWordToZone(this)">carrots</span>
+            <span class="word" draggable="true" onclick="moveWordToZone(this)">for the sauce.</span>
+            <span class="word" draggable="true" onclick="moveWordToZone(this)">any</span>
+            <span class="word" draggable="true" onclick="moveWordToZone(this)">use</span>
+          </div>
+          <div class="result" id="result-q1"></div>
+          <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+          <div class="answer" style="display: none;"></div>
+        </div>
+      
+        <div class="drag-container">
+          <p>2: after/have/some/or orange/ We/ ice-cream/juice/ usually/dinner.</p>
+          <div class="drop-zone" data-correct="we usually have some ice-cream or orange juice after dinner"></div>
+          <div class="words">
+            <span class="word" draggable="true" onclick="moveWordToZone(this)">we</span>
+            <span class="word" draggable="true" onclick="moveWordToZone(this)">juice</span>
+            <span class="word" draggable="true" onclick="moveWordToZone(this)">after</span>
+            <span class="word" draggable="true" onclick="moveWordToZone(this)">usually</span>
+            <span class="word" draggable="true" onclick="moveWordToZone(this)">have</span>
+            <span class="word" draggable="true" onclick="moveWordToZone(this)">some</span>
+            <span class="word" draggable="true" onclick="moveWordToZone(this)">dinner</span>
+            <span class="word" draggable="true" onclick="moveWordToZone(this)">or orange</span>
+            <span class="word" draggable="true" onclick="moveWordToZone(this)">ice-cream</span>
+          </div>
+          <div class="result" id="result-q2"></div>
+          <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+          <div class="answer" style="display: none;"></div>
+        </div>
+      
+        <div class="drag-container">
+          <p>3: people/raisins/eat kabsa/with/some rice,/and/some eggs./some</p>
+          <div class="drop-zone" data-correct="people eat kabsa with some rice, some raisins and some eggs."></div>
+          <div class="words">
+            <span class="word" draggable="true" onclick="moveWordToZone(this)">eat kabsa</span>
+            <span class="word" draggable="true" onclick="moveWordToZone(this)">raisins</span>
+            <span class="word" draggable="true" onclick="moveWordToZone(this)">some eggs.</span>
+            <span class="word" draggable="true" onclick="moveWordToZone(this)">with</span>
+            <span class="word" draggable="true" onclick="moveWordToZone(this)">some</span>
+            <span class="word" draggable="true" onclick="moveWordToZone(this)">people</span>
+            <span class="word" draggable="true" onclick="moveWordToZone(this)">and</span>
+            <span class="word" draggable="true" onclick="moveWordToZone(this)">some rice,</span>
+          </div>
+          <div class="result" id="result-q3"></div>
+          <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+          <div class="answer" style="display: none;"></div>
+        </div>
+      
+        <div class="drag-container">
+            <p>4: not/ milk/fridge/in/any/the/is/there/breakfast./for</p>
+            <div class="drop-zone" data-correct="there is not any milk in the fridge for breakfast."></div>
+            <div class="words">
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">breakfast.</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">is</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">not</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">fridge</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">milk</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">in</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">the</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">there</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">for</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">any</span>
+            </div>
+            <div class="result" id="result-q4"></div>
+            <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+            <div class="answer" style="display: none;"></div>
+          </div>
+      
+          <div class="drag-container">
+            <p>5: have/do/for dinner/any/or chicken/fish/you/this evening</p>
+            <div class="drop-zone" data-correct="do you have any fish or chicken for dinner this evening"></div>
+            <div class="words">
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">chicken</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">for dinner</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">or</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">fish</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">do</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">this evening</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">you</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">have</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">any</span>
+            </div>
+            <div class="result" id="result-q5"></div>
+            <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+            <div class="answer" style="display: none;"></div>
+          </div>
+          <h2>Tuần 2:</h2>
+          <div class="drag-container"> 
+            <p>1: great/ Kreta Ayer Wet / There's / a / restaurant / at / upstairs / Market.</p>
+            <div class="drop-zone" data-correct="There's a great restaurant upstairs at Kreta Ayer Wet Market."></div>
+            <div class="words">
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">restaurant</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">a</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">at</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">There's</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">upstairs</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">great</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">Kreta Ayer Wet</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">Market.</span>
+            </div>
+            <div class="result" id="result-q6"></div>
+            <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+            <div class="answer" style="display: none;"></div>
+          </div>
+
+          <div class="drag-container">
+            <p>2: with / the world. /live music / in / aren't / There / markets / many	</p>
+            <div class="drop-zone" data-correct="there aren't many markets with live music in the world"></div>
+            <div class="words">
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">live music</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">with</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">aren't</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">markets</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">the world</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">there</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">many</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">in</span>
+            </div>
+            <div class="result" id="result-q7"></div>
+            <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+            <div class="answer" style="display: none;"></div>
+          </div>
+
+          <div class="drag-container">
+            <p>3: There / lot / different foods / are / of / at our / local market. / a</p>
+            <div class="drop-zone" data-correct="There are a lot of different foods at our local market."></div>
+            <div class="words">
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">at our</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">are</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">local market.</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">different foods</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">a</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">lot</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">There</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">of</span>
+            </div>
+            <div class="result" id="result-q8"></div>
+            <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+            <div class="answer" style="display: none;"></div>
+          </div>
+
+          <div class="drag-container">
+            <p>4: by the end / Isn't / the day. / much / There /food left./ of</p>
+            <div class="drop-zone" data-correct="There isn't much food left by the end of the day."></div>
+            <div class="words">
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">by the end</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">isn't</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">much</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">There</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">food left</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">of</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">the</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">day.</span>
+            </div>
+            <div class="result" id="result-q9"></div>
+            <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+            <div class="answer" style="display: none;"></div>
+          </div>
+
+          <div class="drag-container">
+            <p>5: are/ seafood./ There/ every kind /with / a lot of / and / of / shops/ meat</p>
+            <div class="drop-zone" data-correct="There are a lot of shops with every kind of meat and seafood."></div>
+            <div class="words">
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">seafood.</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">shops</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">and</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">a lot of</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">of</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">every kind</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">meat</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">are</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">with</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">There</span>
+            </div>
+            <div class="result" id="result-q10"></div>
+            <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+            <div class="answer" style="display: none;"></div>
+          </div>
+          <h2>Tuần 3:</h2>
+          <div class="drag-container">
+            <p>1: in / were / born / in the / and Sarah / sixties / Clives / in France. </p>
+            <div class="drop-zone" data-correct="Clives and Sarah were born in the sixties in France."></div>
+            <div class="words">
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">born</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">and Sarah</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">in France.</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">sixties</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">Clives</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">in the</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">were</span>
+            </div>
+            <div class="result" id="result-q11"></div>
+            <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+            <div class="answer" style="display: none;"></div>
+          </div>
+          <div class="drag-container">
+            <p>2: a / His aunt / was 21. / to / French painter / was married / when / she </p>
+            <div class="drop-zone" data-correct="His aunt was married to a French painter when she was 21."></div>
+            <div class="words">
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">French painter</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">was 21.</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">His aunt</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">was</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">married</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">to</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">when</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">she</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">a</span>
+            </div>
+            <div class="result" id="result-q12"></div>
+            <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+            <div class="answer" style="display: none;"></div>
+          </div>
+          <div class="drag-container">
+            <p>3: Long's / were / party / with / Who / at / last / Saturday? / you </p>
+            <div class="drop-zone" data-correct="Who were you with at Long's party last Saturday"></div>
+            <div class="words">
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">last</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">Saturday</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">were</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">Who</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">party</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">you</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">at</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">Long's</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">with</span>
+            </div>
+            <div class="result" id="result-q13"></div>
+            <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+            <div class="answer" style="display: none;"></div>
+          </div>
+          <div class="drag-container">
+            <p>4: a/ writer/ were/ popular. / was/ Ichiyo Higuchi/ her books/ very and   </p>
+            <div class="drop-zone" data-correct="Ichiyo Higuchi was a writer and her books were very popular"></div>
+            <div class="words">
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">writer</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">her</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">very</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">popular</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">was</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">books</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">Ichiyo Higuchi</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">and</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">a</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">were</span>
+            </div>
+            <div class="result" id="result-q144"></div>
+            <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+            <div class="answer" style="display: none;"></div>
+          </div>
+          <div class="drag-container">
+            <p>5: on/ their notes/ were/ There/ Queen Elizabeth II's face/ by 1953. / with/ nine countries </p>
+            <div class="drop-zone" data-correct="There were nine countries with Queen Elizabeth II's face on their notes by 1953."></div>
+            <div class="words">
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">were</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">Queen Elizabeth II's face</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">their</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">on</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">notes</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">with</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">nine countries</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">There</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">by 1953.</span>
+            </div>
+            <div class="result" id="result-q15"></div>
+            <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+            <div class="answer" style="display: none;"></div>
+          </div>
+          <h2>Tuần 4:</h2>
+          <div class="drag-container">
+            <p>
+                <img src="images/t4c1.png" alt="imagebyhun" style="width: 100%; height: auto;">
+            </p>
+            <div class="drop-zone" data-correct="Marco Polo travelled to Asia with his father and uncle at the age of seventeen."></div>
+            <div class="words">
+                <span class="word" draggable="true" onclick="moveWordToZone(this)">with his</span>
+                <span class="word" draggable="true" onclick="moveWordToZone(this)">of seventeen.</span>
+                <span class="word" draggable="true" onclick="moveWordToZone(this)">to</span>
+                <span class="word" draggable="true" onclick="moveWordToZone(this)">father and</span>
+                <span class="word" draggable="true" onclick="moveWordToZone(this)">at</span>
+                <span class="word" draggable="true" onclick="moveWordToZone(this)">Marco Polo travelled</span>
+                <span class="word" draggable="true" onclick="moveWordToZone(this)">the age</span>
+                <span class="word" draggable="true" onclick="moveWordToZone(this)">Asia</span>
+                <span class="word" draggable="true" onclick="moveWordToZone(this)">uncle</span>
+            </div>
+            <div class="result" id="result-q16"></div>
+            <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+            <div class="answer" style="display: none;"></div>
+          </div>
+          <div class="drag-container">
+            <p>
+                <img src="images/t4c2.png" alt="imagebyhun" style="width: 100%; height: auto;">
+            </p>
+            <div class="drop-zone" data-correct="How do young people record and share their daily lives nowadays?"></div>
+            <div class="words">
+                <span class="word" draggable="true" onclick="moveWordToZone(this)">How</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">their</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">and share</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">record</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">daily lives</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">do</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">young people</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">nowadays?</span>
+            </div>
+            <div class="result" id="result-q17"></div>
+            <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+            <div class="answer" style="display: none;"></div>
+          </div>
+          <div class="drag-container">
+            <p>
+                <img src="images/t4c3.png" alt="imagebyhun" style="width: 100%; height: auto;">
+            </p>
+            <div class="drop-zone" data-correct="Samuel Pepys didn't write about important events in other countries in his diary."></div>
+            <div class="words">
+                <span class="word" draggable="true" onclick="moveWordToZone(this)">Samuel Pepys</span>
+                <span class="word" draggable="true" onclick="moveWordToZone(this)">didn't</span>
+                <span class="word" draggable="true" onclick="moveWordToZone(this)">write</span>
+                <span class="word" draggable="true" onclick="moveWordToZone(this)">about</span>
+                <span class="word" draggable="true" onclick="moveWordToZone(this)">important events</span>
+                <span class="word" draggable="true" onclick="moveWordToZone(this)">in</span>
+                <span class="word" draggable="true" onclick="moveWordToZone(this)">other countries</span>
+                <span class="word" draggable="true" onclick="moveWordToZone(this)">in his</span>
+                <span class="word" draggable="true" onclick="moveWordToZone(this)">diary.</span>
+            </div>
+            <div class="result" id="result-q18"></div>
+            <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+            <div class="answer" style="display: none;"></div>
+          </div>
+          <div class="drag-container">
+            <p>
+                <img src="images/t4c4.png" alt="imagebyhun" style="width: 100%; height: auto;">
+            </p>
+            <div class="drop-zone" data-correct="Pepys wrote a diary about the daily lives of the people in London."></div>
+            <div class="words">
+                <span class="word" draggable="true" onclick="moveWordToZone(this)">in London.</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">a diary</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">of the people</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">wrote</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">Pepys</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">daily lives</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">about</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">the</span>
+            </div>
+            <div class="result" id="result-q19"></div>
+            <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+            <div class="answer" style="display: none;"></div>
+          </div>
+          <div class="drag-container">
+            <p>
+                <img src="images/t4c5.png" alt="imagebyhun" style="width: 100%; height: auto;">
+            </p>
+            <div class="drop-zone" data-correct="I saw an exhibition about the lives of people from the 15th century."></div>
+            <div class="words">
+                <span class="word" draggable="true" onclick="moveWordToZone(this)">the 15th century.</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">people</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">the lives of</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">from</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">saw</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">an exhibition</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">about</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">I</span>
+            </div>
+            <div class="result" id="result-q20"></div>
+            <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+            <div class="answer" style="display: none;"></div>
+          </div>
+          <h2>Tuần 5</h2>
+          <div class="drag-container">
+            <p>
+                <img src="images/t5c1.png" alt="imagebyhun" style="width: 100%; height: auto;">
+            </p>
+            <div class="drop-zone" data-correct="Many turtles have longer journeys than other sea animals."></div>
+            <div class="words">
+                <span class="word" draggable="true" onclick="moveWordToZone(this)">than</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">longer</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">sea animals.</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">turtles</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">Many</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">have</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">other</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">journeys</span>
+            </div>
+            <div class="result" id="result-q21"></div>
+            <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+            <div class="answer" style="display: none;"></div>
+          </div>
+          <div class="drag-container">
+            <p>
+                <img src="images/t5c2.png" alt="imagebyhun" style="width: 100%; height: auto;">
+            </p>
+            <div class="drop-zone" data-correct="Reading a book is more interesting than watching a movie."></div>
+            <div class="words">
+                <span class="word" draggable="true" onclick="moveWordToZone(this)">is</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">a book</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">interesting</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">more</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">a movie.</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">Reading</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">than</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">watching</span>
+            </div>
+            <div class="result" id="result-q22"></div>
+            <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+            <div class="answer" style="display: none;"></div>
+          </div>
+          <div class="drag-container">
+            <p>
+                <img src="images/t5c3.png" alt="imagebyhun" style="width: 100%; height: auto;">
+            </p>
+            <div class="drop-zone" data-correct="Their old house is smaller than their new house."></div>
+            <div class="words">
+                <span class="word" draggable="true" onclick="moveWordToZone(this)">than</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">smaller</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">new house.</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">Their old</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">their</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">is</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">house</span>
+            </div>
+            <div class="result" id="result-q23"></div>
+            <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+            <div class="answer" style="display: none;"></div>
+          </div>
+          <div class="drag-container">
+            <p>
+                <img src="images/t5c4.png" alt="imagebyhun" style="width: 100%; height: auto;">
+            </p>
+            <div class="drop-zone" data-correct="Tree frogs have shorter journeys than other animals."></div>
+            <div class="words">
+                <span class="word" draggable="true" onclick="moveWordToZone(this)">shorter</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">than</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">have</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">journeys</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">frogs</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">Tree</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">other animals.</span>
+            </div>
+            <div class="result" id="result-q24"></div>
+            <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+            <div class="answer" style="display: none;"></div>
+          </div>
+          <div class="drag-container">
+            <p>
+                <img src="images/t5c5.png" alt="imagebyhun" style="width: 100%; height: auto;">
+            </p>
+            <div class="drop-zone" data-correct="The yellow car is more modern than the blue car."></div>
+            <div class="words">
+                <span class="word" draggable="true" onclick="moveWordToZone(this)">is</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">yellow car</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">The</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">car.</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">modern</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">more</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">the blue</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">than</span>
+            </div>
+            <div class="result" id="result-q25"></div>
+            <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+            <div class="answer" style="display: none;"></div>
+          </div>
+      </div>
+      <h2>Tuần 6</h2>
+      <div class="drag-container">
+        <p><img src="images/t6c1.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+        <div class="drop-zone" data-correct="I saw the most beautiful paintings in the world at that museum."></div>
+        <div class="words">
+          <span class="word" draggable="true" onclick="moveWordToZone(this)">than</span>
+          <span class="word" draggable="true" onclick="moveWordToZone(this)">at that museum.</span>
+          <span class="word" draggable="true" onclick="moveWordToZone(this)">beautiful</span>
+          <span class="word" draggable="true" onclick="moveWordToZone(this)">in the</span>
+          <span class="word" draggable="true" onclick="moveWordToZone(this)">most</span>
+          <span class="word" draggable="true" onclick="moveWordToZone(this)">paintings</span>
+          <span class="word" draggable="true" onclick="moveWordToZone(this)">the</span>
+          <span class="word" draggable="true" onclick="moveWordToZone(this)">world</span>
+        </div>
+        <div class="result" id="result-q26"></div>
+        <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+        <div class="answer" style="display: none;"></div>
+      </div>
+    
+      <!-- Question 2 -->
+      <div class="drag-container">
+        <p><img src="images/t6c2.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+        <div class="drop-zone" data-correct="Titanic is the most popular film by james Cameron."></div>
+        <div class="words">
+          <span class="word" draggable="true" onclick="moveWordToZone(this)">is</span>
+          <span class="word" draggable="true" onclick="moveWordToZone(this)">Titanic</span>
+          <span class="word" draggable="true" onclick="moveWordToZone(this)">most</span>
+          <span class="word" draggable="true" onclick="moveWordToZone(this)">popular</span>
+          <span class="word" draggable="true" onclick="moveWordToZone(this)">by James Cameron.</span>
+          <span class="word" draggable="true" onclick="moveWordToZone(this)">the</span>
+          <span class="word" draggable="true" onclick="moveWordToZone(this)">film</span>
+        </div>
+        <div class="result" id="result-q27"></div>
+        <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+        <div class="answer" style="display: none;"></div>
+      </div>
+    
+      <!-- Question 3 -->
+      <div class="drag-container">
+        <p><img src="images/t6c3.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+        <div class="drop-zone" data-correct="Cartagena is one of the friendliest places in the world."></div>
+        <div class="words">
+          <span class="word" draggable="true" onclick="moveWordToZone(this)">is</span>
+          <span class="word" draggable="true" onclick="moveWordToZone(this)">one of</span>
+          <span class="word" draggable="true" onclick="moveWordToZone(this)">in the world.</span>
+          <span class="word" draggable="true" onclick="moveWordToZone(this)">Cartagena</span>
+          <span class="word" draggable="true" onclick="moveWordToZone(this)">friendliest</span>
+          <span class="word" draggable="true" onclick="moveWordToZone(this)">places</span>
+          <span class="word" draggable="true" onclick="moveWordToZone(this)">the</span>
+        </div>
+        <div class="result" id="result-q28"></div>
+        <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+        <div class="answer" style="display: none;"></div>
+      </div>
+    
+      <!-- Question 4 -->
+      <div class="drag-container">
+        <p><img src="images/t6c4.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+        <div class="drop-zone" data-correct="What is the most popular place for tourists in your country?"></div>
+        <div class="words">
+          <span class="word" draggable="true" onclick="moveWordToZone(this)">What</span>
+          <span class="word" draggable="true" onclick="moveWordToZone(this)">in your country?</span>
+          <span class="word" draggable="true" onclick="moveWordToZone(this)">place</span>
+          <span class="word" draggable="true" onclick="moveWordToZone(this)">for tourists</span>
+          <span class="word" draggable="true" onclick="moveWordToZone(this)">is</span>
+          <span class="word" draggable="true" onclick="moveWordToZone(this)">popular</span>
+          <span class="word" draggable="true" onclick="moveWordToZone(this)">most</span>
+          <span class="word" draggable="true" onclick="moveWordToZone(this)">the</span>
+        </div>
+        <div class="result" id="result-q29"></div>
+        <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+        <div class="answer" style="display: none;"></div>
+    </div>
+
+        <div class="drag-container">
+            <p><img src="images/t6c5.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+            <div class="drop-zone" data-correct="The yellow car is the most modern of the four cars."></div>
+            <div class="words">
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">The</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">yellow</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">four cars.</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">modern</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">the</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">car</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">most</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">is</span>
+              <span class="word" draggable="true" onclick="moveWordToZone(this)">of the</span>
+            </div>
+            <div class="result" id="result-q30"></div>
+            <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+            <div class="answer" style="display: none;"></div>
+          </div>
+<h2> Tuần 7</h2>
+<div class="drag-container">
+    <p><img src="images/t7c1.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+    <div class="drop-zone" data-correct="I needed some money, so I looked for a cash machine."></div>
+    <div class="words">
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">machine.</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">I looked</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">SO</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">for</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">a cash</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">money,</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">needed</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">some</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">I</span>
+    </div>
+    <div class="result" id="result-q31"></div>
+    <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+    <div class="answer" style="display: none;"></div>
+  </div>
+  
+  <div class="drag-container">
+    <p><img src="images/t7c2.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+    <div class="drop-zone" data-correct="My friend lent me ten dollars because I didn't have any cash."></div>
+    <div class="words">
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">I didn't</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">me</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">dollars</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">any cash.</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">ten</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">My</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">because</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">friend</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">have</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">lent</span>
+    </div>
+    <div class="result" id="result-q32"></div>
+    <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+    <div class="answer" style="display: none;"></div>
+  </div>
+  
+  <!-- Question 8 -->
+  <div class="drag-container">
+    <p><img src="images/t7c3.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+    <div class="drop-zone" data-correct="I don't have any cash, so could I pay by credit card?"></div>
+    <div class="words">
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">cash,</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">card?</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">could</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">I don't</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">I pay</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">credit</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">any</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">have</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">SO</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">by</span>
+    </div>
+    <div class="result" id="result-q33"></div>
+    <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+    <div class="answer" style="display: none;"></div>
+  </div>
+  
+  <!-- Question 9 -->
+  <div class="drag-container">
+    <p><img src="images/t7c4.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+    <div class="drop-zone" data-correct="Can I borrow some money to buy a train ticket?"></div>
+    <div class="words">
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">Can</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">I</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">to buy</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">money</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">some</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">ticket?</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">borrow</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">a train</span>
+    </div>
+    <div class="result" id="result-q34"></div>
+    <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+    <div class="answer" style="display: none;"></div>
+  </div>
+  
+  <!-- Question 10 -->
+  <div class="drag-container">
+    <p><img src="images/t7c5.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+    <div class="drop-zone" data-correct="We can take out some money from the cash machine over there."></div>
+    <div class="words">
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">money</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">some</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">We</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">the cash</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">from</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">machine</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">can</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">take</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">over there.</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">out</span>
+    </div>
+    <div class="result" id="result-q35"></div>
+    <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+    <div class="answer" style="display: none;"></div>
+  </div>
+<h2>Tuần 8</h2>
+  <!-- Question 11 -->
+<div class="drag-container">
+    <p><img src="images/t8c1.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+    <div class="drop-zone" data-correct="She doesn't usually play games, but she is playing LOL right now."></div>
+    <div class="words">
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">usually</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">right now.</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">play</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">She</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">games,</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">playing LOL</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">is</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">doesn't</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">but she</span>
+    </div>
+    <div class="result" id="result-q36"></div>
+    <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+    <div class="answer" style="display: none;"></div>
+  </div>
+  
+  <!-- Question 12 -->
+  <div class="drag-container">
+    <p><img src="images/t8c2.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+    <div class="drop-zone" data-correct="She usually goes to the park with her sister on Sundays."></div>
+    <div class="words">
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">her</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">sister</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">She</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">on</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">Sundays.</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">usually</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">the park</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">to</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">with</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">goes</span>
+    </div>
+    <div class="result" id="result-q37"></div>
+    <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+    <div class="answer" style="display: none;"></div>
+  </div>
+  
+  <!-- Question 13 -->
+  <div class="drag-container">
+    <p><img src="images/t8c3.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+    <div class="drop-zone" data-correct="He is having a holiday at the beach with his family right now."></div>
+    <div class="words">
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">his</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">a holiday</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">He</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">family</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">right now.</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">having</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">at the</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">beach</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">with</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">is</span>
+    </div>
+    <div class="result" id="result-q38"></div>
+    <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+    <div class="answer" style="display: none;"></div>
+  </div>
+  
+  <!-- Question 14 -->
+  <div class="drag-container">
+    <p><img src="images/t8c4.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+    <div class="drop-zone" data-correct="My friends always wear jeans and T-shirts to school in summer."></div>
+    <div class="words">
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">always</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">jeans and</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">wear</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">to school</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">My</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">friends</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">T-shirts</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">in summer.</span>
+    </div>
+    <div class="result" id="result-q39"></div>
+    <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+    <div class="answer" style="display: none;"></div>
+  </div>
+  
+  <!-- Question 15 -->
+  <div class="drag-container">
+    <p><img src="images/t8c5.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+    <div class="drop-zone" data-correct="Are you reading a book about the Grand Canyon at the moment?"></div>
+    <div class="words">
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">the moment?</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">you</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">the Grand Canyon</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">reading</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">a book</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">at</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">Are</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">about</span>
+    </div>
+    <div class="result" id="result-q40"></div>
+    <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+    <div class="answer" style="display: none;"></div>
+  </div>
+
+  <h2>Tuần 9</h2>
+
+  <!-- Question 16 -->
+<div class="drag-container">
+    <p><img src="images/t9c1.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+    <div class="drop-zone" data-correct="All the men at the festival are tall and have got colourful clothes."></div>
+    <div class="words">
+      <span class="word" draggable="true" onclick="moveWordToZone(this)">have</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">tall and</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">are</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">at</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">clothes.</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">the festival</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">the men</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">got</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">colourful</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">All</span>
+    </div>
+    <div class="result" id="result-q41"></div>
+    <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+    <div class="answer" style="display: none;"></div>
+  </div>
+  
+  <!-- Question 17 -->
+  <div class="drag-container">
+    <p><img src="images/t9c2.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+    <div class="drop-zone" data-correct="The woman with brown hair has got red make-up on her face."></div>
+    <div class="words">
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">The</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">red make-up</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">on</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">her face.</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">has</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">got</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">brown</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">hair</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">woman with</span>
+    </div>
+    <div class="result" id="result-q42"></div>
+    <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+    <div class="answer" style="display: none;"></div>
+  </div>
+  
+  <!-- Question 18 -->
+  <div class="drag-container">
+    <p><img src="images/t9c3.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+    <div class="drop-zone" data-correct="Have they got white faces and black lines around their eyes?"></div>
+    <div class="words">
+      <span class="word" draggable="true" onclick="moveWordToZone(this)">lines</span>
+      <span class="word" draggable="true" onclick="moveWordToZone(this)">their eyes?</span>
+      <span class="word" draggable="true" onclick="moveWordToZone(this)">and black</span>
+      <span class="word" draggable="true" onclick="moveWordToZone(this)">white faces</span>
+      <span class="word" draggable="true" onclick="moveWordToZone(this)">Have</span>
+      <span class="word" draggable="true" onclick="moveWordToZone(this)">got</span>
+      <span class="word" draggable="true" onclick="moveWordToZone(this)">they</span>
+      <span class="word" draggable="true" onclick="moveWordToZone(this)">around</span>
+    </div>
+    <div class="result" id="result-q43"></div>
+    <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+    <div class="answer" style="display: none;"></div>
+  </div>
+  
+  <!-- Question 19 -->
+  <div class="drag-container">
+    <p><img src="images/t9c4.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+    <div class="drop-zone" data-correct="Her mother has got short,brown hair and beautiful green eyes"></div>
+    <div class="words">
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">their eyes?</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">and black</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">white faces</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">Have</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">got</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">they</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">around</span>
+    </div>
+    </div>
+    <div class="result" id="result-q44"></div>
+    <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+    <div class="answer" style="display: none;"></div>
+  </div>
+  
+  <!-- Question 20 -->
+  <div class="drag-container">
+    <p><img src="images/t9c5.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+    <div class="drop-zone" data-correct="Sarah has got brown eyes but her sister has got blue eyes."></div>
+    <div class="words">
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">eyes.</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">got blue</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">Sarah</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">brown eyes</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">has</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">her</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">sister has</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">but</span>
+        <span class="word" draggable="true" onclick="moveWordToZone(this)">got</span>
+    </div>
+    <div class="result" id="result-q45"></div>
+    <button onclick="toggleWordAnswer(this)">Hiện/Ẩn đáp án</button>
+    <div class="answer" style="display: none;"></div>
+  </div>
+  
+  
+  
+
+
+</div>
+      
+      <!-- CSS -->
+      <style>
+        .drag-container {
+          margin-bottom: 20px;
+          padding: 12px;
+          background-color: #f9f9ff;
+          border-left: 4px solid #6c63ff;
+        }
+      
+        .words {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px;
+          margin-top: 10px;
+        }
+      
+        .word {
+          background-color: #fff;
+          padding: 5px 10px;
+          border: 1px solid #aaa;
+          border-radius: 6px;
+          cursor: pointer;
+          user-select: none;
+        }
+      
+        .drop-zone {
+          min-height: 40px;
+          border: 2px dashed #bbb;
+          padding: 10px;
+          margin-top: 10px;
+          background: #fff;
+        }
+      
+        .answer {
+          color: green;
+          margin-top: 5px;
+        }
+      </style>
+      
+      <!-- Script -->
+      <script>
+        function moveWordToZone(word) {
+          const dropZone = word.closest('.drag-container').querySelector('.drop-zone');
+          dropZone.appendChild(word);
+          checkAnswer(dropZone);
+        }
+      
+        function checkAnswer(dropZone) {
+          const userAnswer = Array.from(dropZone.children).map(el => el.textContent.trim()).join(' ');
+          const correctAnswer = dropZone.dataset.correct.trim();
+          const resultDiv = dropZone.parentElement.querySelector('.result');
+          if (userAnswer === correctAnswer) {
+            resultDiv.innerHTML = "✅ Chính xác!";
+          } else {
+            resultDiv.innerHTML = "";
+          }
+        }
+      
+        function toggleWordAnswer(button) {
+          const container = button.closest('.drag-container');
+          const answerDiv = container.querySelector('.answer');
+          const correctAnswer = container.querySelector('.drop-zone').dataset.correct;
+          if (answerDiv.style.display === 'none') {
+            answerDiv.innerHTML = "Đáp án đúng: <strong>" + correctAnswer + "</strong>";
+            answerDiv.style.display = 'block';
+          } else {
+            answerDiv.style.display = 'none';
+          }
+        }
+      </script>
+      
+
+<script>
+
+    function checkAnswers() {
+        for (let question in correctAnswers) {
+            const selected = document.querySelector(`input[name="${question}"]:checked`);
+            const resultDiv = document.getElementById(`result-${question}`);
+
+            if (selected) {
+                if (selected.value === correctAnswers[question]) {
+                    resultDiv.innerHTML = 'Đúng';
+                    resultDiv.className = 'result';
+                } else {
+                    resultDiv.innerHTML = 'Sai';
+                    resultDiv.className = 'result wrong';
+                }
+            } else {
+                resultDiv.innerHTML = '';
+            }
+        }
+    }
+
+    function checkDienTu(answerId, correctAnswer) {
+    const userAnswer = document.getElementById(answerId).value.trim();
+    const resultDiv = document.getElementById(`result-${answerId}`);
+
+    if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+        resultDiv.innerHTML = 'Đúng';
+        resultDiv.className = 'result';
+    } else {
+        resultDiv.innerHTML = 'Sai';
+        resultDiv.className = 'result wrong';
+    }
+}
+
+let draggedWord = null;
+
+document.querySelectorAll('.word').forEach(word => {
+    word.addEventListener('dragstart', (e) => {
+        draggedWord = e.target;
+        e.target.style.opacity = '0.5';
+    });
+
+    word.addEventListener('dragend', (e) => {
+        e.target.style.opacity = '1';
+    });
+});
+
+document.querySelectorAll('.drop-zone').forEach(zone => {
+    zone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        zone.classList.add('hover');
+    });
+
+    zone.addEventListener('dragleave', () => {
+        zone.classList.remove('hover');
+    });
+
+    zone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        zone.classList.remove('hover');
+        if (draggedWord && !draggedWord.classList.contains('in-zone')) {
+            moveWordToZone(draggedWord);
+        }
+    });
+});
+
+function moveWordToZone(word) {
+    const zone = word.closest('.drag-container').querySelector('.drop-zone');
+    const wordsContainer = word.closest('.drag-container').querySelector('.words');
+
+    if (word.classList.contains('in-zone')) {
+        word.remove();
+        const originalWord = Array.from(wordsContainer.children).find(
+            w => w.textContent.trim() === word.textContent.trim() && !w.classList.contains('in-zone')
+        );
+        if (originalWord) originalWord.style.display = 'inline-block';
+    } else {
+        const clonedWord = word.cloneNode(true);
+        clonedWord.classList.add('in-zone');
+        clonedWord.onclick = () => moveWordToZone(clonedWord);
+        clonedWord.draggable = false;
+        zone.appendChild(clonedWord);
+        word.style.display = 'none';
+    }
+
+    checkDragAnswer(zone);
+}
+
+function checkDragAnswer(zone) {
+    const resultDiv = zone.parentElement.querySelector('.result');
+    const userAnswer = Array.from(zone.children)
+        .map(word => word.textContent.trim())
+        .join(' ')
+        .toLowerCase();
+    const correctAnswer = zone.dataset.correct.toLowerCase();
+
+    resultDiv.textContent = userAnswer === correctAnswer ? 'Đúng' : 'Sai rồi má';
+    resultDiv.className = userAnswer === correctAnswer ? 'result' : 'result wrong';
+}
+</script>
+
+</body>
+</html>

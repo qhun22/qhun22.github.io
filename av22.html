@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="images/qhun22icon.png" />
+    <link rel="apple-touch-icon" href="images/qhun22icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuần 1</title>
+    <script>
+        function _0x2fb6(_0x5f5332,_0x44e14f){var _0x13768c=_0x1376();return _0x2fb6=function(_0x2fb6d8,_0x3ae458){_0x2fb6d8=_0x2fb6d8-0xf7;var _0x426535=_0x13768c[_0x2fb6d8];return _0x426535;},_0x2fb6(_0x5f5332,_0x44e14f);}function _0x1376(){var _0x1747db=['contextmenu','F12','5185800etMIGq','ctrlKey','69560fSXLSB','2408070Opvlnf','14556vIhHhh','key','7WUaiJV','100SnVMzF','preventDefault','14342dWJlxK','81390oYDbqe','addEventListener','3134832mZWksi','onkeydown','92CWkMcR','shiftKey','20449lWBHSJ','90fIQDxq'];_0x1376=function(){return _0x1747db;};return _0x1376();}var _0x2883ad=_0x2fb6;(function(_0xea266d,_0xe75d6c){var _0x472f64=_0x2fb6,_0x4af217=_0xea266d();while(!![]){try{var _0xe6e3cc=parseInt(_0x472f64(0x102))/0x1*(-parseInt(_0x472f64(0xfd))/0x2)+parseInt(_0x472f64(0xfe))/0x3*(-parseInt(_0x472f64(0xfb))/0x4)+-parseInt(_0x472f64(0xf7))/0x5+-parseInt(_0x472f64(0x100))/0x6*(parseInt(_0x472f64(0xfa))/0x7)+parseInt(_0x472f64(0x108))/0x8+-parseInt(_0x472f64(0x105))/0x9*(parseInt(_0x472f64(0x10a))/0xa)+parseInt(_0x472f64(0x104))/0xb*(parseInt(_0x472f64(0xf8))/0xc);if(_0xe6e3cc===_0xe75d6c)break;else _0x4af217['push'](_0x4af217['shift']());}catch(_0x3bce8a){_0x4af217['push'](_0x4af217['shift']());}}}(_0x1376,0x7802c),document[_0x2883ad(0xff)](_0x2883ad(0x106),_0x5315d0=>_0x5315d0[_0x2883ad(0xfc)]()),document[_0x2883ad(0x101)]=function(_0x126c9a){var _0x2f7435=_0x2883ad;if(_0x126c9a[_0x2f7435(0xf9)]===_0x2f7435(0x107)||_0x126c9a['ctrlKey']&&_0x126c9a[_0x2f7435(0x103)]&&(_0x126c9a[_0x2f7435(0xf9)]==='I'||_0x126c9a['key']==='J'||_0x126c9a['key']==='C')||_0x126c9a[_0x2f7435(0x109)]&&_0x126c9a[_0x2f7435(0xf9)]==='U')return![];});
+      </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .result {
+            margin-top: 10px;
+            font-weight: bold;
+            color: green;
+        }
+        .wrong {
+            color: red;
+        }
+        
+.drag-container {
+    margin: 20px 0;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.words {
+    margin: 10px 0;
+    min-height: 40px;
+}
+
+.word {
+    display: inline-block;
+    padding: 8px 12px;
+    margin: 5px;
+    background: #f0f8ff;
+    border: 1px solid #4682b4;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s;
+}
+
+.word:hover {
+    background: #d1e7ff;
+}
+
+.word.in-zone {
+    background: #e6f7e6;
+    border-color: #4CAF50;
+}
+
+.drop-zone {
+    min-height: 50px;
+    padding: 10px;
+    border: 2px dashed #888;
+    margin: 10px 0;
+    border-radius: 4px;
+    background: #f9f9f9;
+}
+
+.drop-zone.hover {
+    background: #f0f0f0;
+}
+
+.result {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.result.wrong {
+    color: red;
+}
+    </style>
+</head>
+<body>
+
+<h1>an may xin file AV2</h1>
+
+
+
+    <div id="dientu">
+        <h2>Viết đủ từ bên dưới sẽ tự đúng nhé, không biết đáp án có thể xem và ẩn bên dưới ! </h2>
+      
+
+      <div class="qhun">
+        <p><img src="images/q266.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+        <p>Mount Fansipan is ........... in Vietnam.</p>
+        <input type="text" id="q26" oninput="checkDienTu('q26', 'the highest mountain')">
+        <div class="result" id="result-q26"></div>
+        <button onclick="toggleAnswer('answer-q26')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q26" class="answer">Đáp án đúng: <strong>the highest mountain</strong></div>
+    </div>
+    <div class="qhun">
+        <p><img src="images/q277.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+        <p>The pink car is .................... of the three cars.</p>
+        <input type="text" id="q27" oninput="checkDienTu('q27', 'the most expensive')">
+        <div class="result" id="result-q27"></div>
+        <button onclick="toggleAnswer('answer-q27')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q27" class="answer">Đáp án đúng: <strong>the most expensive</strong></div>
+    </div>
+    
+    <div class="qhun">
+        <p>Read the information. Then complete the sentence with THREE WORDS.
+            This tree is 100 years old. It is older than other trees in my garden.
+            <br>This is ........... in my garden.</p>
+        <input type="text" id="q28" oninput="checkDienTu('q28', 'the oldest tree')">
+        <div class="result" id="result-q28"></div>
+        <button onclick="toggleAnswer('answer-q28')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q28" class="answer">Đáp án đúng: <strong>the oldest tree</strong></div>
+    </div>
+    
+    <div class="qhun">
+        <p><img src="images/q299.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+        <p>Minh ........... of the three boys.</p>
+        <input type="text" id="q29" oninput="checkDienTu('q29', 'is the tallest')">
+        <div class="result" id="result-q29"></div>
+        <button onclick="toggleAnswer('answer-q29')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q29" class="answer">Đáp án đúng: <strong>is the tallest</strong></div>
+    </div>
+    
+    <div class="qhun">
+        <p><img src="images/q300.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+        <p>A cheetah.............. of the three animals.</p>
+        <input type="text" id="q30" oninput="checkDienTu('q30', 'is the fastest')">
+        <div class="result" id="result-q30"></div>
+        <button onclick="toggleAnswer('answer-q30')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q30" class="answer">Đáp án đúng: <strong>is the fastest</strong></div>
+    </div>
+
+    <div class="qhun">
+        <p><img src="images/q310.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+        <p>He usually .......... his friends at weekends.</p>
+        <input type="text" id="q31" oninput="checkDienTu('q31', 'plays basketball with')">
+        <div class="result" id="result-q31"></div>
+        <button onclick="toggleAnswer('answer-q31')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q31" class="answer">Đáp án đúng: <strong>plays basketball with</strong></div>
+    </div>
+    
+    <div class="qhun">
+        <p><img src="images/q320.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+        <p>She ........... the moment. She is cleaning in the kitchen.</p>
+        <input type="text" id="q32" oninput="checkDienTu('q32', 'isn’t cooking at')">
+        <div class="result" id="result-q32"></div>
+        <button onclick="toggleAnswer('answer-q32')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q32" class="answer">Đáp án đúng: <strong>isn’t cooking at</strong></div>
+    </div>
+    
+    <div class="qhun">
+        <p><img src="images/q330.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+        <p>My friends like playing badminton, but they..........football.</p>
+        <input type="text" id="q33" oninput="checkDienTu('q33', 'don’t like playing')">
+        <div class="result" id="result-q33"></div>
+        <button onclick="toggleAnswer('answer-q33')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q33" class="answer">Đáp án đúng: <strong>don’t like playing</strong></div>
+    </div>
+    
+    <div class="qhun">
+        <p><img src="images/q340.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+        <p>.............. their holiday at the lake with their cousins right now.</p>
+        <input type="text" id="q34" oninput="checkDienTu('q34', 'They are enjoying')">
+        <div class="result" id="result-q34"></div>
+        <button onclick="toggleAnswer('answer-q34')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q34" class="answer">Đáp án đúng: <strong>They are enjoying</strong></div>
+    </div>
+    
+    <div class="qhun">
+        <p><img src="images/q350.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+        <p>............. an essay about the environment right now?</p>
+        <input type="text" id="q35" oninput="checkDienTu('q35', 'Are you writing')">
+        <div class="result" id="result-q35"></div>
+        <button onclick="toggleAnswer('answer-q35')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q35" class="answer">Đáp án đúng: <strong>Are you writing</strong></div>
+    </div>
+
+    <div class="qhun">
+        <p><img src="images/q360.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+        <p>I forgot to bring cash, ........ to pay with my credit card.</p>
+        <input type="text" id="q36" oninput="checkDienTu('q36', 'so I had')">
+        <div class="result" id="result-q36"></div>
+        <button onclick="toggleAnswer('answer-q36')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q36" class="answer">Đáp án đúng: <strong>so I had</strong></div>
+    </div>
+    
+    <div class="qhun">
+        <p><img src="images/q370.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+        <p>They borrowed money from the bank ........to buy a new car.</p>
+        <input type="text" id="q37" oninput="checkDienTu('q37', 'because they needed')">
+        <div class="result" id="result-q37"></div>
+        <button onclick="toggleAnswer('answer-q37')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q37" class="answer">Đáp án đúng: <strong>because they needed</strong></div>
+    </div>
+    
+    <div class="qhun">
+        <p><img src="images/q380.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+        <p>My brother has some extra money, ......me a little when I need it.</p>
+        <input type="text" id="q38" oninput="checkDienTu('q38', 'so he lends')">
+        <div class="result" id="result-q38"></div>
+        <button onclick="toggleAnswer('answer-q38')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q38" class="answer">Đáp án đúng: <strong>so he lends</strong></div>
+    </div>
+
+    <div class="qhun">
+        <p><img src="images/q390.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+        <p>My sister.........blonde hair.</p>
+        <input type="text" id="q39" oninput="checkDienTu('q39', 'has got long')">
+        <div class="result" id="result-q39"></div>
+        <button onclick="toggleAnswer('answer-q39')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q39" class="answer">Đáp án đúng: <strong>has got long</strong></div>
+    </div>
+    
+    <div class="qhun">
+        <p><img src="images/q400.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+        <p>The man has ..........beard. It covers his mouth.</p>
+        <input type="text" id="q40" oninput="checkDienTu('q40', 'got a thick')">
+        <div class="result" id="result-q40"></div>
+        <button onclick="toggleAnswer('answer-q40')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q40" class="answer">Đáp án đúng: <strong>got a thick</strong></div>
+    </div>
+    
+    <div class="qhun">
+        <p><img src="images/q410.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+        <p>Question 14: Thai Nguyen has....of beautiful tea hills.</p>
+        <input type="text" id="q41" oninput="checkDienTu('q41', 'got a lot')">
+        <div class="result" id="result-q41"></div>
+        <button onclick="toggleAnswer('answer-q41')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q41" class="answer">Đáp án đúng: <strong>got a lot</strong></div>
+    </div>
+    
+    <div class="qhun">
+        <p><img src="images/q420.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+        <p>Liam has......They are Gina and Rachel.</p>
+        <input type="text" id="q42" oninput="checkDienTu('q42', 'got two sisters')">
+        <div class="result" id="result-q42"></div>
+        <button onclick="toggleAnswer('answer-q42')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q42" class="answer">Đáp án đúng: <strong>got two sisters</strong></div>
+    </div>
+    
+    <div class="qhun">
+        <p><img src="images/q430.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+        <p>They have........... around their eyes.</p>
+        <input type="text" id="q43" oninput="checkDienTu('q43', 'got black lines')">
+        <div class="result" id="result-q43"></div>
+        <button onclick="toggleAnswer('answer-q43')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q43" class="answer">Đáp án đúng: <strong>got black lines</strong></div>
+    </div>
+
+    <div class="qhun">
+        <p><img src="images/q440.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+        <p>Question 11: This house......that house.</p>
+        <input type="text" id="q44" oninput="checkDienTu('q44', 'is bigger than')">
+        <div class="result" id="result-q44"></div>
+        <button onclick="toggleAnswer('answer-q44')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q44" class="answer">Đáp án đúng: <strong>is bigger than</strong></div>
+    </div>
+    
+    <div class="qhun">
+        <p>A Porche is.......................Mini.</p>
+        <p><img src="images/q450.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+        <input type="text" id="q45" oninput="checkDienTu('q45', 'faster than a')">
+        <div class="result" id="result-q45"></div>
+        <button onclick="toggleAnswer('answer-q45')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q45" class="answer">Đáp án đúng: <strong>faster than a</strong></div>
+    </div>
+    
+    <div class="qhun">
+        <p>Mount Everest is 8,848 meters high. Mount God-Austen is 8,611 meters high<br>Mount Everest is........Godwin-Austen.</p>
+        <input type="text" id="q46" oninput="checkDienTu('q46', 'higher than mount')">
+        <div class="result" id="result-q46"></div>
+        <button onclick="toggleAnswer('answer-q46')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q46" class="answer">Đáp án đúng: <strong>higher than mount</strong></div>
+    </div>
+    
+    <div class="qhun">
+        <p>Read the information. Then complete the comparative sentences with three words.
+            London has a population of 8.6 million. Madrid has a population of 3.1 million.
+            <br>The population of London....that of Madrid.vv</p>
+        <input type="text" id="q47" oninput="checkDienTu('q47', 'is bigger than')">
+        <div class="result" id="result-q47"></div>
+        <button onclick="toggleAnswer('answer-q47')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q47" class="answer">Đáp án đúng: <strong>is bigger than</strong></div>
+    </div>
+    
+    <div class="qhun">
+        <p><img src="images/q480.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+        <p>I ................ first art school when I was five.</p>
+        <input type="text" id="q48" oninput="checkDienTu('q48', 'went to my')">
+        <div class="result" id="result-q48"></div>
+        <button onclick="toggleAnswer('answer-q48')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q48" class="answer">Đáp án đúng: <strong>went to my</strong></div>
+    </div>
+    
+    <div class="qhun">
+        <p>Question 11: Yandu Bista....a cave</p>
+        <p><img src="images/q490.png" alt="imagebyhun" style="width: 100%; height: auto;"></p>
+        <input type="text" id="q49" oninput="checkDienTu('q49', 'was born in')">
+        <div class="result" id="result-q49"></div>
+        <button onclick="toggleAnswer('answer-q49')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q49" class="answer">Đáp án đúng: <strong>was born in</strong></div>
+    </div>
+    
+    <div class="qhun">
+        <p>Complete the sentences with THREE WORDS to make them correct and meaningful.
+            Use the given prompts to guide your answers.
+            I grow/big city/ my brother and sister
+            <br><br>I ..... a big city with my brother and sister</p>
+        <input type="text" id="q50" oninput="checkDienTu('q50', 'grew up in')">
+        <div class="result" id="result-q50"></div>
+        <button onclick="toggleAnswer('answer-q50')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q50" class="answer">Đáp án đúng: <strong>grew up in</strong></div>
+    </div>
+    
+    <div class="qhun">
+        <p>Complete the sentences with THREE WORDS to make them correct and meaningful. Use the given prompts to guide your answers.
+            1/ not write/ any emails/friends/because/1/busy/last week.
+            <br><br>I......emails to my friends because I was busy last week.</p>
+        <input type="text" id="q51" oninput="checkDienTu('q51', 'didn\'t write any')">
+        <div class="result" id="result-q51"></div>
+        <button onclick="toggleAnswer('answer-q51')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q51" class="answer">Đáp án đúng: <strong>didn't write any</strong></div>
+    </div>
+
+    <div class="qhun">
+        <p>Complete the sentences with THREE WORDS to make them correct and meaningful.   Use the given prompts to guide your answers. #
+            Maria's paintings/famous/Singapore/before/she/work/ France.
+            <br><br>Maria's paintings....Singapore before she worked in France.</p>
+        <input type="text" id="q52" oninput="checkDienTu('q52', 'were famous in')">
+        <div class="result" id="result-q52"></div>
+        <button onclick="toggleAnswer('answer-q52')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q52" class="answer">Đáp án đúng: <strong>were famous in</strong></div>
+    </div>
+    
+    <div class="qhun">
+        <p>Complete the sentences with THREE WORDS to make them correct and meaningful.   Use the given prompts to guide your answers. #
+            Tom/ be/ Paris/ his family/ 1980s?
+      <br><br>....Paris with his family in the 1980s?</p>
+        <input type="text" id="q53" oninput="checkDienTu('q53', 'Was tom in')">
+        <div class="result" id="result-q53"></div>
+        <button onclick="toggleAnswer('answer-q53')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q53" class="answer">Đáp án đúng: <strong>Was tom in</strong></div>
+    </div>
+    
+    <div class="qhun">
+        <p>Complete the sentences with THREE WORDS to make them correct and meaningful. Use the given prompts to guide your answers.
+            Their father/born/Rome/but/he/not/Italian.
+      <br><br>Their father was born in Rome,.........Italian.</p>
+        <input type="text" id="q54" oninput="checkDienTu('q54', 'but he wasn\'t')">
+        <div class="result" id="result-q54"></div>
+        <button onclick="toggleAnswer('answer-q54')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q54" class="answer">Đáp án đúng: <strong>but he wasn't</strong></div>
+    </div>
+    
+    <div class="qhun">
+        <p>Complete the sentences with THREE WORDS to make them correct and meaningful. Use the given prompts to guide your answers.  #
+            My mother/ not born/ big city.
+      <br><br>My mother ..... a big city.</p>
+        <input type="text" id="q55" oninput="checkDienTu('q55', 'wasn\'t born in')">
+        <div class="result" id="result-q55"></div>
+        <button onclick="toggleAnswer('answer-q55')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q55" class="answer">Đáp án đúng: <strong>wasn't born in</strong></div>
+    </div>
+    
+    <div class="qhun">
+        <p>Complete the sentences with THREE WORDS to make them correct and meaningful. Use the given prompts to guide your answers.  
+            My mum and dad/ marry/ when/ they/ be/ Japan.
+      <br><br>My mum and dad got married....in Japan.</p>
+        <input type="text" id="q56" oninput="checkDienTu('q56', 'When they were')">
+        <div class="result" id="result-q56"></div>
+        <button onclick="toggleAnswer('answer-q56')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q56" class="answer">Đáp án đúng: <strong>When they were</strong></div>
+    </div>
+    
+    <div class="qhun">
+        <p>Complete the sentence with THREE WORDS so that it has the same meaning as the given one. 
+            Do you buy many oranges for the children?
+            <br><br>Do you buy a lot....the children?</p>
+        <input type="text" id="q57" oninput="checkDienTu('q57', 'of oranges for')">
+        <div class="result" id="result-q57"></div>
+        <button onclick="toggleAnswer('answer-q57')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q57" class="answer">Đáp án đúng: <strong>of oranges for</strong></div>
+    </div>
+    
+    <div class="qhun">
+        <p>Complete the sentence with THREE WORDS so that it has the same meaning as the given one. 
+            There aren't a lot of local markets in my region.
+            <br><br>There aren't .....in my region</p>
+        <input type="text" id="q58" oninput="checkDienTu('q58', 'many local markets')">
+        <div class="result" id="result-q58"></div>
+        <button onclick="toggleAnswer('answer-q58')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q58" class="answer">Đáp án đúng: <strong>many local markets</strong></div>
+    </div>
+    
+    <div class="qhun">
+        <p>Complete the sentence with THREE WORDS so that it has the same meaning as the given one. <br><br>There isn't .. .the fridge.</p>
+        <input type="text" id="q59" oninput="checkDienTu('q59', 'much milk in')">
+        <div class="result" id="result-q59"></div>
+        <button onclick="toggleAnswer('answer-q59')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q59" class="answer">Đáp án đúng: <strong>much milk in</strong></div>
+    </div>
+    
+    <div class="qhun">
+        <p>Complete the sentence with THREE WORDS so that it has the same meaning as the given one.<br><br>I don't eat a.....and milk for breakfast.</p>
+        <input type="text" id="q60" oninput="checkDienTu('q60', 'lot of bread')">
+        <div class="result" id="result-q60"></div>
+        <button onclick="toggleAnswer('answer-q60')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q60" class="answer">Đáp án đúng: <strong>lot of bread</strong></div>
+    </div>
+    
+    <div class="qhun">
+        <p>Complete the sentence with THREE WORDS so that it has the same meaning as the given one.<br><br>She doesn't put........her food.</p>
+        <input type="text" id="q61" oninput="checkDienTu('q61', 'much salt on')">
+        <div class="result" id="result-q61"></div>
+        <button onclick="toggleAnswer('answer-q61')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q61" class="answer">Đáp án đúng: <strong>much salt on</strong></div>
+    </div>
+
+    <div class="qhun">
+        <p>Complete the sentences with THREE WORDS to make them correct and meaningful. Use the given prompts to guide your answers.
+            I think/ there/ rice/ the cupboard.
+            <br><br>I think there is …….. the cupboard.</p>
+        <input type="text" id="q62" oninput="checkDienTu('q62', 'some rice in')">
+        <div class="result" id="result-q62"></div>
+        <button onclick="toggleAnswer('answer-q62')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q62" class="answer">Đáp án đúng: <strong>some rice in</strong></div>
+    </div>
+    
+    <div class="qhun">
+        <p>I/not/use/carrot/the sauce.<br><br>I don’t ……… in the sauce.</p>
+        <input type="text" id="q63" oninput="checkDienTu('q63', 'use a carrot')">
+        <div class="result" id="result-q63"></div>
+        <button onclick="toggleAnswer('answer-q63')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q63" class="answer">Đáp án đúng: <strong>use a carrot</strong></div>
+    </div>
+    
+    <div class="qhun">
+        <p>I/have/glass/orange juice, please?<br><br>Can …… glass of orange juice, please?</p>
+        <input type="text" id="q64" oninput="checkDienTu('q64', 'I have a')">
+        <div class="result" id="result-q64"></div>
+        <button onclick="toggleAnswer('answer-q64')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q64" class="answer">Đáp án đúng: <strong>I have a</strong></div>
+    </div>
+    
+    <div class="qhun">
+        <p>We / want / rice / vegetables  / lunch.<br><br>We..........and vegetables for lunch.</p>
+        <input type="text" id="q65" oninput="checkDienTu('q65', 'want some rice')">
+        <div class="result" id="result-q65"></div>
+        <button onclick="toggleAnswer('answer-q65')">Hiện/Ẩn đáp án</button>
+        <div id="answer-q65" class="answer">Đáp án đúng: <strong>want some rice</strong></div>
+    </div>
+      
+      <style>
+        .qhun {
+          margin-bottom: 20px;
+          padding: 10px;
+          border-left: 4px solid #6c63ff;
+          background-color: #f9f9ff;
+        }
+      
+        .answer {
+          display: none;
+          color: green;
+          margin-top: 5px;
+        }
+      
+        button {
+          margin-top: 5px;
+        }
+      </style>
+      
+      <script>
+        function toggleAnswer(id) {
+          const answerDiv = document.getElementById(id);
+          answerDiv.style.display = (answerDiv.style.display === 'none') ? 'block' : 'none';
+        }
+      </script>
+
+<style>
+    .highlight {
+        font-weight: bold;
+        color: #ff5733; 
+    }
+
+    .highlight a {
+        text-decoration: underline;
+        color: #007bff; 
+        font-weight: bold;
+    }
+
+    .highlight a:hover {
+        color: #0056b3; 
+    }
+</style>
+
+<p class="highlight">Sai sót, thắc mắc báo: <a href="https://www.facebook.com/qhun1984">Huy</a> để sửa ạ, mọi người thông cảm hic!</p>
+        
+      <!-- CSS -->
+      <style>
+        .drag-container {
+          margin-bottom: 20px;
+          padding: 12px;
+          background-color: #f9f9ff;
+          border-left: 4px solid #6c63ff;
+        }
+      
+        .words {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 6px;
+          margin-top: 10px;
+        }
+      
+        .word {
+          background-color: #fff;
+          padding: 5px 10px;
+          border: 1px solid #aaa;
+          border-radius: 6px;
+          cursor: pointer;
+          user-select: none;
+        }
+      
+        .drop-zone {
+          min-height: 40px;
+          border: 2px dashed #bbb;
+          padding: 10px;
+          margin-top: 10px;
+          background: #fff;
+        }
+      
+        .answer {
+          color: green;
+          margin-top: 5px;
+        }
+      </style>
+      
+      
+      <script>
+        function moveWordToZone(word) {
+          const dropZone = word.closest('.drag-container').querySelector('.drop-zone');
+          dropZone.appendChild(word);
+          checkAnswer(dropZone);
+        }
+      
+        function checkAnswer(dropZone) {
+          const userAnswer = Array.from(dropZone.children).map(el => el.textContent.trim()).join(' ');
+          const correctAnswer = dropZone.dataset.correct.trim();
+          const resultDiv = dropZone.parentElement.querySelector('.result');
+          if (userAnswer === correctAnswer) {
+            resultDiv.innerHTML = "✅ Chính xác!";
+          } else {
+            resultDiv.innerHTML = "";
+          }
+        }
+      
+        function toggleWordAnswer(button) {
+          const container = button.closest('.drag-container');
+          const answerDiv = container.querySelector('.answer');
+          const correctAnswer = container.querySelector('.drop-zone').dataset.correct;
+          if (answerDiv.style.display === 'none') {
+            answerDiv.innerHTML = "Đáp án đúng: <strong>" + correctAnswer + "</strong>";
+            answerDiv.style.display = 'block';
+          } else {
+            answerDiv.style.display = 'none';
+          }
+        }
+      </script>
+      
+
+<script>
+    const correctAnswers = {
+        q26: 'the highest mountain',
+q27: 'the most expensive',
+q28: 'the oldest tree',
+q29: 'is the tallest',
+q30: 'is the fastest',
+q31: 'plays basketball with',
+q32: 'isn’t cooking at',
+q33: 'don’t like playing',
+q34: 'They are enjoying',
+q35: 'Are you writing',
+q36: 'so I had',
+q37: 'because they needed',
+q38: 'so he lends',
+q39: 'has got long',
+q40: 'got a thick',
+q41: 'got a lot',
+q42: 'got two sisters',
+q43: 'got black lines',
+q44: 'is bigger than',
+q45: 'faster than a',
+q46: 'higher than mount',
+q47: 'is bigger than',
+q48: 'went to my',
+q49: 'was born in',
+q50: 'grew up in',
+q51: 'didn\'t write any',
+q52: 'were famous in',
+q53: 'Was tom in',
+q54: 'but he wasn’t',
+q55: 'wasn’t born in',
+q56: 'When they were',
+q57: 'of oranges for',
+q58: 'many local markets',
+q59: 'much milk in',
+q60: 'lot of bread',
+q61: 'much salt on',
+q62: 'some rice in',
+q63: 'use a carrot',
+q64: 'I have a',
+q65: 'want some rice',
+
+    };
+
+    function checkAnswers() {
+        for (let question in correctAnswers) {
+            const selected = document.querySelector(`input[name="${question}"]:checked`);
+            const resultDiv = document.getElementById(`result-${question}`);
+
+            if (selected) {
+                if (selected.value === correctAnswers[question]) {
+                    resultDiv.innerHTML = 'Đúng';
+                    resultDiv.className = 'result';
+                } else {
+                    resultDiv.innerHTML = 'Sai';
+                    resultDiv.className = 'result wrong';
+                }
+            } else {
+                resultDiv.innerHTML = '';
+            }
+        }
+    }
+
+    function checkDienTu(answerId, correctAnswer) {
+    const userAnswer = document.getElementById(answerId).value.trim();
+    const resultDiv = document.getElementById(`result-${answerId}`);
+
+    if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+        resultDiv.innerHTML = 'Đúng';
+        resultDiv.className = 'result';
+    } else {
+        resultDiv.innerHTML = 'Sai';
+        resultDiv.className = 'result wrong';
+    }
+}
+
+let draggedWord = null;
+
+document.querySelectorAll('.word').forEach(word => {
+    word.addEventListener('dragstart', (e) => {
+        draggedWord = e.target;
+        e.target.style.opacity = '0.5';
+    });
+
+    word.addEventListener('dragend', (e) => {
+        e.target.style.opacity = '1';
+    });
+});
+
+document.querySelectorAll('.drop-zone').forEach(zone => {
+    zone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        zone.classList.add('hover');
+    });
+
+    zone.addEventListener('dragleave', () => {
+        zone.classList.remove('hover');
+    });
+
+    zone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        zone.classList.remove('hover');
+        if (draggedWord && !draggedWord.classList.contains('in-zone')) {
+            moveWordToZone(draggedWord);
+        }
+    });
+});
+
+function moveWordToZone(word) {
+    const zone = word.closest('.drag-container').querySelector('.drop-zone');
+    const wordsContainer = word.closest('.drag-container').querySelector('.words');
+
+    if (word.classList.contains('in-zone')) {
+        word.remove();
+        const originalWord = Array.from(wordsContainer.children).find(
+            w => w.textContent.trim() === word.textContent.trim() && !w.classList.contains('in-zone')
+        );
+        if (originalWord) originalWord.style.display = 'inline-block';
+    } else {
+        const clonedWord = word.cloneNode(true);
+        clonedWord.classList.add('in-zone');
+        clonedWord.onclick = () => moveWordToZone(clonedWord);
+        clonedWord.draggable = false;
+        zone.appendChild(clonedWord);
+        word.style.display = 'none';
+    }
+
+    checkDragAnswer(zone);
+}
+
+function checkDragAnswer(zone) {
+    const resultDiv = zone.parentElement.querySelector('.result');
+    const userAnswer = Array.from(zone.children)
+        .map(word => word.textContent.trim())
+        .join(' ')
+        .toLowerCase();
+    const correctAnswer = zone.dataset.correct.toLowerCase();
+
+    resultDiv.textContent = userAnswer === correctAnswer ? 'Đúng' : 'Sai rồi má';
+    resultDiv.className = userAnswer === correctAnswer ? 'result' : 'result wrong';
+}
+</script>
+
+</body>
+</html>
