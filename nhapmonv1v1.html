@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ig: qhun22</title>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Quicksand', sans-serif;
+        }
+    
+        .quiz-container {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px 25px;
+            max-width: 700px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease;
+        }
+    
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+    
+        .question-container {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+    
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: #222;
+        }
+    
+        .answers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    
+        .answer-btn {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+        
+        .answer:hover {
+            background-color: #ffe6f0;
+            transform: scale(0.5);
+        } 
+        .answer-btn:hover {
+            background-color: #f1f1f1;
+            border-color: #aaa;
+        }
+    
+        .answer-btn.selected {
+            background-color: #ffd966;
+            border-color: #f1c40f;
+            font-weight: bold;
+        }
+    
+        .answer-btn.correct {
+            background-color: #b6e9b1;
+            border-color: #2ecc71;
+            color: #2c3e50;
+        }
+    
+        .answer-btn.incorrect {
+            background-color: #f9b3b3;
+            border-color: #e74c3c;
+            color: #2c3e50;
+        }
+    
+        .submit-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    
+        .submit-btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+    
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+    
+        .result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+    
+        .reset-btn {
+            margin-top: 15px;
+            background-color: #27ae60;
+        }
+    
+        .reset-btn:hover {
+            background-color: #1e8449;
+        }
+        .quiz-container {
+            margin-top: 60px;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        @media (max-width: 600px) {
+            .quiz-container {
+                padding: 15px 20px;
+            }
+    
+            h1 {
+                font-size: 1.5rem;
+            }
+    
+            .answer-btn {
+                font-size: 0.95rem;
+            }
+    
+            .submit-btn {
+                width: 100%;
+            }
+    
+            .result {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>NHAP MON TUAN 1</h1>
+       
+        <div id="questions"></div>
+        <div class="submit-container">
+            <button class="submit-btn">Nộp Bài</button>
+            <div class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+        {
+    question: "Khái niệm 'phần cứng máy tính' được định nghĩa như thế nào?",
+    answers: [
+        { text: "Tập hợp các giao thức mạng và kết nối Internet.", correct: false },
+        { text: "Tập hợp các dữ liệu và thông tin lưu trữ trong máy tính.", correct: false },
+        { text: "Tập hợp các thành phần vật lý tạo nên một hệ thống máy tính.", correct: true },
+        { text: "Tập hợp các phần mềm và ứng dụng chạy trên máy tính.", correct: false }
+    ]
+},
+{
+    question: "Phân loại phần mềm theo lĩnh vực ứng dụng gồm những loại nào sau đây?",
+    answers: [
+        { text: "Chương trình, sản phẩm, hệ thống, Phần mềm hệ điều hành, phần mềm nhúng.", correct: false },
+        { text: "Phần mềm hệ thống, phần mềm nghiệp vụ, phần mềm thời gian thực, phần mềm khoa học kỹ thuật, phần mềm nhúng.", correct: true },
+        { text: "Phần mềm hệ điều hành, chương trình, phần mềm nhúng, phần mềm khoa học kỹ thuật.", correct: false },
+        { text: "Phần mềm hệ thống, phần mềm thời gian thực, Phần mềm hệ điều hành, chương trình, sản phẩm, phần mềm khoa học kỹ thuật.", correct: false }
+    ]
+},
+{
+    question: "Khẳng định nào sau đây là đúng?",
+    answers: [
+        { text: "Phần mềm thời gian thực là phần mềm dùng các thuật toán phức tạp (vật lý, mô phỏng) và có năng lực tính toán cao.", correct: false },
+        { text: "Phần mềm thời gian thực là phần mềm phục vụ cho các chương trình khác, tương tác trực tiếp với phần cứng máy tính và nó chỉ được thực thi khi thiết bị chứa nó khởi động.", correct: false },
+        { text: "Phần mềm thời gian thực là phần mềm nhằm thu thập, xử lý (phân tích) các dữ kiện thế giới, kiểm soát, điều khiển và phối hợp các dữ kiện này.", correct: true },
+        { text: "Phần mềm thời gian thực là phần mềm thường sử dụng các thuật toán phi số (logic) như suy luận, tìm kiếm, nhận dạng, dự đoán.", correct: false }
+    ]
+},
+{
+    question: "Những tiêu chí nào sau đây đánh giá chất lượng phần mềm hiện nay?",
+    answers: [
+        { text: "Đủ chức năng nghiệp vụ; Dễ sử dụng, tiện lợi; Tin cậy, an toàn; Dễ bảo trì.", correct: true },
+        { text: "Có khả năng bảo trì, Giá cả hợp lý, Giải được các bài toán lớn.", correct: false },
+        { text: "Đủ chức năng nghiệp vụ, Không vượt quá thời hạn cho phép; Không vượt quá chi phí cho phép.", correct: false },
+        { text: "Phát triển trong thời gian ngắn, Dễ hiểu, dễ sử dụng và tương thích với những phần mềm khác.", correct: false }
+    ]
+},
+{
+    question: "Một trong các kết quả nghiên cứu nổi bật đạt được trong những năm 1970 của công nghệ phần mềm là:",
+    answers: [
+        { text: "Phương pháp lập trình có cấu trúc.", correct: true },
+        { text: "Sự ra đời của công nghệ hướng đối tượng.", correct: false },
+        { text: "Sự phát triển của các mô hình quản lý.", correct: false },
+        { text: "Ngôn ngữ thế hệ thứ 4 ra đời như LISP, Prolog.", correct: false }
+    ]
+},
+{
+    question: "Một lập trình viên tự viết một công cụ nhỏ để tự động hóa một số tác vụ lặp đi lặp lại trong công việc hàng ngày của mình. Công cụ này thuộc loại phần mềm nào?",
+    answers: [
+        { text: "Sản phẩm.", correct: false },
+        { text: "Chương trình.", correct: true },
+        { text: "Sản phẩm đại trà.", correct: false },
+        { text: "Hệ thống.", correct: false }
+    ]
+},
+{
+    question: "Dự án phát triển một phần mềm giáo dục trực tuyến, cung cấp các bài giảng, bài tập và diễn đàn thảo luận cho học sinh. Để đảm bảo phần mềm đáp ứng được nhu cầu của người dùng, yếu tố nào sau đây cần được đặc biệt chú trọng?",
+    answers: [
+        { text: "Khả năng tương thích với nhiều nền tảng.", correct: false },
+        { text: "Tính bảo mật của dữ liệu.", correct: false },
+        { text: "Giao diện người dùng thân thiện.", correct: false },
+        { text: "Tất cả các yếu tố trên (A), (B), (C).", correct: true }
+    ]
+},
+{
+    question: "Một công ty vừa và nhỏ muốn tìm kiếm một phần mềm quản lý nhân sự để thay thế phương pháp quản lý thủ công hiện tại. Loại phần mềm nào phù hợp nhất với nhu cầu của công ty này?",
+    answers: [
+        { text: "Phần mềm nghiệp vụ.", correct: true },
+        { text: "Phần mềm hệ thống.", correct: false },
+        { text: "Phần mềm công cụ.", correct: false },
+        { text: "Cả (A) và (C).", correct: false }
+    ]
+},
+{
+    question: "Đặc điểm nào sau đây KHÔNG phải là một lợi ích của việc sử dụng phần mềm nguồn mở?",
+    answers: [
+        { text: "Khả năng tùy biến cao.", correct: false },
+        { text: "Miễn phí.", correct: false },
+        { text: "Có cộng đồng người dùng lớn.", correct: false },
+        { text: "Độ bảo mật cao.", correct: true }
+    ]
+},
+{
+    question: "Phần mềm ứng dụng và phần mềm hệ thống khác nhau ở điểm nào?",
+    answers: [
+        { text: "Phần mềm ứng dụng được cài đặt sẵn trong máy tính, còn phần mềm hệ thống cần được cài đặt thêm.", correct: false },
+        { text: "Phần mềm ứng dụng thường có giao diện phức tạp hơn phần mềm hệ thống.", correct: false },
+        { text: "Phần mềm ứng dụng thực hiện các tác vụ cụ thể theo yêu cầu của người dùng, còn phần mềm hệ thống quản lý và điều khiển phần cứng của máy tính.", correct: true },
+        { text: "Phần mềm ứng dụng giúp máy tính hoạt động, còn phần mềm hệ thống giúp người dùng thực hiện công việc.", correct: false }
+    ]
+},
+{
+    question: "Việc kiểm thử một hệ thống phần mềm thường phức tạp hơn việc kiểm thử một chương trình đơn lẻ vì:",
+    answers: [
+        { text: "Hệ thống không cần phải tương thích với các phần cứng khác nhau.", correct: false },
+        { text: "Hệ thống có ít tương tác với các phần khác.", correct: false },
+        { text: "Hệ thống thường có quy mô nhỏ hơn.", correct: false },
+        { text: "Hệ thống có nhiều thành phần liên kết với nhau, có thể gây ra các lỗi khó dự đoán.", correct: true }
+    ]
+},
+{
+    question: "Khi nào doanh nghiệp nên lựa chọn phần mềm nghiệp vụ đặt hàng thay vì sử dụng phần mềm thương mại sẵn có?",
+    answers: [
+        { text: "Khi doanh nghiệp muốn tiết kiệm chi phí và cần triển khai phần mềm trong thời gian ngắn.", correct: false },
+        { text: "Khi doanh nghiệp muốn một giải pháp phần mềm độc đáo và phù hợp với quy trình làm việc riêng.", correct: true },
+        { text: "Khi doanh nghiệp muốn có một giải pháp phần mềm sẵn có và dễ sử dụng.", correct: false },
+        { text: "Khi doanh nghiệp có quy mô nhỏ và nhu cầu đơn giản.", correct: false }
+    ]
+},
+{
+    question: "Tại sao giai đoạn tiến hóa phần mềm lại cần thiết?",
+    answers: [
+        { text: "Vì công nghệ luôn phát triển, yêu cầu của người dùng cũng thay đổi theo.", correct: true },
+        { text: "Vì phần mềm không bao giờ gặp lỗi.", correct: false },
+        { text: "Vì phần mềm luôn hoàn hảo ngay từ lần đầu phát triển.", correct: false },
+        { text: "Vì nhu cầu của người dùng không bao giờ thay đổi.", correct: false }
+    ]
+},
+{
+    question: "Yếu tố nào thường chiếm phần lớn chi phí trong một hệ thống phần mềm?",
+    answers: [
+        { text: "Chi phí nhân lực.", correct: true },
+        { text: "Chi phí phần mềm.", correct: false },
+        { text: "Chi phí phần cứng.", correct: false },
+        { text: "Chi phí bảo trì.", correct: false }
+    ]
+},
+{
+    question: "Để giảm thời gian phát triển phần mềm, doanh nghiệp nên làm gì?",
+    answers: [
+        { text: "Chọn các giải pháp phần mềm có sẵn trên thị trường.", correct: true },
+        { text: "Không cần thiết phải kiểm thử phần mềm kỹ lưỡng.", correct: false },
+        { text: "Chỉ tập trung vào phát triển các tính năng cốt lõi.", correct: false },
+        { text: "Tự phát triển phần mềm mà không cần đến các công ty tư vấn.", correct: false }
+    ]
+},
+{
+    question: "Phân loại phần mềm theo chức năng gồm những loại phần mềm nào sau đây?",
+    answers: [
+        { text: "Phần mềm hệ thống, phần mềm thời gian thực.", correct: false },
+        { text: "Phần mềm hệ điều hành, chương trình, phần mềm nhúng.", correct: false },
+        { text: "Chương trình, sản phẩm, hệ thống.", correct: false },
+        { text: "Phần mềm hệ thống, phần mềm nghiệp vụ, phần mềm công cụ.", correct: true }
+    ]
+},
+{
+    question: "Việc sử dụng phần mềm mang lại lợi ích gì cho con người?",
+    answers: [
+        { text: "Tất cả các đáp án (A), (B), (C).", correct: true },
+        { text: "Tiết kiệm thời gian.", correct: false },
+        { text: "Tăng năng suất làm việc.", correct: false },
+        { text: "Truy cập thông tin dễ dàng.", correct: false }
+    ]
+},
+{
+    question: "Đặc điểm nào sau đây KHÔNG phải là đặc trưng của phần mềm sản phẩm đặt hàng?",
+    answers: [
+        { text: "Có chi phí phát triển cao hơn so với sản phẩm chung.", correct: false },
+        { text: "Có thể tích hợp các tính năng đặc biệt theo yêu cầu.", correct: false },
+        { text: "Được phát triển theo yêu cầu riêng của khách hàng.", correct: false },
+        { text: "Thường được sử dụng rộng rãi trên thị trường.", correct: true }
+    ]
+},
+{
+    question: "Sự phát triển của điện toán đám mây đã tác động như thế nào đến ngành phần mềm những năm 2010?",
+    answers: [
+        { text: "Sự phát triển của điện toán đám mây vào những năm 2020 làm hạn chế khả năng tùy biến của phần mềm.", correct: false },
+        { text: "Các doanh nghiệp có xu hướng giảm nhu cầu tự mua sẵn cơ sở hạ tầng phần cứng, thay vào đó chuyển sang sử dụng cơ sở hạ tầng điện toán đám mây.", correct: true },
+        { text: "Sự phát triển của điện toán đám mây dẫn tới tăng chi phí phát triển phần mềm, giai đoạn thiết kế hệ thống, lập trình tốn nhiều thời gian hơn.", correct: false },
+        { text: "Làm chậm quá trình phát triển phần mềm.", correct: false }
+    ]
+},
+{
+    question: "Giai đoạn nào trong quy trình phát triển phần mềm có vai trò quan trọng nhất trong việc đảm bảo chất lượng sản phẩm?",
+    answers: [
+        { text: "Phát triển.", correct: false },
+        { text: "Tiến hóa phần mềm.", correct: false },
+        { text: "Kiểm thử.", correct: false },
+        { text: "Phân tích, xác định yêu cầu.", correct: true }
+    ]
+},
+{
+    question: "Đâu là đặc trưng của phần mềm?",
+    answers: [
+        { text: "Mòn cũ và thoái hóa theo thời gian.", correct: false },
+        { text: "Mòn cũ, nhưng không thoái hóa theo thời gian.", correct: false },
+        { text: "Không mòn cũ, nhưng thoái hóa theo thời gian.", correct: true },
+        { text: "Không mòn cũ, không thoái hóa theo thời gian.", correct: false }
+    ]
+},
+{
+    question: "Dự án phát triển một phần mềm quản lý kho hàng, tích hợp với hệ thống kế toán và hệ thống quản lý bán hàng. Loại phần mềm nào phù hợp nhất với dự án này?",
+    answers: [
+        { text: "Cả A và B đều đúng.", correct: false },
+        { text: "Sản phẩm.", correct: false },
+        { text: "Chương trình.", correct: false },
+        { text: "Hệ thống.", correct: true }
+    ]
+},
+{
+    question: "Phần mềm đại trà thường có ưu điểm gì so với sản phẩm đặt hàng?",
+    answers: [
+        { text: "Khả năng tùy biến cao hơn.", correct: false },
+        { text: "Thời gian phát triển ngắn hơn.", correct: true },
+        { text: "Thích hợp với nhiều loại hình doanh nghiệp khác nhau.", correct: false },
+        { text: "Chi phí phát triển cao hơn.", correct: false }
+    ]
+},
+{
+    question: "Mục tiêu chính của giai đoạn phân tích, xác định yêu cầu trong quy trình phát triển phần mềm là gì?",
+    answers: [
+        { text: "Hiểu rõ và đầy đủ nhu cầu của khách hàng về phần mềm.", correct: true },
+        { text: "Thiết kế giao diện người dùng cho phần mềm.", correct: false },
+        { text: "Kiểm tra xem phần mềm có hoạt động đúng không.", correct: false },
+        { text: "Viết mã nguồn cho phần mềm.", correct: false }
+    ]
+},
+{
+    question: "Nếu bỏ qua giai đoạn phân tích, xác định yêu cầu, điều gì có thể xảy ra?",
+    answers: [
+        { text: "Không có gì ảnh hưởng đến quá trình phát triển phần mềm.", correct: false },
+        { text: "Phần mềm sẽ đáp ứng đúng nhu cầu của khách hàng.", correct: false },
+        { text: "Phần mềm sẽ được phát triển nhanh hơn.", correct: false },
+        { text: "Phần mềm có thể không đáp ứng được yêu cầu của khách hàng, dẫn đến phải làm lại từ đầu.", correct: true }
+    ]
+},
+{
+    question: "Phần mềm có vai trò gì đối với máy tính?",
+    answers: [
+        { text: "Cung cấp năng lượng cho máy tính hoạt động.", correct: false },
+        { text: "Là bộ phận vật lý của máy tính.", correct: false },
+        { text: "Cho phép người dùng tương tác và điều khiển máy tính.", correct: true },
+        { text: "Lưu trữ dữ liệu vĩnh viễn.", correct: false }
+    ]
+},
+{
+    question: "Trong trường hợp nào dưới đây, việc một người vừa viết vừa sử dụng chương trình là phù hợp nhất?",
+    answers: [
+        { text: "Tạo một trò chơi điện tử đa người chơi.", correct: false },
+        { text: "Tạo một công cụ nhỏ hỗ trợ công việc cá nhân.", correct: true },
+        { text: "Phát triển một phần mềm thương mại lớn.", correct: false },
+        { text: "Phát triển một hệ thống quản lý cơ sở dữ liệu.", correct: false }
+    ]
+},
+{
+    question: "Khẳng định nào sau đây là đúng?",
+    answers: [
+        { text: "Sản phẩm hệ thống là chương trình hệ thống kết hợp với môi trường cài đặt trong sản xuất.", correct: false },
+        { text: "Sản phẩm hệ thống là sản phẩm phần mềm kết hợp với môi trường cài đặt.", correct: true },
+        { text: "Sản phẩm hệ thống là sản phẩm phần mềm cộng thêm yếu tố người dùng trong sản xuất.", correct: false },
+        { text: "Sản phẩm hệ thống là chương trình phần mềm cộng thêm yếu tố người dùng.", correct: false }
+    ]
+},
+{
+    question: "Mục tiêu chính của giai đoạn phân tích, xác định yêu cầu trong quá trình phát triển phần mềm là gì?",
+    answers: [
+        { text: "Viết mã nguồn cho phần mềm.", correct: false },
+        { text: "Thiết kế giao diện người dùng cho phần mềm.", correct: false },
+        { text: "Kiểm tra xem phần mềm có hoạt động đúng không.", correct: false },
+        { text: "Hiểu rõ và đầy đủ nhu cầu của khách hàng về phần mềm.", correct: true }
+    ]
+}
+        ];
+
+        let userAnswers = [];
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function getRequiredSelectionCount(questionText) {
+        const match = questionText.match(/chọn\s*(\d+)/i);
+        return match ? parseInt(match[1]) : 1; // Mặc định là chọn 1 nếu không có "chọn X"
+    }
+
+    function initQuiz() {
+        shuffleArray(questions);
+        const questionsContainer = document.getElementById('questions');
+        questionsContainer.innerHTML = '';
+
+        questions.forEach((q, qIndex) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question-container';
+
+            shuffleArray(q.answers);
+
+            questionDiv.innerHTML = `
+                <div class="question-text">${qIndex + 1}. ${q.question}</div>
+                <div class="answers-container"></div>
+            `;
+
+            const answersContainer = questionDiv.querySelector('.answers-container');
+
+            q.answers.forEach(answer => {
+                const button = document.createElement('button');
+                button.className = 'answer-btn';
+                button.textContent = answer.text;
+                button.addEventListener('click', () => {
+                    selectAnswer(qIndex, answer);
+                    const required = getRequiredSelectionCount(q.question);
+                    const selected = userAnswers[qIndex]?.length || 0;
+                    if (selected === required) {
+                        showImmediateResult(qIndex);
+                    }
+                });
+                answersContainer.appendChild(button);
+            });
+
+            questionsContainer.appendChild(questionDiv);
+        });
+
+        document.querySelector('.submit-btn').style.display = 'none';
+    }
+
+    function selectAnswer(qIndex, answer) {
+        const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+        const buttons = questionDiv.querySelectorAll('.answer-btn');
+
+        const clickedBtn = [...buttons].find(btn => btn.textContent === answer.text);
+        clickedBtn.classList.toggle('selected');
+
+        if (!userAnswers[qIndex]) userAnswers[qIndex] = [];
+
+        const alreadySelected = userAnswers[qIndex].find(a => a.text === answer.text);
+        if (alreadySelected) {
+            userAnswers[qIndex] = userAnswers[qIndex].filter(a => a.text !== answer.text);
+        } else {
+            userAnswers[qIndex].push(answer);
+        }
+    }
+
+    function showImmediateResult(qIndex) {
+        const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+        const buttons = questionDiv.querySelectorAll('.answer-btn');
+        const selectedAnswers = userAnswers[qIndex] || [];
+
+        buttons.forEach(btn => {
+            btn.disabled = true;
+            const answerObj = questions[qIndex].answers.find(a => a.text === btn.textContent);
+            const isSelected = selectedAnswers.find(a => a.text === btn.textContent);
+
+            if (answerObj.correct) {
+                btn.classList.add('correct');
+            } else if (isSelected) {
+                btn.classList.add('incorrect');
+            }
+        });
+    }
+
+    initQuiz();
+    </script>
+</body>
+</html>

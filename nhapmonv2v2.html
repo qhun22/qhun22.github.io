@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ig: qhun22</title>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Quicksand', sans-serif;
+        }
+    
+        .quiz-container {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px 25px;
+            max-width: 700px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease;
+        }
+    
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+    
+        .question-container {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+    
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: #222;
+        }
+    
+        .answers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    
+        .answer-btn {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+        
+        .answer:hover {
+            background-color: #ffe6f0;
+            transform: scale(0.5);
+        } 
+        .answer-btn:hover {
+            background-color: #f1f1f1;
+            border-color: #aaa;
+        }
+    
+        .answer-btn.selected {
+            background-color: #ffd966;
+            border-color: #f1c40f;
+            font-weight: bold;
+        }
+    
+        .answer-btn.correct {
+            background-color: #b6e9b1;
+            border-color: #2ecc71;
+            color: #2c3e50;
+        }
+    
+        .answer-btn.incorrect {
+            background-color: #f9b3b3;
+            border-color: #e74c3c;
+            color: #2c3e50;
+        }
+    
+        .submit-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    
+        .submit-btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+    
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+    
+        .result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+    
+        .reset-btn {
+            margin-top: 15px;
+            background-color: #27ae60;
+        }
+    
+        .reset-btn:hover {
+            background-color: #1e8449;
+        }
+        .quiz-container {
+            margin-top: 60px;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        @media (max-width: 600px) {
+            .quiz-container {
+                padding: 15px 20px;
+            }
+    
+            h1 {
+                font-size: 1.5rem;
+            }
+    
+            .answer-btn {
+                font-size: 0.95rem;
+            }
+    
+            .submit-btn {
+                width: 100%;
+            }
+    
+            .result {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>NHAP MON TUAN 2</h1>
+        
+        <div id="questions"></div>
+        <div class="submit-container">
+            <button class="submit-btn">Nộp Bài</button>
+            <div class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+        {
+    question: "Quy trình phát triển phần mềm bao gồm những hoạt động cơ bản nào sau đây?",
+    answers: [
+        { text: "Đặc tả yêu cầu, phân tích thành phần, thiết kế hệ thống tái sử dụng, cài đặt.", correct: false },
+        { text: "Tạo bản mẫu lấy ý kiến cải tiến.", correct: false },
+        { text: "Phân tích thành phần, điều chỉnh yêu cầu, thiết kế tái sử dụng, phát triển tích hợp.", correct: false },
+        { text: "Đặc tả yêu cầu, xây dựng hệ thống, kiểm thử, vận hành và bảo trì.", correct: true }
+    ]
+},
+{
+    question: "Hoạt động đặc tả trong quá trình phát triển phần mềm có mục đích chính là gì?",
+    answers: [
+        { text: "Điều chỉnh hệ thống cho phù hợp với yêu cầu mới.", correct: false },
+        { text: "Xây dựng hệ thống phần mềm.", correct: false },
+        { text: "Kiểm tra xem hệ thống có hoạt động đúng không.", correct: false },
+        { text: "Mô tả chi tiết những gì hệ thống cần làm.", correct: true }
+    ]
+},
+{
+    question: "Mục tiêu chính của giai đoạn kiểm thử trong quy trình phát triển phần mềm là gì?",
+    answers: [
+        { text: "Xây dựng thêm các tính năng mới cho phần mềm.", correct: false },
+        { text: "Đảm bảo phần mềm hoạt động đúng theo yêu cầu.", correct: true },
+        { text: "Sửa chữa các lỗi trong quá trình đặc tả.", correct: false },
+        { text: "Điều chỉnh giao diện người dùng của phần mềm.", correct: false }
+    ]
+},
+{
+    question: "Giai đoạn mở rộng trong quy trình phát triển phần mềm thường xảy ra khi nào?",
+    answers: [
+        { text: "Khi phát hiện lỗi trong quá trình kiểm thử.", correct: false },
+        { text: "Khi quá trình phát triển phần mềm hoàn tất.", correct: false },
+        { text: "Khi có những thay đổi trong yêu cầu của khách hàng.", correct: true },
+        { text: "Khi muốn thay đổi công nghệ phát triển.", correct: false }
+    ]
+},
+{
+    question: "Tại sao giai đoạn đặc tả lại quan trọng trong quy trình phát triển phần mềm?",
+    answers: [
+        { text: "Vì nó giúp giảm chi phí phát triển.", correct: false },
+        { text: "Vì nó đảm bảo rằng phần mềm được phát triển theo đúng yêu cầu của khách hàng.", correct: true },
+        { text: "Vì nó giúp tăng tính bảo mật của phần mềm.", correct: false },
+        { text: "Vì nó giúp tiết kiệm thời gian phát triển.", correct: false }
+    ]
+},
+{
+    question: "Một dự án phần mềm đang trong giai đoạn kiểm thử, nhóm phát triển phát hiện ra một lỗi nghiêm trọng ảnh hưởng đến chức năng cốt lõi của hệ thống. Hành động nào sau đây là ưu tiên hàng đầu?",
+    answers: [
+        { text: "Điều chỉnh lại tài liệu đặc tả.", correct: false },
+        { text: "Tiếp tục kiểm thử các tính năng khác.", correct: false },
+        { text: "Sửa chữa lỗi và tiến hành thử lại.", correct: true },
+        { text: "Báo cáo lỗi cho khách hàng.", correct: false }
+    ]
+},
+{
+    question: "Mô hình quy trình phát triển phần mềm là gì?",
+    answers: [
+        { text: "Biểu diễn trừu tượng tiến trình thiết kế và vận hành phần mềm.", correct: true },
+        { text: "Một biểu diễn trực quan, trừu tượng của vòng đời phát triển và tiến hóa phần mềm.", correct: false },
+        { text: "Biểu diễn chi tiết và trừu tượng của tiến trình phân tích và quản lý các yêu cầu phần mềm.", correct: false },
+        { text: "Biểu diễn chi tiết của tiến trình tiến hóa sản phẩm phần mềm.", correct: false }
+    ]
+},
+{
+    question: "Khi nào mô hình thác nước được sử dụng?",
+    answers: [
+        { text: "Khi dự án có yêu cầu rõ ràng và không thay đổi nhiều.", correct: true },
+        { text: "Khi đội ngũ phát triển nhỏ không có kinh nghiệm.", correct: false },
+        { text: "Khi yêu cầu không rõ ràng và có xu hướng thay đổi.", correct: false },
+        { text: "Khi thời gian phát triển không còn quan trọng.", correct: false }
+    ]
+},
+{
+    question: "Mô hình xoắn ốc cho phép phát triển phần mềm thông qua các vòng lặp. Điều này có ưu điểm gì?",
+    answers: [
+        { text: "Tăng tính phức tạp trong quản lý dự án.", correct: false },
+        { text: "Giảm thời gian phát triển.", correct: false },
+        { text: "Đảm bảo chất lượng thông qua kiểm thử liên tục.", correct: true },
+        { text: "Giảm chi phí phát triển.", correct: false }
+    ]
+},
+{
+    question: "Một trong những đặc điểm nổi bật của mô hình RUP là gì?",
+    answers: [
+        { text: "Chỉ sử dụng một phương pháp phát triển.", correct: false },
+        { text: "Không cho phép thay đổi yêu cầu.", correct: false },
+        { text: "Không cần tài liệu hóa.", correct: false },
+        { text: "Tính linh hoạt và có thể tùy chỉnh.", correct: true }
+    ]
+},
+{
+    question: "Trong giai đoạn 'Construction' của RUP, nhóm phát triển cần làm gì để đảm bảo chất lượng sản phẩm?",
+    answers: [
+        { text: "Không cần phải tài liệu hóa.", correct: false },
+        { text: "Chỉ tập trung vào phát triển mã mà không cần phản hồi từ người dùng.", correct: false },
+        { text: "Chỉ phát triển mã nguồn mà không cần kiểm thử.", correct: false },
+        { text: "Thực hiện kiểm thử và đánh giá sản phẩm.", correct: true }
+    ]
+},
+{
+    question: "Mô hình phát triển phần mềm thác nước phù hợp với dự án phát triển phần mềm nào?",
+    answers: [
+        { text: "Chỉ áp dụng cho những dự án phát triển phần mềm lớn.", correct: false },
+        { text: "Phần mềm lớn có độ rủi ro cao.", correct: false },
+        { text: "Phần mềm có các yêu cầu đã được xác định rõ ràng ngay từ đầu.", correct: true },
+        { text: "Phần mềm có các yêu cầu chưa rõ ràng.", correct: false }
+    ]
+},
+{
+    question: "Mô hình xoắn ốc phù hợp nhất với loại dự án nào?",
+    answers: [
+        { text: "Dự án chỉ cần phát triển một lần.", correct: false },
+        { text: "Dự án không cần yêu cầu kiểm thử.", correct: false },
+        { text: "Dự án nhỏ yêu cầu rõ ràng.", correct: false },
+        { text: "Dự án lớn và phức tạp với yêu cầu chưa rõ ràng và thay đổi.", correct: true }
+    ]
+},
+{
+    question: "Mô hình RAD thường phù hợp với loại dự án nào?",
+    answers: [
+        { text: "Dự án có tính mô đun hóa cao và cần triển khai trong thời gian ngắn.", correct: true },
+        { text: "Dự án lớn và phức tạp.", correct: false },
+        { text: "Dự án có yêu cầu không rõ ràng.", correct: false },
+        { text: "Dự án cần tính bảo mật cao.", correct: false }
+    ]
+},
+{
+    question: "Bạn đang làm việc trong một dự án RUP và phát hiện ra rằng một số yêu cầu không khả thi. Bạn nên làm gì trong giai đoạn Elaboration?",
+    answers: [
+        { text: "Chỉ thông báo cho quản lý.", correct: false },
+        { text: "Bỏ qua các yêu cầu đó.", correct: false },
+        { text: "Đợi đến giai đoạn Transition để giải quyết.", correct: false },
+        { text: "Làm việc với bên liên quan để điều chỉnh các yêu cầu.", correct: true }
+    ]
+},
+{
+    question: "Hoạt động nào sau đây trong quy trình phát triển phần mềm giúp xác định rõ những gì hệ thống phần mềm cần phải làm?",
+    answers: [
+        { text: "Kiểm thử.", correct: false },
+        { text: "Phân tích và đặc tả yêu cầu.", correct: true },
+        { text: "Phát triển.", correct: false },
+        { text: "Mở rộng.", correct: false }
+    ]
+},
+{
+    question: "Mục tiêu cuối cùng của quy trình phát triển phần mềm là gì?",
+    answers: [
+        { text: "Tạo ra một sản phẩm phần mềm hoàn chỉnh.", correct: false },
+        { text: "Đáp ứng các yêu cầu của khách hàng.", correct: false },
+        { text: "Xây dựng một đội ngũ phát triển phần mềm hiệu quả.", correct: false },
+        { text: "Tất cả các đáp án trên đều đúng.", correct: true }
+    ]
+},
+{
+    question: "Trong mô hình xoắn ốc, pha đầu tiên là gì?",
+    answers: [
+        { text: "Đánh giá - Evaluation phase.", correct: false },
+        { text: "Phân tích rủi ro - Risk analysis phase.", correct: false },
+        { text: "Lập kế hoạch - Planning phase.", correct: true },
+        { text: "Thực thi kỹ thuật - Engineering phase.", correct: false }
+    ]
+},
+{
+    question: "Mô hình RAD chủ yếu nhấn mạnh điều gì?",
+    answers: [
+        { text: "Tích hợp liên tục.", correct: false },
+        { text: "Quản lý rủi ro.", correct: false },
+        { text: "Phát triển nhanh chóng.", correct: true },
+        { text: "Phát triển theo từng giai đoạn.", correct: false }
+    ]
+},
+{
+    question: "Pha nào trong mô hình xoắn ốc tập trung vào việc đánh giá và giảm thiểu rủi ro?",
+    answers: [
+        { text: "Lập kế hoạch cho vòng tiếp theo.", correct: false },
+        { text: "Phân tích rủi ro.", correct: true },
+        { text: "Xác định mục tiêu.", correct: false },
+        { text: "Phát triển và kiểm thử.", correct: false }
+    ]
+},
+{
+    question: "Trong mô hình thác nước, việc thay đổi yêu cầu của khách hàng ở giai đoạn nào là khó khăn và tốn kém nhất?",
+    answers: [
+        { text: "Giai đoạn phân tích yêu cầu.", correct: false },
+        { text: "Giai đoạn thiết kế.", correct: false },
+        { text: "Giai đoạn kiểm thử.", correct: false },
+        { text: "Giai đoạn triển khai.", correct: true }
+    ]
+},
+{
+    question: "Hành động nào sau đây thuộc giai đoạn xây dựng trong quy trình phát triển phần mềm?",
+    answers: [
+        { text: "Điều chỉnh phần mềm theo yêu cầu mới.", correct: false },
+        { text: "Đặc tả các tính năng của phần mềm.", correct: false },
+        { text: "Kiểm tra lỗi trong phần mềm.", correct: false },
+        { text: "Viết mã nguồn.", correct: true }
+    ]
+},
+{
+    question: "Giai đoạn nào trong quy trình phát triển phần mềm giúp xác định những yêu cầu của khách hàng và chức năng mà phần mềm cần có?",
+    answers: [
+        { text: "Đặc tả.", correct: true },
+        { text: "Kiểm thử.", correct: false },
+        { text: "Mở rộng.", correct: false },
+        { text: "Phát triển.", correct: false }
+    ]
+},
+{
+    question: "Mô hình thác nước (Waterfall) và mô hình lặp & tăng trưởng (Iterative & Incremental) khác nhau ở điểm nào chính?",
+    answers: [
+        { text: "Mô hình thác nước có vị trí thấp hơn.", correct: false },
+        { text: "Mô hình thác nước diễn ra tuần tự, trong khi mô hình lặp cho phép phát triển qua nhiều vòng lặp.", correct: true },
+        { text: "Mô hình thác nước cho phép thay đổi yêu cầu, còn mô hình lặp thì không.", correct: false },
+        { text: "Mô hình lặp không cần kiểm thử.", correct: false }
+    ]
+},
+{
+    question: "Hoạt động quản lý các yêu cầu phần mềm nhằm?",
+    answers: [
+        { text: "Lưu trữ, cập nhật, lưu vết và tìm kiếm các yêu cầu dễ dàng hơn.", correct: true },
+        { text: "Phân tích xác định yêu cầu.", correct: false },
+        { text: "Mô tả các yêu cầu phần mềm.", correct: false },
+        { text: "Trả lời câu hỏi What.", correct: false }
+    ]
+},
+{
+    question: "Mô hình lặp & tăng trưởng cho phép điều chỉnh yêu cầu ở giai đoạn nào?",
+    answers: [
+        { text: "Chỉ trong vòng cuối cùng.", correct: false },
+        { text: "Chỉ trong vòng lặp đầu tiên.", correct: false },
+        { text: "Sau mỗi vòng lặp.", correct: true },
+        { text: "Không cho phép điều chỉnh yêu cầu.", correct: false }
+    ]
+},
+{
+    question: "Mô hình RUP có thể được áp dụng cho dự án nào?",
+    answers: [
+        { text: "Dự án lớn và phức tạp.", correct: true },
+        { text: "Chỉ dự án nhỏ.", correct: false },
+        { text: "Dự án không có yêu cầu rõ ràng.", correct: false },
+        { text: "Chỉ dự án phần mềm doanh nghiệp.", correct: false }
+    ]
+},
+{
+    question: "Mô hình thác nước được đặc trưng bởi điểm nào sau đây?",
+    answers: [
+        { text: "Tiến trình diễn ra theo tuần tự.", correct: true },
+        { text: "Phát triển lặp đi lặp lại.", correct: false },
+        { text: "Tích hợp liên tục.", correct: false },
+        { text: "Tập trung vào quản lý rủi ro.", correct: false }
+    ]
+},
+{
+    question: "Mô hình RUP được phát triển bởi công ty nào?",
+    answers: [
+        { text: "Rational Software.", correct: true },
+        { text: "IBM.", correct: false },
+        { text: "Microsoft.", correct: false },
+        { text: "Oracle.", correct: false }
+    ]
+},
+{
+    question: "Mô hình RAD thường phù hợp với loại dự án nào?",
+    answers: [
+        { text: "Dự án có tính mô đun hóa cao và cần triển khai trong thời gian ngắn.", correct: true },
+        { text: "Dự án lớn và phức tạp.", correct: false },
+        { text: "Dự án có yêu cầu không rõ ràng.", correct: false },
+        { text: "Dự án cần tính bảo mật cao.", correct: false }
+    ]
+}
+        ];
+
+        let userAnswers = [];
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function getRequiredSelectionCount(questionText) {
+        const match = questionText.match(/chọn\s*(\d+)/i);
+        return match ? parseInt(match[1]) : 1; // Mặc định là chọn 1 nếu không có "chọn X"
+    }
+
+    function initQuiz() {
+        shuffleArray(questions);
+        const questionsContainer = document.getElementById('questions');
+        questionsContainer.innerHTML = '';
+
+        questions.forEach((q, qIndex) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question-container';
+
+            shuffleArray(q.answers);
+
+            questionDiv.innerHTML = `
+                <div class="question-text">${qIndex + 1}. ${q.question}</div>
+                <div class="answers-container"></div>
+            `;
+
+            const answersContainer = questionDiv.querySelector('.answers-container');
+
+            q.answers.forEach(answer => {
+                const button = document.createElement('button');
+                button.className = 'answer-btn';
+                button.textContent = answer.text;
+                button.addEventListener('click', () => {
+                    selectAnswer(qIndex, answer);
+                    const required = getRequiredSelectionCount(q.question);
+                    const selected = userAnswers[qIndex]?.length || 0;
+                    if (selected === required) {
+                        showImmediateResult(qIndex);
+                    }
+                });
+                answersContainer.appendChild(button);
+            });
+
+            questionsContainer.appendChild(questionDiv);
+        });
+
+        document.querySelector('.submit-btn').style.display = 'none';
+    }
+
+    function selectAnswer(qIndex, answer) {
+        const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+        const buttons = questionDiv.querySelectorAll('.answer-btn');
+
+        const clickedBtn = [...buttons].find(btn => btn.textContent === answer.text);
+        clickedBtn.classList.toggle('selected');
+
+        if (!userAnswers[qIndex]) userAnswers[qIndex] = [];
+
+        const alreadySelected = userAnswers[qIndex].find(a => a.text === answer.text);
+        if (alreadySelected) {
+            userAnswers[qIndex] = userAnswers[qIndex].filter(a => a.text !== answer.text);
+        } else {
+            userAnswers[qIndex].push(answer);
+        }
+    }
+
+    function showImmediateResult(qIndex) {
+        const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+        const buttons = questionDiv.querySelectorAll('.answer-btn');
+        const selectedAnswers = userAnswers[qIndex] || [];
+
+        buttons.forEach(btn => {
+            btn.disabled = true;
+            const answerObj = questions[qIndex].answers.find(a => a.text === btn.textContent);
+            const isSelected = selectedAnswers.find(a => a.text === btn.textContent);
+
+            if (answerObj.correct) {
+                btn.classList.add('correct');
+            } else if (isSelected) {
+                btn.classList.add('incorrect');
+            }
+        });
+    }
+
+    initQuiz();
+    </script>
+</body>
+</html>

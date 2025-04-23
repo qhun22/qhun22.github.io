@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ig: qhun22</title>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Quicksand', sans-serif;
+        }
+    
+        .quiz-container {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px 25px;
+            max-width: 700px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease;
+        }
+    
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+    
+        .question-container {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+    
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: #222;
+        }
+    
+        .answers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    
+        .answer-btn {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+        
+        .answer:hover {
+            background-color: #ffe6f0;
+            transform: scale(0.5);
+        } 
+        .answer-btn:hover {
+            background-color: #f1f1f1;
+            border-color: #aaa;
+        }
+    
+        .answer-btn.selected {
+            background-color: #ffd966;
+            border-color: #f1c40f;
+            font-weight: bold;
+        }
+    
+        .answer-btn.correct {
+            background-color: #b6e9b1;
+            border-color: #2ecc71;
+            color: #2c3e50;
+        }
+    
+        .answer-btn.incorrect {
+            background-color: #f9b3b3;
+            border-color: #e74c3c;
+            color: #2c3e50;
+        }
+    
+        .submit-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    
+        .submit-btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+    
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+    
+        .result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+    
+        .reset-btn {
+            margin-top: 15px;
+            background-color: #27ae60;
+        }
+    
+        .reset-btn:hover {
+            background-color: #1e8449;
+        }
+        .quiz-container {
+            margin-top: 60px;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        @media (max-width: 600px) {
+            .quiz-container {
+                padding: 15px 20px;
+            }
+    
+            h1 {
+                font-size: 1.5rem;
+            }
+    
+            .answer-btn {
+                font-size: 0.95rem;
+            }
+    
+            .submit-btn {
+                width: 100%;
+            }
+    
+            .result {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>NHAP MON TUAN 6</h1>
+    
+        <div id="questions"></div>
+        <div class="submit-container">
+            <button class="submit-btn">Nộp Bài</button>
+            <div class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+        {
+    question: "Khi nào nên chọn kiến trúc dữ liệu tập trung?",
+    answers: [
+        { text: "Khi hệ thống cần đảm bảo tính bảo mật cao cho từng dịch vụ.", correct: false },
+        { text: "Khi hệ thống đơn giản, dữ liệu được chia sẻ chung và không yêu cầu khả năng mở rộng quá cao.", correct: true },
+        { text: "Khi hệ thống yêu cầu khả năng mở rộng cao.", correct: false },
+        { text: "Khi hệ thống có nhiều dịch vụ độc lập.", correct: false }
+    ]
+},
+{
+    question: "Đặc điểm nào sau đây được sử dụng để đánh giá một bản thiết kế tốt?",
+    answers: [
+        { text: "Chứa mọi trường hợp kiểm thử của các thành phần phần mềm.", correct: false },
+        { text: "Cung cấp một mô tả hoàn thiện về sản phẩm phần mềm.", correct: false },
+        { text: "Giải pháp đầy đủ cho mọi các yêu cầu trong pha phân tích.", correct: false },
+        { text: "Tính gắn kết giữa các mô-đun, tính cố kết trong một mô đun và khả năng tái sử dụng.", correct: true }
+    ]
+},
+{
+    question: "Các tiêu chuẩn để đánh giá một giao diện tốt là gì?",
+    answers: [
+        { text: "Đẹp, dễ sử dụng, thông minh.", correct: false },
+        { text: "Dễ sử dụng, thân thiện, thông minh.", correct: false },
+        { text: "Đáp ứng các yêu cầu về chức năng và phi chức năng của người sử dụng.", correct: false },
+        { text: "Khả năng dễ sử dụng, khả năng dung thứ lỗi và phù hợp với các đặc điểm, yêu cầu của người dùng.", correct: true }
+    ]
+},
+{
+    question: "Trong thiết kế thành phần, phần tử nào sau đây không được mô tả chi tiết?",
+    answers: [
+        { text: "Mã nguồn.", correct: true },
+        { text: "Phương thức.", correct: false },
+        { text: "Giao diện.", correct: false },
+        { text: "Thuộc tính.", correct: false }
+    ]
+},
+{
+    question: "Quy trình thiết kế kiến trúc nhằm mục đích gì?",
+    answers: [
+        { text: "Lựa chọn, xây dựng mô hình tổ chức, phân rã hệ thống và điều khiển hệ thống.", correct: true },
+        { text: "Lựa chọn và xây dựng mô hình điều khiển sự hoạt động của các cấu thành hệ thống.", correct: false },
+        { text: "Xác định và mô tả các hệ thống con cấu thành lên hệ thống cần xây dựng.", correct: false },
+        { text: "Lựa chọn và xây dựng mô hình tổ chức cho hệ thống.", correct: false }
+    ]
+},
+{
+    question: "Người quan trọng nhất ảnh hưởng đến quá trình thiết kế giao diện là gì?",
+    answers: [
+        { text: "Người sử dụng hệ thống.", correct: true },
+        { text: "Các bên đấu thầu hệ thống.", correct: false },
+        { text: "Người phân tích hệ thống.", correct: false },
+        { text: "Người thiết kế giao diện.", correct: false }
+    ]
+},
+{
+    question: "Mô hình phân lớp tổ chức hệ thống thành:",
+    answers: [
+        { text: "Nhiều mô đun thành phần có sự trao đổi thông tin với nhau.", correct: false },
+        { text: "Nhiều hệ con, mỗi hệ con hoạt động độc lập với nhau.", correct: false },
+        { text: "Nhiều lớp, mỗi lớp cung cấp dịch vụ khác nhau.", correct: true },
+        { text: "Nhiều thực thể có mối quan hệ với nhau.", correct: false }
+    ]
+},
+{
+    question: "Các thành phần chính của mô hình khách chủ bao gồm:",
+    answers: [
+        { text: "Các máy khách, máy chủ và giao thức.", correct: false },
+        { text: "Các máy khách (Clients), các máy chủ (Servers) và hệ thống mạng nối máy khách với máy chủ.", correct: true },
+        { text: "Các máy khách, máy chủ và phần mềm điều khiển.", correct: false },
+        { text: "Các máy khách, các máy chủ và cơ sở hạ tầng.", correct: false }
+    ]
+},
+{
+    question: "Khi nào bạn nên chọn kiến trúc microservices để phát triển một ứng dụng?",
+    answers: [
+        { text: "Khi ứng dụng không có nhiều thay đổi về yêu cầu.", correct: false },
+        { text: "Khi ứng dụng có quy mô nhỏ và đơn giản.", correct: false },
+        { text: "Khi ứng dụng yêu cầu hiệu năng cực cao.", correct: false },
+        { text: "Khi ứng dụng cần được phát triển nhanh chóng và linh hoạt.", correct: true }
+    ]
+},
+{
+    question: "Hoạt động nào thường không kết hợp với quá trình thiết kế giao diện người dùng?",
+    answers: [
+        { text: "Xây dựng giao diện.", correct: false },
+        { text: "Đánh giá giao diện.", correct: false },
+        { text: "Phân tích người dùng và tác vụ.", correct: false },
+        { text: "Ước lượng chi phí.", correct: true }
+    ]
+},
+{
+    question: "Bạn đang phát triển một ứng dụng web đơn giản để quản lý danh bạ cá nhân. Ứng dụng này yêu cầu giao diện người dùng thân thiện, dễ sử dụng và không đòi hỏi tính thực thời cao. Kiến trúc nào sau đây phù hợp nhất?",
+    answers: [
+        { text: "Kiến trúc SOA.", correct: false },
+        { text: "Kiến trúc client-server.", correct: true },
+        { text: "Kiến trúc microservices.", correct: false },
+        { text: "Kiến trúc sự kiện.", correct: false }
+    ]
+},
+{
+    question: "Bạn đang làm việc trên một dự án phát triển một nền tảng e-commerce. Nền tảng này cần có khả năng tích hợp với nhiều hệ thống khác nhau như hệ thống thanh toán, hệ thống quản lý kho hàng. Kiến trúc nào sẽ giúp bạn dễ dàng thực hiện việc tích hợp này?",
+    answers: [
+        { text: "Kiến trúc SOA.", correct: true },
+        { text: "Kiến trúc microservices.", correct: false },
+        { text: "Kiến trúc đơn khối.", correct: false },
+        { text: "Kiến trúc event-driven.", correct: false }
+    ]
+},
+{
+    question: "Khi thiết kế một trang web thương mại điện tử, yếu tố nào sau đây ảnh hưởng lớn nhất đến quyết định mua hàng của khách hàng?",
+    answers: [
+        { text: "Hình ảnh sản phẩm.", correct: false },
+        { text: "Sự dễ sử dụng của trang web.", correct: true },
+        { text: "Màu sắc giao diện.", correct: false },
+        { text: "Số lượng sản phẩm.", correct: false }
+    ]
+},
+{
+    question: "Khi thiết kế một cơ sở dữ liệu cho một mạng xã hội, bạn nên chọn loại khóa nào cho trường 'username' để đảm bảo tính duy nhất và tránh trùng lặp?",
+    answers: [
+        { text: "Khóa ngoại.", correct: false },
+        { text: "Khóa chính.", correct: true },
+        { text: "Khóa tổng hợp.", correct: false },
+        { text: "Khóa ứng viên.", correct: false }
+    ]
+},
+{
+    question: "Mối quan hệ 'một-nhiều' trong mô hình thực thể liên kết thường được thể hiện như thế nào trong cơ sở dữ liệu?",
+    answers: [
+        { text: "Bằng cách tạo một bảng mới với khóa chính là khóa ngoại tham chiếu đến bảng chính.", correct: true },
+        { text: "Không thể thể hiện mối quan hệ này trong cơ sở dữ liệu.", correct: false },
+        { text: "Bằng cách thêm một trường mới vào bảng chính.", correct: false },
+        { text: "Bằng cách tạo một chỉ mục trên trường liên kết.", correct: false }
+    ]
+},
+{
+    question: "Nhược điểm lớn nhất của kiến trúc microservices là gì?",
+    answers: [
+        { text: "Hiệu suất cao.", correct: false },
+        { text: "Chi phí phát triển thấp.", correct: false },
+        { text: "Dễ dàng triển khai và quản lý.", correct: false },
+        { text: "Độ phức tạp trong quản lý và phối hợp các dịch vụ.", correct: true }
+    ]
+},
+{
+    question: "Quy trình thiết kế giao diện phải trải qua các hoạt động nào để đảm bảo tính chất khách quan của giao diện thiết kế?",
+    answers: [
+        { text: "Tiếp xúc và trao đổi với khách hàng trong quá trình thiết kế giao diện.", correct: false },
+        { text: "Tiếp xúc trao đổi với khách hàng, cùng khách hàng thiết kế giao diện trên giấy, và cùng khách hàng đánh giá giao diện.", correct: false },
+        { text: "Tìm hiểu kỹ các hoạt động của người sử dụng đối với hệ thống, lập mẫu thử giao diện, tinh chỉnh mẫu thử, đánh giá mẫu thử cùng người dùng sau đó mới tiến hành cài đặt giao diện.", correct: true },
+        { text: "Thiết kế phác thảo giao diện trên giấy, đánh giá giao diện cùng người dùng, thiết kế mô phỏng mẫu thử và cài đặt giao diện chính thức.", correct: false }
+    ]
+},
+{
+    question: "Mục tiêu của giai đoạn phân rã hệ thống trong thiết kế cấu trúc là gì?",
+    answers: [
+        { text: "(2) Phân rã hệ thống thành một tập các chức năng độc lập.", correct: false },
+        { text: "Cả (1), (2) và (3).", correct: true },
+        { text: "(3) Phân rã hệ thống thành mô hình quan hệ thực thể.", correct: false },
+        { text: "(1) Phân rã hệ thống thành một tập các mô-đun.", correct: false }
+    ]
+},
+{
+    question: "Một công ty tài chính muốn xây dựng một hệ thống giao dịch chứng khoán trực tuyến. Hệ thống này yêu cầu tính bảo mật cao, khả năng xử lý giao dịch nhanh chóng và chính xác. Bạn sẽ chọn kiến trúc nào?",
+    answers: [
+        { text: "Kiến trúc client-server.", correct: false },
+        { text: "Kiến trúc service-oriented architecture (SOA).", correct: false },
+        { text: "Kiến trúc microservices.", correct: true },
+        { text: "Tất cả các đáp án (A), (B), (C) đều phù hợp.", correct: false }
+    ]
+},
+{
+    question: "Microservices là gì?",
+    answers: [
+        { text: "Một phương pháp quản lý dự án phần mềm.", correct: false },
+        { text: "Một loại cơ sở dữ liệu phân tán.", correct: false },
+        { text: "Một kiểu kiến trúc phần mềm chia nhỏ ứng dụng thành các dịch vụ nhỏ, độc lập.", correct: true },
+        { text: "Một ngôn ngữ lập trình mới.", correct: false }
+    ]
+},
+{
+    question: "Trong kiến trúc microservices, mỗi dịch vụ thường có một:",
+    answers: [
+        { text: "Cơ sở dữ liệu chung.", correct: false },
+        { text: "Cơ sở dữ liệu riêng.", correct: true },
+        { text: "Chia sẻ cơ sở dữ liệu với các dịch vụ khác.", correct: false },
+        { text: "Không cần cơ sở dữ liệu.", correct: false }
+    ]
+},
+{
+    question: "Thành phần nào sau đây không phải là một bộ phận trong kiến trúc hệ thống?",
+    answers: [
+        { text: "Thành phần điều khiển.", correct: false },
+        { text: "Thành phần cấu trúc dữ liệu.", correct: false },
+        { text: "Thành phần giao tiếp.", correct: false },
+        { text: "Thành phần giao diện.", correct: true }
+    ]
+},
+{
+    question: "Bạn đang phát triển một ứng dụng mạng xã hội với hàng triệu người dùng. Yêu cầu của hệ thống là khả năng mở rộng cao, thời gian đáp ứng nhanh và khả năng xử lý đồng thời lớn. Kiến trúc nào sau đây phù hợp nhất?",
+    answers: [
+        { text: "Kiến trúc đơn khối.", correct: false },
+        { text: "Kiến trúc event-driven.", correct: false },
+        { text: "Kiến trúc microservices.", correct: true },
+        { text: "Kiến trúc phân tầng.", correct: false }
+    ]
+},
+{
+    question: "Khi thiết kế một ứng dụng di động, nguyên tắc thiết kế nào sau đây cần được ưu tiên hàng đầu?",
+    answers: [
+        { text: "Tối ưu hóa cho nhiều nền tảng.", correct: false },
+        { text: "Sử dụng nhiều hiệu ứng chuyển động.", correct: false },
+        { text: "Tối ưu hóa cho màn hình lớn.", correct: false },
+        { text: "Đảm bảo tính nhất quán trong thiết kế.", correct: true }
+    ]
+},
+{
+    question: "Trong kiến trúc phân tầng, lớp nào thường chịu trách nhiệm giao tiếp trực tiếp với người dùng?",
+    answers: [
+        { text: "Lớp giao diện người dùng.", correct: true },
+        { text: "Lớp nghiệp vụ.", correct: false },
+        { text: "Lớp điều khiển.", correct: false },
+        { text: "Lớp truy cập dữ liệu.", correct: false }
+    ]
+},
+{
+    question: "Bạn đang phát triển một ứng dụng IoT (Internet of Things) cần thu thập dữ liệu từ nhiều cảm biến khác nhau. Kiến trúc nào sẽ phù hợp nhất?",
+    answers: [
+        { text: "Kiến trúc dữ liệu tập trung.", correct: false },
+        { text: "Kiến trúc client-server.", correct: false },
+        { text: "Kiến trúc sự kiện.", correct: true },
+        { text: "Kiến trúc microservices.", correct: false }
+    ]
+}
+        ];
+
+        let userAnswers = [];
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function getRequiredSelectionCount(questionText) {
+        const match = questionText.match(/chọn\s*(\d+)/i);
+        return match ? parseInt(match[1]) : 1; // Mặc định là chọn 1 nếu không có "chọn X"
+    }
+
+    function initQuiz() {
+        shuffleArray(questions);
+        const questionsContainer = document.getElementById('questions');
+        questionsContainer.innerHTML = '';
+
+        questions.forEach((q, qIndex) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question-container';
+
+            shuffleArray(q.answers);
+
+            questionDiv.innerHTML = `
+                <div class="question-text">${qIndex + 1}. ${q.question}</div>
+                <div class="answers-container"></div>
+            `;
+
+            const answersContainer = questionDiv.querySelector('.answers-container');
+
+            q.answers.forEach(answer => {
+                const button = document.createElement('button');
+                button.className = 'answer-btn';
+                button.textContent = answer.text;
+                button.addEventListener('click', () => {
+                    selectAnswer(qIndex, answer);
+                    const required = getRequiredSelectionCount(q.question);
+                    const selected = userAnswers[qIndex]?.length || 0;
+                    if (selected === required) {
+                        showImmediateResult(qIndex);
+                    }
+                });
+                answersContainer.appendChild(button);
+            });
+
+            questionsContainer.appendChild(questionDiv);
+        });
+
+        document.querySelector('.submit-btn').style.display = 'none';
+    }
+
+    function selectAnswer(qIndex, answer) {
+        const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+        const buttons = questionDiv.querySelectorAll('.answer-btn');
+
+        const clickedBtn = [...buttons].find(btn => btn.textContent === answer.text);
+        clickedBtn.classList.toggle('selected');
+
+        if (!userAnswers[qIndex]) userAnswers[qIndex] = [];
+
+        const alreadySelected = userAnswers[qIndex].find(a => a.text === answer.text);
+        if (alreadySelected) {
+            userAnswers[qIndex] = userAnswers[qIndex].filter(a => a.text !== answer.text);
+        } else {
+            userAnswers[qIndex].push(answer);
+        }
+    }
+
+    function showImmediateResult(qIndex) {
+        const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+        const buttons = questionDiv.querySelectorAll('.answer-btn');
+        const selectedAnswers = userAnswers[qIndex] || [];
+
+        buttons.forEach(btn => {
+            btn.disabled = true;
+            const answerObj = questions[qIndex].answers.find(a => a.text === btn.textContent);
+            const isSelected = selectedAnswers.find(a => a.text === btn.textContent);
+
+            if (answerObj.correct) {
+                btn.classList.add('correct');
+            } else if (isSelected) {
+                btn.classList.add('incorrect');
+            }
+        });
+    }
+
+    initQuiz();
+    </script>
+</body>
+</html>

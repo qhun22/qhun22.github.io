@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ig: qhun22</title>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Quicksand', sans-serif;
+        }
+    
+        .quiz-container {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px 25px;
+            max-width: 700px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease;
+        }
+    
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+    
+        .question-container {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+    
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: #222;
+        }
+    
+        .answers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    
+        .answer-btn {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+        
+        .answer:hover {
+            background-color: #ffe6f0;
+            transform: scale(0.5);
+        } 
+        .answer-btn:hover {
+            background-color: #f1f1f1;
+            border-color: #aaa;
+        }
+    
+        .answer-btn.selected {
+            background-color: #ffd966;
+            border-color: #f1c40f;
+            font-weight: bold;
+        }
+    
+        .answer-btn.correct {
+            background-color: #b6e9b1;
+            border-color: #2ecc71;
+            color: #2c3e50;
+        }
+    
+        .answer-btn.incorrect {
+            background-color: #f9b3b3;
+            border-color: #e74c3c;
+            color: #2c3e50;
+        }
+    
+        .submit-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    
+        .submit-btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+    
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+    
+        .result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+    
+        .reset-btn {
+            margin-top: 15px;
+            background-color: #27ae60;
+        }
+    
+        .reset-btn:hover {
+            background-color: #1e8449;
+        }
+        .quiz-container {
+            margin-top: 60px;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        @media (max-width: 600px) {
+            .quiz-container {
+                padding: 15px 20px;
+            }
+    
+            h1 {
+                font-size: 1.5rem;
+            }
+    
+            .answer-btn {
+                font-size: 0.95rem;
+            }
+    
+            .submit-btn {
+                width: 100%;
+            }
+    
+            .result {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>NHAP MON TUAN 3</h1>
+        
+        <div id="questions"></div>
+        <div class="submit-container">
+            <button class="submit-btn">Nộp Bài</button>
+            <div class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+        {
+    question: "Tuyên ngôn Agile nhấn mạnh việc ưu tiên phần mềm hoạt động hơn là tài liệu đầy đủ vì lý do gì?",
+    answers: [
+        { text: "Khách hàng quan tâm đến sản phẩm hoạt động tốt hơn.", correct: true },
+        { text: "Viết tài liệu tốn quá nhiều thời gian.", correct: false },
+        { text: "Tài liệu không cần thiết trong phát triển phần mềm.", correct: false },
+        { text: "Tài liệu khó cập nhật.", correct: false }
+    ]
+},
+{
+    question: "Theo Tuyên ngôn Agile, việc cộng tác với khách hàng có ý nghĩa như thế nào?",
+    answers: [
+        { text: "Giúp cho việc quản lý dự án trở nên dễ dàng hơn.", correct: false },
+        { text: "Giúp cho sản phẩm cuối cùng đáp ứng tốt hơn nhu cầu của khách hàng.", correct: true },
+        { text: "Giúp cho việc đàm phán hợp đồng dễ dàng hơn.", correct: false },
+        { text: "Giúp cho khách hàng hiểu rõ hơn về quy trình phát triển phần mềm.", correct: false }
+    ]
+},
+{
+    question: "Theo Tuyên ngôn Agile, yếu tố nào đóng vai trò quan trọng nhất trong thành công của một dự án?",
+    answers: [
+        { text: "Tài liệu kỹ thuật chi tiết.", correct: false },
+        { text: "Quy trình làm việc rõ ràng.", correct: false },
+        { text: "Sự hợp tác và tương tác giữa các thành viên.", correct: true },
+        { text: "Công cụ hỗ trợ hiện đại.", correct: false }
+    ]
+},
+{
+    question: "Theo Tuyên ngôn Agile, khi có sự thay đổi trong dự án, nhóm phát triển nên làm gì?",
+    answers: [
+        { text: "Tìm cách để giảm thiểu tác động của sự thay đổi.", correct: false },
+        { text: "Tuân thủ chặt chẽ kế hoạch ban đầu.", correct: false },
+        { text: "Từ chối các yêu cầu thay đổi.", correct: false },
+        { text: "Linh hoạt thích ứng với những thay đổi.", correct: true }
+    ]
+},
+{
+    question: "Theo Tuyên ngôn Agile, mục tiêu cuối cùng của quá trình phát triển phần mềm là gì?",
+    answers: [
+        { text: "Làm hài lòng khách hàng.", correct: true },
+        { text: "Tạo ra nhiều tài liệu.", correct: false },
+        { text: "Hoàn thành dự án đúng hạn.", correct: false },
+        { text: "Tuân thủ các quy trình.", correct: false }
+    ]
+},
+{
+    question: "Agile phù hợp với loại dự án nào?",
+    answers: [
+        { text: "Dự án có yêu cầu thay đổi thường xuyên.", correct: true },
+        { text: "Dự án có yêu cầu rất rõ ràng và ổn định.", correct: false },
+        { text: "Dự án có quy mô nhỏ và đơn giản.", correct: false },
+        { text: "Dự án có thời gian thực hiện rất ngắn.", correct: false }
+    ]
+},
+{
+    question: "Một công ty đang phát triển một phần mềm mới. Khách hàng yêu cầu thêm một tính năng hoàn toàn mới vào giữa dự án. Theo quan điểm của Agile, công ty nên làm gì?",
+    answers: [
+        { text: "Hoàn thành dự án theo đúng kế hoạch ban đầu rồi mới thực hiện yêu cầu mới.", correct: false },
+        { text: "Tiếp tục thực hiện theo kế hoạch ban đầu và bỏ qua yêu cầu mới.", correct: false },
+        { text: "Đánh giá tác động của yêu cầu mới và điều chỉnh kế hoạch phù hợp.", correct: true },
+        { text: "Từ chối yêu cầu của khách hàng vì điều này vi phạm hợp đồng.", correct: false }
+    ]
+},
+{
+    question: "Ưu điểm lớn nhất của Agile là gì?",
+    answers: [
+        { text: "Giảm thiểu rủi ro.", correct: false },
+        { text: "Giảm chất lượng sản phẩm.", correct: false },
+        { text: "Nâng cao khả năng thích ứng với thay đổi.", correct: true },
+        { text: "Tăng chi phí phát triển.", correct: false }
+    ]
+},
+{
+    question: "Scrum Master có phải là một người quản lý truyền thống không?",
+    answers: [
+        { text: "Có, Scrum Master chịu trách nhiệm về thành công của dự án.", correct: false },
+        { text: "Có, Scrum Master có đầy đủ quyền hạn để ra quyết định.", correct: false },
+        { text: "Không, Scrum Master là một người phục vụ nhóm và giúp nhóm đạt được mục tiêu.", correct: true },
+        { text: "Không, Scrum Master chỉ chịu trách nhiệm về kỹ thuật.", correct: false }
+    ]
+},
+{
+    question: "Tại sao Sprint Review lại quan trọng trong Scrum?",
+    answers: [
+        { text: "Để giải quyết các vấn đề phát sinh trong Sprint.", correct: false },
+        { text: "Để đánh giá tiến độ của từng thành viên trong nhóm.", correct: false },
+        { text: "Để lên kế hoạch cho Sprint tiếp theo.", correct: false },
+        { text: "Để trình diễn sản phẩm đã hoàn thành và thu thập phản hồi từ khách hàng.", correct: true }
+    ]
+},
+{
+    question: "Development Team có trách nhiệm gì trong một dự án Scrum?",
+    answers: [
+        { text: "Thực hiện công việc phát triển sản phẩm.", correct: true },
+        { text: "Quản lý dự án.", correct: false },
+        { text: "Đào tạo các thành viên mới.", correct: false },
+        { text: "Xác định các yêu cầu của khách hàng.", correct: false }
+    ]
+},
+{
+    question: "Product Backlog có vai trò gì trong Scrum?",
+    answers: [
+        { text: "Là danh sách tất cả các yêu cầu và tính năng của sản phẩm.", correct: true },
+        { text: "Là danh sách các công việc đã hoàn thành.", correct: false },
+        { text: "Là danh sách các công việc cần làm trong một Sprint.", correct: false },
+        { text: "Là danh sách các thành viên trong nhóm.", correct: false }
+    ]
+},
+{
+    question: "Mối quan hệ giữa Product Backlog, Sprint Backlog và Increment là gì?",
+    answers: [
+        { text: "Không có mối quan hệ nào.", correct: false },
+        { text: "Product Backlog là danh sách tổng thể, Sprint Backlog là một phần của Product Backlog được chọn để tạo ra Increment trong mỗi Sprint.", correct: true },
+        { text: "Increment là danh sách tổng thể, bao gồm cả Product Backlog và Sprint Backlog.", correct: false },
+        { text: "Sprint Backlog là danh sách tổng thể, Product Backlog là một phần của Sprint Backlog.", correct: false }
+    ]
+},
+{
+    question: "Sprint Retrospective tập trung vào việc gì?",
+    answers: [
+        { text: "Giải quyết các vấn đề phát sinh trong Sprint.", correct: false },
+        { text: "Lên kế hoạch cho Sprint tiếp theo.", correct: false },
+        { text: "Đánh giá quá trình làm việc và tìm cách cải thiện.", correct: true },
+        { text: "Đánh giá sản phẩm đã hoàn thành.", correct: false }
+    ]
+},
+{
+    question: "Mục đích chính của Sprint Planning là gì?",
+    answers: [
+        { text: "Cải thiện quy trình làm việc.", correct: false },
+        { text: "Lên kế hoạch cho công việc trong một Sprint.", correct: true },
+        { text: "Đánh giá sản phẩm đã hoàn thành.", correct: false },
+        { text: "Giải quyết các vấn đề phát sinh.", correct: false }
+    ]
+},
+{
+    question: "Sprint Review thường được tổ chức vào thời điểm nào?",
+    answers: [
+        { text: "Hàng ngày.", correct: false },
+        { text: "Vào đầu mỗi Sprint.", correct: false },
+        { text: "Vào cuối mỗi Sprint.", correct: true },
+        { text: "Hàng tuần.", correct: false }
+    ]
+},
+{
+    question: "Daily Scrum được tổ chức với mục đích gì?",
+    answers: [
+        { text: "Để lên kế hoạch chi tiết cho công việc trong ngày.", correct: false },
+        { text: "Để đồng bộ hóa công việc và giải quyết các trở ngại.", correct: true },
+        { text: "Để báo cáo tiến độ công việc cho quản lý.", correct: false },
+        { text: "Để đánh giá chất lượng sản phẩm.", correct: false }
+    ]
+},
+{
+    question: "Sprint Retrospective thường được tổ chức vào thời điểm nào?",
+    answers: [
+        { text: "Bất cứ khi nào nhóm muốn.", correct: false },
+        { text: "Vào đầu mỗi Sprint.", correct: false },
+        { text: "Ngay sau Sprint Review.", correct: true },
+        { text: "Vào cuối mỗi Sprint.", correct: false }
+    ]
+},
+{
+    question: "Tại sao Sprint Review lại quan trọng đối với khách hàng?",
+    answers: [
+        { text: "Vì họ có thể xem trước sản phẩm.", correct: false },
+        { text: "Vì họ có thể kiểm soát quá trình phát triển.", correct: false },
+        { text: "Vì họ có thể cung cấp phản hồi để cải thiện sản phẩm.", correct: true },
+        { text: "Vì họ có thể quyết định các tính năng mới.", correct: false }
+    ]
+},
+{
+    question: "Một Product Owner liên tục thay đổi yêu cầu trong quá trình Sprint. Điều này sẽ ảnh hưởng như thế nào đến nhóm?",
+    answers: [
+        { text: "Tăng động lực làm việc của nhóm.", correct: false },
+        { text: "Không ảnh hưởng gì vì nhóm đã quen với việc thay đổi.", correct: false },
+        { text: "Giúp nhóm linh hoạt hơn.", correct: false },
+        { text: "Gây ảnh hưởng đến tiến độ và chất lượng của sản phẩm.", correct: true }
+    ]
+},
+{
+    question: "Tuyên ngôn Agile ưu tiên phần mềm chạy tốt hơn là tài liệu đầy đủ vì lý do gì?",
+    answers: [
+        { text: "Vì viết tài liệu tốn quá nhiều thời gian.", correct: false },
+        { text: "Vì tài liệu khó cập nhật.", correct: false },
+        { text: "Vì phần mềm chạy tốt sẽ tự động tạo ra tài liệu.", correct: false },
+        { text: "Vì khách hàng quan tâm đến giá trị thực tế mà phần mềm mang lại.", correct: true }
+    ]
+},
+{
+    question: "Tại sao Agile khuyến khích sự linh hoạt trong quá trình phát triển phần mềm?",
+    answers: [
+        { text: "Vì có thể thay đổi công nghệ.", correct: false },
+        { text: "Vì yêu cầu của khách hàng có thể thay đổi trong quá trình thực hiện.", correct: true },
+        { text: "Vì các thành viên trong nhóm có thể thay đổi ý kiến.", correct: false },
+        { text: "Vì công nghệ phát triển rất nhanh.", correct: false }
+    ]
+},
+{
+    question: "Điểm khác biệt cơ bản giữa Agile và các mô hình phát triển truyền thống là gì?",
+    answers: [
+        { text: "Agile có các giai đoạn phát triển cố định, trong khi các mô hình truyền thống linh hoạt hơn.", correct: false },
+        { text: "Agile nhấn mạnh sự linh hoạt và thích ứng, trong khi các mô hình truyền thống có quy trình chặt chẽ.", correct: true },
+        { text: "Agile tập trung vào tài liệu, trong khi các mô hình truyền thống tập trung vào sản phẩm.", correct: false },
+        { text: "Agile không cần đến việc kiểm thử, trong khi các mô hình truyền thống rất chú trọng đến kiểm thử.", correct: false }
+    ]
+},
+{
+    question: "Scrum Master có vai trò gì trong việc giải quyết xung đột trong nhóm?",
+    answers: [
+        { text: "Không can thiệp vào các vấn đề của nhóm.", correct: false },
+        { text: "Tạo điều kiện để nhóm tự giải quyết vấn đề.", correct: true },
+        { text: "Quyết định ai đúng ai sai.", correct: false },
+        { text: "Ép buộc các thành viên phải đồng ý với nhau.", correct: false }
+    ]
+},
+{
+    question: "Sự khác biệt giữa Product Backlog và Sprint Backlog là gì?",
+    answers: [
+        { text: "Product Backlog là danh sách tất cả các yêu cầu, còn Sprint Backlog là một phần của Product Backlog được chọn để thực hiện trong một Sprint.", correct: true },
+        { text: "Product Backlog là danh sách ưu tiên, còn Sprint Backlog là danh sách không ưu tiên.", correct: false },
+        { text: "Không có sự khác biệt.", correct: false },
+        { text: "Product Backlog là danh sách các công việc đã hoàn thành, còn Sprint Backlog là danh sách các công việc đang thực hiện.", correct: false }
+    ]
+},
+{
+    question: "Tại sao Scrum khuyến khích việc tự tổ chức trong Development Team?",
+    answers: [
+        { text: "Để dễ dàng quản lý nhóm.", correct: false },
+        { text: "Để tăng cường tính chủ động và trách nhiệm của từng thành viên.", correct: true },
+        { text: "Để giảm bớt công việc cho Scrum Master.", correct: false },
+        { text: "Để giảm chi phí nhân sự.", correct: false }
+    ]
+},
+{
+    question: "Trong một Sprint, một thành viên trong nhóm liên tục gặp khó khăn và không thể hoàn thành công việc được giao, Scrum Master nên làm gì?",
+    answers: [
+        { text: "Mắng mỏ thành viên đó để họ cố gắng hơn.", correct: false },
+        { text: "Bỏ qua vấn đề này và tiếp tục làm việc với các thành viên khác.", correct: false },
+        { text: "Tổ chức một cuộc họp để tìm hiểu nguyên nhân và hỗ trợ thành viên đó.", correct: true },
+        { text: "Giao lại công việc đó cho thành viên khác.", correct: false }
+    ]
+},
+{
+    question: "Đâu là một trong những đặc điểm của XP?",
+    answers: [
+        { text: "Quy hoạch chi tiết từ đầu.", correct: false },
+        { text: "Lập trình cặp.", correct: true },
+        { text: "Tập trung vào tài liệu thiết kế chi tiết.", correct: false },
+        { text: "Quy trình làm việc cứng nhắc.", correct: false }
+    ]
+},
+{
+    question: "Extreme Programming (XP) là gì?",
+    answers: [
+        { text: "Một trong những công cụ quản lý dự án.", correct: false },
+        { text: "Một phương pháp phát triển phần mềm linh hoạt.", correct: true },
+        { text: "Một ngôn ngữ lập trình mới.", correct: false },
+        { text: "Một mô hình kiểm thử phần mềm.", correct: false }
+    ]
+},
+        ];
+
+        let userAnswers = [];
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function getRequiredSelectionCount(questionText) {
+        const match = questionText.match(/chọn\s*(\d+)/i);
+        return match ? parseInt(match[1]) : 1; // Mặc định là chọn 1 nếu không có "chọn X"
+    }
+
+    function initQuiz() {
+        shuffleArray(questions);
+        const questionsContainer = document.getElementById('questions');
+        questionsContainer.innerHTML = '';
+
+        questions.forEach((q, qIndex) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question-container';
+
+            shuffleArray(q.answers);
+
+            questionDiv.innerHTML = `
+                <div class="question-text">${qIndex + 1}. ${q.question}</div>
+                <div class="answers-container"></div>
+            `;
+
+            const answersContainer = questionDiv.querySelector('.answers-container');
+
+            q.answers.forEach(answer => {
+                const button = document.createElement('button');
+                button.className = 'answer-btn';
+                button.textContent = answer.text;
+                button.addEventListener('click', () => {
+                    selectAnswer(qIndex, answer);
+                    const required = getRequiredSelectionCount(q.question);
+                    const selected = userAnswers[qIndex]?.length || 0;
+                    if (selected === required) {
+                        showImmediateResult(qIndex);
+                    }
+                });
+                answersContainer.appendChild(button);
+            });
+
+            questionsContainer.appendChild(questionDiv);
+        });
+
+        document.querySelector('.submit-btn').style.display = 'none';
+    }
+
+    function selectAnswer(qIndex, answer) {
+        const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+        const buttons = questionDiv.querySelectorAll('.answer-btn');
+
+        const clickedBtn = [...buttons].find(btn => btn.textContent === answer.text);
+        clickedBtn.classList.toggle('selected');
+
+        if (!userAnswers[qIndex]) userAnswers[qIndex] = [];
+
+        const alreadySelected = userAnswers[qIndex].find(a => a.text === answer.text);
+        if (alreadySelected) {
+            userAnswers[qIndex] = userAnswers[qIndex].filter(a => a.text !== answer.text);
+        } else {
+            userAnswers[qIndex].push(answer);
+        }
+    }
+
+    function showImmediateResult(qIndex) {
+        const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+        const buttons = questionDiv.querySelectorAll('.answer-btn');
+        const selectedAnswers = userAnswers[qIndex] || [];
+
+        buttons.forEach(btn => {
+            btn.disabled = true;
+            const answerObj = questions[qIndex].answers.find(a => a.text === btn.textContent);
+            const isSelected = selectedAnswers.find(a => a.text === btn.textContent);
+
+            if (answerObj.correct) {
+                btn.classList.add('correct');
+            } else if (isSelected) {
+                btn.classList.add('incorrect');
+            }
+        });
+    }
+
+    initQuiz();
+    </script>
+</body>
+</html>

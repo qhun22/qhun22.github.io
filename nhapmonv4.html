@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ig: qhun22</title>
+   
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Quicksand', sans-serif;
+        }
+    
+        .quiz-container {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px 25px;
+            max-width: 700px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease;
+        }
+    
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+    
+        .question-container {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+    
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: #222;
+        }
+    
+        .answers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    
+        .answer-btn {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+        
+        .answer:hover {
+            background-color: #ffe6f0;
+            transform: scale(0.5);
+        } 
+        .answer-btn:hover {
+            background-color: #f1f1f1;
+            border-color: #aaa;
+        }
+    
+        .answer-btn.selected {
+            background-color: #ffd966;
+            border-color: #f1c40f;
+            font-weight: bold;
+        }
+    
+        .answer-btn.correct {
+            background-color: #b6e9b1;
+            border-color: #2ecc71;
+            color: #2c3e50;
+        }
+    
+        .answer-btn.incorrect {
+            background-color: #f9b3b3;
+            border-color: #e74c3c;
+            color: #2c3e50;
+        }
+    
+        .submit-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    
+        .submit-btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+    
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+    
+        .result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+    
+        .reset-btn {
+            margin-top: 15px;
+            background-color: #27ae60;
+        }
+    
+        .reset-btn:hover {
+            background-color: #1e8449;
+        }
+    
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        @media (max-width: 600px) {
+            .quiz-container {
+                padding: 15px 20px;
+            }
+    
+            h1 {
+                font-size: 1.5rem;
+            }
+    
+            .answer-btn {
+                font-size: 0.95rem;
+            }
+    
+            .submit-btn {
+                width: 100%;
+            }
+    
+            .result {
+                font-size: 1rem;
+            }
+        }
+        .quiz-container {
+            margin-top: 60px;
+            }
+    </style>
+    
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>NHAP MON TUAN 4</h1>
+        <div id="timer" style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ffeaa7;
+    color: #d63031;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+    z-index: 999;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+">
+    ⏱ Thời gian còn lại: 15 phút 00 giây
+</div>
+
+        <div id="questions"></div>
+        <div class="submit-container">
+            <button class="submit-btn">Nộp Bài</button>
+            <div class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+        {
+    question: "WBS là viết tắt của cụm từ nào và có ý nghĩa là gì trong quản lý dự án?",
+    answers: [
+        { text: "Work Breakdown System – Hệ thống phân tích công việc.", correct: false },
+        { text: "Work Breakdown Schedule – Lịch trình phân tích công việc.", correct: false },
+        { text: "Work Breakdown Structure – Cấu trúc phân tích công việc.", correct: true },
+        { text: "Work Breakdown Strategy – Chiến lược phân tích công việc.", correct: false }
+    ]
+},
+{
+    question: "Mục tiêu của lập kế hoạch dự án phần mềm là:",
+    answers: [
+        { text: "Xác định lịch biểu và ước lượng chi phí.", correct: true },
+        { text: "Xác định tính khả thi của dự án.", correct: false },
+        { text: "Xác định lợi ích chính khi xây dựng dự án.", correct: false },
+        { text: "Sử dụng dữ liệu trong quá khứ.", correct: false }
+    ]
+},
+{
+    question: "Mối quan hệ giữa Bản kế hoạch dự án và lịch biểu dự án là gì?",
+    answers: [
+        { text: "Bản kế hoạch dự án và lịch biểu dự án là hai tài liệu không liên quan gì với nhau.", correct: false },
+        { text: "Lịch biểu dự án là một phần của bản kế hoạch dự án.", correct: true },
+        { text: "Bản kế hoạch dự án là lịch biểu dự án.", correct: false },
+        { text: "Bản kế hoạch là một phần của lịch biểu dự án.", correct: false }
+    ]
+},
+{
+    question: "Các mục tiêu của quản lý dự án là gì?",
+    answers: [
+        { text: "Bàn giao phần mềm đúng hạn, trong phạm vi dự toán, phù hợp với yêu cầu của khách hàng.", correct: true },
+        { text: "Thu lại lợi nhuận cao nhất, điều hành hiệu quả sự giao tiếp giữa các thành viên trong tổ chức phát triển phần mềm.", correct: false },
+        { text: "Thu được phần mềm với chất lượng cao nhất có thể.", correct: false },
+        { text: "Giảm chi phí phát triển phần mềm.", correct: false }
+    ]
+},
+{
+    question: "Phương pháp ước lượng thời gian nào sau đây chia nhỏ công việc thành các hoạt động nhỏ hơn để ước lượng thời gian chi tiết?",
+    answers: [
+        { text: "Phương pháp đường cong S.", correct: false },
+        { text: "Ước lượng từ trên xuống.", correct: false },
+        { text: "Ước lượng từ dưới lên.", correct: true },
+        { text: "Phương pháp PERT.", correct: false }
+    ]
+},
+{
+    question: "Phương pháp PERT sử dụng ba ước lượng thời gian là gì?",
+    answers: [
+        { text: "Thời gian thực hiện, thời gian chờ, thời gian gián đoạn.", correct: false },
+        { text: "Thời gian hoàn thành, thời gian dự trữ, thời gian trễ.", correct: false },
+        { text: "Thời gian bắt đầu sớm nhất, thời gian bắt đầu muộn nhất, thời gian kết thúc sớm nhất.", correct: false },
+        { text: "Thời gian lạc quan, thời gian bi quan, thời gian trung bình.", correct: true }
+    ]
+},
+{
+    question: "Mục tiêu chính của việc lập kế hoạch quản lý rủi ro trong dự án là gì?",
+    answers: [
+        { text: "Gán trách nhiệm cho các thành viên trong nhóm để xử lý rủi ro.", correct: false },
+        { text: "Chuẩn bị các phương án ứng phó để giảm thiểu tác động của rủi ro.", correct: true },
+        { text: "Xác định tất cả các rủi ro có thể xảy ra.", correct: false },
+        { text: "Loại bỏ hoàn toàn mọi rủi ro.", correct: false }
+    ]
+},
+{
+    question: "Những kỹ thuật nào sau đây thường được sử dụng để tạo WBS? (chọn 3)",
+    answers: [
+        { text: "Phân tích từ dưới lên (bottom-up).", correct: true },
+        { text: "Phương pháp PERT.", correct: false },
+        { text: "Phương pháp tương tự (Analogy).", correct: true },
+        { text: "Phương pháp CPM.", correct: false },
+        { text: "Phương pháp từ trên xuống (Top-down).", correct: true },
+        { text: "Phương pháp phân tích SWOT.", correct: false }
+    ]
+},
+{
+    question: "Khi sử dụng phương pháp phân tích từ trên xuống, yếu tố nào sau đây là quan trọng nhất?",
+    answers: [
+        { text: "Xác định các nguồn lực cần thiết.", correct: false },
+        { text: "Xác định các bên liên quan.", correct: false },
+        { text: "Xác định thời gian hoàn thành dự án.", correct: false },
+        { text: "Xác định rõ mục tiêu của dự án.", correct: true },
+        { text: "Xác định các rủi ro tiềm ẩn.", correct: false }
+    ]
+},
+{
+    question: "Những kỹ thuật ước lượng thời gian nào sau đây thường được sử dụng trong quản lý dự án? (chọn 2)",
+    answers: [
+        { text: "Phương pháp phân tích từ dưới lên.", correct: true },
+        { text: "Phương pháp phân tích từ trên xuống.", correct: true },
+        { text: "Phương pháp PERT.", correct: false },
+        { text: "Phương pháp CPM.", correct: false }
+    ]
+},
+{
+    question: "Khi xây dựng WBS cho một dự án triển khai hệ thống quản lý cơ sở dữ liệu, yếu tố nào sau đây cần được đặc biệt chú trọng?",
+    answers: [
+        { text: "Các công việc liên quan đến cài đặt phần cứng.", correct: false },
+        { text: "Các công việc liên quan đến cấu hình phần mềm.", correct: false },
+        { text: "Các công việc liên quan đến di chuyển dữ liệu.", correct: false },
+        { text: "Cả (A), (B), (C).", correct: true }
+    ]
+},
+{
+    question: "Trong quá trình thực hiện dự án, bạn phát hiện ra một số thay đổi trong yêu cầu. Điều này sẽ ảnh hưởng như thế nào đến WBS và bạn nên làm gì?",
+    answers: [
+        { text: "Tạo một WBS mới.", correct: false },
+        { text: "Bỏ qua những thay đổi này.", correct: false },
+        { text: "Tiếp tục thực hiện WBS cũ.", correct: false },
+        { text: "Cập nhật WBS để phản ánh những thay đổi mới.", correct: true }
+    ]
+},
+{
+    question: "Các bước cơ bản trong quá trình lập kế hoạch quản lý rủi ro bao gồm:",
+    answers: [
+        { text: "Lập kế hoạch dự án, phân công nhiệm vụ, theo dõi tiến độ, đánh giá hiệu quả.", correct: false },
+        { text: "Xác định rủi ro, đánh giá rủi ro, lập kế hoạch ứng phó, theo dõi và kiểm soát.", correct: true },
+        { text: "Phân tích SWOT, xây dựng ma trận RACI, lập kế hoạch truyền thông, quản lý thay đổi.", correct: false },
+        { text: "Xác định phạm vi dự án, phân tích rủi ro, lập kế hoạch chi phí, kiểm soát chất lượng.", correct: false }
+    ]
+},
+{
+    question: "Bạn đang làm việc cho một công ty khởi nghiệp và muốn phát triển một sản phẩm phần mềm mới. Bạn dự định sử dụng mô hình phát triển Agile để giảm thiểu rủi ro và linh hoạt thích ứng với thay đổi. Tuy nhiên, mô hình này có thể khiến chi phí khó dự đoán hơn so với các mô hình truyền thống. Để giải quyết vấn đề này, bạn nên làm gì?",
+    answers: [
+        { text: "Không cần ước tính các chi phí, chỉ cần tập trung vào phát triển sản phẩm.", correct: false },
+        { text: "Tăng gấp đôi số tiền dự trữ cho các rủi ro.", correct: false },
+        { text: "Chia nhỏ dự án thành các giai đoạn ngắn và ước tính chi phí cho từng giai đoạn.", correct: true },
+        { text: "Ước tính chi phí một lần duy nhất cho toàn bộ dự án.", correct: false }
+    ]
+},
+{
+    question: "Trong quá trình thực hiện một dự án phát triển ứng dụng di động, bạn nhận thấy rằng một số tính năng mới đã được khách hàng yêu cầu. Để đáp ứng yêu cầu của khách hàng, bạn nên:",
+    answers: [
+        { text: "Đánh giá tác động của các tính năng mới đến kế hoạch dự án và đưa ra quyết định phù hợp.", correct: true },
+        { text: "Từ chối yêu cầu của khách hàng vì điều này sẽ làm chậm tiến độ dự án.", correct: false },
+        { text: "Bỏ qua các tính năng đã được lên kế hoạch ban đầu và tập trung vào các tính năng mới.", correct: false },
+        { text: "Thực hiện các tính năng mới ngay lập tức mà không cần đánh giá.", correct: false }
+    ]
+},
+{
+    question: "Bước đầu tiên trong lập kế hoạch dự án là:",
+    answers: [
+        { text: "Xác định giá thành sản phẩm, ước lượng các tham số, độ đo.", correct: false },
+        { text: "Lựa chọn mô hình nhóm dự án, thành lập tổ chức phát triển phần mềm.", correct: false },
+        { text: "Xác định mục tiêu và phạm vi, các chính sách của dự án.", correct: true },
+        { text: "Xác định ràng buộc của dự án, huấn luyện nhân sự.", correct: false }
+    ]
+},
+{
+    question: "Quản lý phạm vi dự án là gì?",
+    answers: [
+        { text: "Quá trình lập kế hoạch chi tiết các hoạt động của dự án.", correct: false },
+        { text: "Quá trình xác định và kiểm soát những gì được bao gồm và không được bao gồm trong dự án.", correct: true },
+        { text: "Quá trình theo dõi và kiểm soát tiến độ của dự án.", correct: false },
+        { text: "Quá trình phân bổ tài nguyên cho các hoạt động của dự án.", correct: false }
+    ]
+},
+{
+    question: "Cấp độ thấp nhất trong một WBS thường được gọi là gì?",
+    answers: [
+        { text: "Gói công việc.", correct: true },
+        { text: "Sản phẩm.", correct: false },
+        { text: "Nhiệm vụ.", correct: false },
+        { text: "Hoạt động.", correct: false }
+    ]
+},
+{
+    question: "Giả sử trong WBS của dự án, bạn có một gói công việc là 'Phát triển tính năng thanh toán'. Gói công việc nào sau đây có thể là một gói công việc con phù hợp?",
+    answers: [
+        { text: "Xây dựng cơ sở dữ liệu.", correct: false },
+        { text: "Thiết kế logo.", correct: false },
+        { text: "Lập trình backend.", correct: true },
+        { text: "Kiểm tra tính năng thanh toán.", correct: false }
+    ]
+},
+{
+    question: "Một công ty muốn triển khai một hệ thống quản lý nguồn nhân lực mới. Họ đã xây dựng WBS cho dự án này. Sau khi hoàn thành 50% dự án, họ nhận ra rằng có một số công việc quan trọng đã bị bỏ sót trong WBS ban đầu. Điều này cho thấy:",
+    answers: [
+        { text: "Phạm vi của dự án đã thay đổi đáng kể.", correct: false },
+        { text: "WBS cần được cập nhật thường xuyên để phản ánh những thay đổi trong dự án.", correct: true },
+        { text: "WBS đã được xây dựng một cách chi tiết và đầy đủ.", correct: false },
+        { text: "Các thành viên trong nhóm dự án không hiểu rõ về WBS.", correct: false }
+    ]
+},
+{
+    question: "Trong quá trình thực hiện dự án, khách hàng yêu cầu thêm một tính năng mới không nằm trong phạm vi ban đầu. Nhóm dự án nên xử lý tình huống này như thế nào?",
+    answers: [
+        { text: "Chấp nhận yêu cầu của khách hàng và điều chỉnh lại kế hoạch dự án.", correct: false },
+        { text: "Thực hiện cuộc họp đánh giá tác động của yêu cầu mới đến dự án, sau đó quyết định có nên chấp nhận yêu cầu này hay không.", correct: true },
+        { text: "Thêm tính năng mới vào dự án mà không cần cập nhật tài liệu dự án.", correct: false },
+        { text: "Từ chối yêu cầu của khách hàng vì nó sẽ làm ảnh hưởng đến tiến độ và ngân sách của dự án.", correct: false }
+    ]
+},
+{
+    question: "Bạn đang so sánh hai nhà cung cấp phát triển phần mềm để lựa chọn giải pháp phù hợp cho dự án của mình. Nhà cung cấp phần mềm với giá bản quyền 100 triệu đồng và chi phí bảo trì hàng năm là 10 triệu đồng. Nhà cung cấp phần mềm với giá bản quyền 80 triệu đồng nhưng chi phí bảo trì hàng năm là 15 triệu đồng. Nếu dự án của bạn kéo dài 5 năm, bạn nên chọn nhà cung cấp nào để tiết kiệm chi phí hơn?",
+    answers: [
+        { text: "Cả hai nhà cung cấp đều như nhau.", correct: false },
+        { text: "Nhà cung cấp B.", correct: false },
+        { text: "Nhà cung cấp A.", correct: true },
+        { text: "Cần thêm thông tin để đưa ra quyết định.", correct: false }
+    ]
+},
+{
+    question: "Một dự án phát triển phần mềm đang trong giai đoạn thử nghiệm. Dự kiến ban đầu, giai đoạn này sẽ kéo dài 4 tuần. Tuy nhiên, sau 2 tuần, nhóm phát triển phát hiện ra một lỗi nghiêm trọng ảnh hưởng đến chức năng cốt lõi của phần mềm. Để khắc phục lỗi này, nhóm cần thêm 2 tuần nữa. Theo bạn, điều nào sau đây là cách ứng phó phù hợp nhất với tình huống này?",
+    answers: [
+        { text: "Tiếp tục thực hiện theo kế hoạch ban đầu, bỏ qua lỗi vừa phát hiện.", correct: false },
+        { text: "Điều chỉnh kế hoạch dự án, tăng cường nguồn lực cho giai đoạn thử nghiệm và báo cáo tiến độ mới cho khách hàng.", correct: true },
+        { text: "Tìm kiếm một nhà cung cấp dịch vụ bên ngoài để khắc phục lỗi.", correct: false },
+        { text: "Thông báo cho khách hàng về sự chậm trễ và yêu cầu gia hạn thời gian dự án.", correct: false }
+    ]
+},
+{
+    question: "Trình tự các hoạt động quản lý dự án gồm:",
+    answers: [
+        { text: "Lập lịch, tổ chức, lãnh đạo, giám sát, định giá, lập báo cáo, kết thúc dự án.", correct: false },
+        { text: "Xác định dự án, tổ chức, lập kế hoạch, điều hành, giám sát, kết thúc dự án.", correct: true },
+        { text: "Lập kế hoạch, tổ chức, giám sát, hiệu chỉnh, lập báo cáo, kết thúc dự án.", correct: false },
+        { text: "Lập lịch, lập kế hoạch, tổ chức, xác định, giám sát, hiệu chỉnh, lập báo cáo, kết thúc dự án.", correct: false }
+    ]
+},
+{
+    question: "WBS là gì?",
+    answers: [
+        { text: "Một phần mềm quản lý dự án.", correct: false },
+        { text: "Một công cụ lập kế hoạch tài chính cho dự án.", correct: false },
+        { text: "Một phương pháp quản lý dự án giúp chia nhỏ công việc thành các phần nhỏ hơn, dễ quản lý hơn.", correct: true },
+        { text: "Một loại biểu đồ Gantt dùng để theo dõi tiến độ dự án.", correct: false }
+    ]
+},
+{
+    question: "Phương pháp ước lượng thời gian nào sau đây dựa trên kinh nghiệm và phán đoán của người quản lý?",
+    answers: [
+        { text: "Phương pháp đường cong S.", correct: false },
+        { text: "Ước lượng từ dưới lên.", correct: false },
+        { text: "Ước lượng từ trên xuống.", correct: true },
+        { text: "Phương pháp PERT.", correct: false }
+    ]
+},
+{
+    question: "Khi xây dựng WBS, cần tuân thủ nguyên tắc nào sau đây? (chọn 3 đáp án)",
+    answers: [
+        { text: "Các gói công việc phải độc lập với nhau.", correct: true },
+        { text: "Mỗi công việc chỉ thuộc về một gói công việc.", correct: true },
+        { text: "Các gói công việc phải được giao cho các thành viên có cùng kỹ năng.", correct: false },
+        { text: "Các gói công việc phải bao phủ toàn bộ phạm vi dự án.", correct: true },
+        { text: "Các gói công việc phải có kích thước tương đương nhau.", correct: false }
+    ]
+},
+{
+    question: "Trong quá trình tạo WBS cho một dự án phát triển website, bạn gặp phải khó khăn trong việc xác định các công việc chi tiết cho giai đoạn thiết kế giao diện. Bạn nên làm gì?",
+    answers: [
+        { text: "Tìm kiếm sự hỗ trợ từ các nhà thiết kế giao diện.", correct: true },
+        { text: "Tìm kiếm các ví dụ WBS tương tự trên mạng.", correct: false },
+        { text: "Sử dụng một công cụ tạo WBS tự động.", correct: false },
+        { text: "Bỏ qua giai đoạn này và chuyển sang giai đoạn tiếp theo.", correct: false }
+    ]
+},
+{
+    question: "Bạn đang quản lý dự án phát triển một ứng dụng di động thương mại điện tử. Dự án này có các giai đoạn chính: phân tích yêu cầu, thiết kế giao diện, phát triển backend, testing và triển khai. Bạn sẽ sử dụng kỹ thuật nào để tạo WBS phù hợp nhất cho dự án này?",
+    answers: [
+        { text: "Sử dụng công cụ chuyên dụng để tự động tạo WBS.", correct: false },
+        { text: "Phân tích từ dưới lên (bottom-up).", correct: false },
+        { text: "Kết hợp phân tích từ dưới lên và phân tích từ trên xuống.", correct: true },
+        { text: "Phân tích từ trên xuống (top-down).", correct: false }
+    ]
+},
+{
+    question: "Trong quá trình xây dựng WBS, điều nào sau đây là quan trọng nhất?",
+    answers: [
+        { text: "Việc tuân thủ các tiêu chuẩn quốc tế về quản lý dự án.", correct: false },
+        { text: "Việc sử dụng các phần mềm quản lý dự án chuyên dụng.", correct: false },
+        { text: "Sự tham gia của tất cả các thành viên trong nhóm dự án.", correct: false },
+        { text: "Việc xác định rõ ràng các mục tiêu của dự án.", correct: true }
+    ]
+},
+        ];
+
+        let userAnswers = [];
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function getRequiredSelectionCount(questionText) {
+        const match = questionText.match(/chọn\s*(\d+)/i);
+        return match ? parseInt(match[1]) : 1;
+    }
+
+    function initQuiz() {
+        shuffleArray(questions);
+        const questionsContainer = document.getElementById('questions');
+        questionsContainer.innerHTML = '';
+
+        questions.forEach((q, qIndex) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question-container';
+
+            shuffleArray(q.answers);
+
+            questionDiv.innerHTML = `
+                <div class="question-text">${qIndex + 1}. ${q.question}</div>
+                <div class="answers-container"></div>
+            `;
+
+            const answersContainer = questionDiv.querySelector('.answers-container');
+
+            q.answers.forEach(answer => {
+                const button = document.createElement('button');
+                button.className = 'answer-btn';
+                button.textContent = answer.text;
+                button.addEventListener('click', () => {
+                    selectAnswer(qIndex, answer);
+                });
+                answersContainer.appendChild(button);
+            });
+
+            questionsContainer.appendChild(questionDiv);
+        });
+    }
+
+    function selectAnswer(qIndex, answer) {
+        const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+        const buttons = questionDiv.querySelectorAll('.answer-btn');
+
+        const clickedBtn = [...buttons].find(btn => btn.textContent === answer.text);
+        clickedBtn.classList.toggle('selected');
+
+        if (!userAnswers[qIndex]) userAnswers[qIndex] = [];
+
+        const alreadySelected = userAnswers[qIndex].find(a => a.text === answer.text);
+        if (alreadySelected) {
+            userAnswers[qIndex] = userAnswers[qIndex].filter(a => a.text !== answer.text);
+        } else {
+            userAnswers[qIndex].push(answer);
+        }
+    }
+
+    function showResult() {
+        let score = 0;
+        const resultDiv = document.querySelector('.result');
+
+        questions.forEach((q, qIndex) => {
+            const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+            const buttons = questionDiv.querySelectorAll('.answer-btn');
+            const selectedAnswers = userAnswers[qIndex] || [];
+            const correctAnswers = q.answers.filter(a => a.correct);
+
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                const answerObj = q.answers.find(a => a.text === btn.textContent);
+                const isSelected = selectedAnswers.find(a => a.text === btn.textContent);
+
+                if (answerObj.correct) {
+                    btn.classList.add('correct');
+                } else if (isSelected) {
+                    btn.classList.add('incorrect');
+                }
+            });
+
+            // Tính điểm: tất cả đáp án đúng phải được chọn và không chọn nhầm
+            const allCorrectSelected = correctAnswers.every(a =>
+                selectedAnswers.find(sel => sel.text === a.text)
+            );
+            const noIncorrectSelected = selectedAnswers.every(a =>
+                q.answers.find(ans => ans.text === a.text && ans.correct)
+            );
+
+            if (allCorrectSelected && noIncorrectSelected) {
+                score += 10;
+            }
+        });
+
+        resultDiv.innerHTML = `
+            <p>Điểm của bạn: ${score}/${questions.length * 10}</p>
+            <button class="submit-btn reset-btn" onclick="location.reload()">Làm lại</button>
+        `;
+        resultDiv.style.display = 'block';
+        document.querySelector('.submit-btn').style.display = 'none';
+    }
+
+    document.querySelector('.submit-btn').addEventListener('click', showResult);
+    function startTimer(durationInSeconds) {
+    const timerDisplay = document.getElementById('timer');
+    let timeLeft = durationInSeconds;
+
+    const interval = setInterval(() => {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        timerDisplay.textContent = `⏱ Thời gian còn lại: ${minutes} phút ${seconds < 10 ? '0' : ''}${seconds} giây`;
+
+        if (--timeLeft < 0) {
+            clearInterval(interval);
+            timerDisplay.textContent = "⏰ Hết giờ! Bài đã được nộp.";
+            showResult(); // tự động nộp bài
+        }
+    }, 1000);
+}
+    initQuiz();
+    startTimer(900);
+    </script>
+</body>
+</html>

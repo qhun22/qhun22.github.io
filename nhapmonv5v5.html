@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ig: qhun22</title>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Quicksand', sans-serif;
+        }
+    
+        .quiz-container {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px 25px;
+            max-width: 700px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease;
+        }
+    
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+    
+        .question-container {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+    
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: #222;
+        }
+    
+        .answers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    
+        .answer-btn {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+        
+        .answer:hover {
+            background-color: #ffe6f0;
+            transform: scale(0.5);
+        } 
+        .answer-btn:hover {
+            background-color: #f1f1f1;
+            border-color: #aaa;
+        }
+    
+        .answer-btn.selected {
+            background-color: #ffd966;
+            border-color: #f1c40f;
+            font-weight: bold;
+        }
+    
+        .answer-btn.correct {
+            background-color: #b6e9b1;
+            border-color: #2ecc71;
+            color: #2c3e50;
+        }
+    
+        .answer-btn.incorrect {
+            background-color: #f9b3b3;
+            border-color: #e74c3c;
+            color: #2c3e50;
+        }
+    
+        .submit-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    
+        .submit-btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+    
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+    
+        .result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+    
+        .reset-btn {
+            margin-top: 15px;
+            background-color: #27ae60;
+        }
+    
+        .reset-btn:hover {
+            background-color: #1e8449;
+        }
+        .quiz-container {
+            margin-top: 60px;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        @media (max-width: 600px) {
+            .quiz-container {
+                padding: 15px 20px;
+            }
+    
+            h1 {
+                font-size: 1.5rem;
+            }
+    
+            .answer-btn {
+                font-size: 0.95rem;
+            }
+    
+            .submit-btn {
+                width: 100%;
+            }
+    
+            .result {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>NHAP MON TUAN 5</h1>
+        
+        <div id="questions"></div>
+        <div class="submit-container">
+            <button class="submit-btn">Nộp Bài</button>
+            <div class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+        {
+    question: "Sau khi hoàn thành phỏng vấn, người phỏng vấn nên làm gì?",
+    answers: [
+        { text: "Bắt đầu lập trình ngay lập tức.", correct: false },
+        { text: "Ngừng liên lạc với các bên liên quan.", correct: false },
+        { text: "Ghi lại kết quả và phân tích thông tin thu thập được.", correct: true },
+        { text: "Chỉ thông báo cho nhóm phát triển.", correct: false }
+    ]
+},
+{
+    question: "Một trong những lợi ích chính của việc phỏng vấn riêng lẻ với các bên liên quan là:",
+    answers: [
+        { text: "Giúp người phỏng vấn hiểu rõ hơn về quan điểm và nhu cầu cá nhân của bên liên quan.", correct: true },
+        { text: "Tạo ra tài liệu kỹ thuật chi tiết hơn.", correct: false },
+        { text: "Thu thập thông tin từ nhiều nguồn một cách đồng thời.", correct: false },
+        { text: "Tiết kiệm thời gian.", correct: false }
+    ]
+},
+{
+    question: "Tại sao phải quản lý sự thay đổi của các yêu cầu?",
+    answers: [
+        { text: "Vì các yêu cầu của hệ thống luôn thay đổi.", correct: false },
+        { text: "Vì giúp ta phân tích, dự đoán các thay đổi của các yêu cầu, dự đoán chi phí cài đặt thay đổi và góp phần tạo nên thành công của sản phẩm phần mềm.", correct: true },
+        { text: "Vì giúp ta tạo ra các sản phẩm phần mềm, dễ bảo trì, mở rộng, ít lỗi.", correct: false },
+        { text: "Giúp ta giảm chi phí trong quá trình kiểm thử, bảo trì, mở rộng phần mềm.", correct: false }
+    ]
+},
+{
+    question: "Khi thu thập yêu cầu, để việc quan sát đạt hiệu quả, nên làm gì?",
+    answers: [
+        { text: "Xác định cái gì sẽ được quan sát, xác định thời gian cần thiết cho việc quan sát, và được sự chấp thuận của người bị quan sát.", correct: true },
+        { text: "Dùng các phương tiện quay ghi để hỗ trợ.", correct: false },
+        { text: "Dùng phần mềm máy tính để lưu vết các thao tác, và các file được người sử dụng mở.", correct: false },
+        { text: "Kết hợp quan sát thủ công và phương pháp quan sát tự động.", correct: false }
+    ]
+},
+{
+    question: "Yêu cầu chức năng hệ thống nhằm tìm ra:",
+    answers: [
+        { text: "(1) Những thành phần của hệ thống.", correct: false },
+        { text: "Cả (1), (2) và (3).", correct: true },
+        { text: "(3) Những dịch vụ mà hệ thống cần có để cung cấp cho người sử dụng.", correct: false },
+        { text: "(2) Những ràng buộc của hệ thống.", correct: false }
+    ]
+},
+{
+    question: "Quy trình phân tích yêu cầu gồm các hoạt động nào sau đây?",
+    answers: [
+        { text: "Phân tích khả thi, thu thập yêu cầu, đặc tả yêu cầu, thẩm định yêu cầu.", correct: true },
+        { text: "Thu thập yêu cầu, trao đổi với khách hàng, đặc tả yêu cầu, thẩm định yêu cầu.", correct: false },
+        { text: "Thu thập yêu cầu, phân tích yêu cầu, đặc tả yêu cầu, kiểm tra yêu cầu.", correct: false },
+        { text: "Phân tích khả thi, Phỏng vấn khách hàng, đặc tả yêu cầu, thẩm định yêu cầu.", correct: false }
+    ]
+},
+{
+    question: "Đâu là yêu cầu chức năng trong các yêu cầu sau?",
+    answers: [
+        { text: "Hệ thống phải cho phép người dùng đăng nhập bằng tài khoản.", correct: true },
+        { text: "Hệ thống phải hoạt động ổn định trong 24/7.", correct: false },
+        { text: "Hệ thống phải có tốc độ phản hồi dưới 2 giây.", correct: false },
+        { text: "Hệ thống phải có giao diện thân thiện với người dùng.", correct: false }
+    ]
+},
+{
+    question: "Một công ty muốn phát triển một ứng dụng đặt đồ ăn trực tuyến. Yêu cầu nào sau đây KHÔNG phải là yêu cầu chức năng? (Chọn 2 đáp án)",
+    answers: [
+        { text: "Người dùng có thể tạo tài khoản và đăng nhập.", correct: false },
+        { text: "Thời gian tải trang phải dưới 3 giây.", correct: true },
+        { text: "Hệ thống phải hoạt động ổn định trong 24/7.", correct: true },
+        { text: "Ứng dụng phải hiển thị danh sách các nhà hàng gần đó.", correct: false }
+    ]
+},
+{
+    question: "Vì sao việc xác định stakeholder lại quan trọng trong quá trình phát triển hệ thống?",
+    answers: [
+        { text: "Để phân chia công việc cho các thành viên trong nhóm.", correct: false },
+        { text: "Để biết ai sẽ trả tiền cho dự án.", correct: false },
+        { text: "Để biết ai sẽ sử dụng hệ thống.", correct: false },
+        { text: "Để hiểu rõ hơn về nhu cầu, mong đợi và ảnh hưởng của các bên liên quan đến hệ thống.", correct: true }
+    ]
+},
+{
+    question: "Những ai có thể là stakeholder của một hệ thống quản lý nhân sự?",
+    answers: [
+        { text: "Nhân viên, quản lý, phòng ban nhân sự, phòng kế toán, và cả khách hàng.", correct: true },
+        { text: "Chỉ có nhân viên.", correct: false },
+        { text: "Chỉ có phòng ban nhân sự.", correct: false },
+        { text: "Chỉ có quản lý.", correct: false }
+    ]
+},
+{
+    question: "Khi xác định yêu cầu của một hệ thống quản lý thư viện, yêu cầu nào sau đây KHÔNG phải là yêu cầu chức năng?",
+    answers: [
+        { text: "Hệ thống phải có giao diện thân thiện, dễ sử dụng.", correct: true },
+        { text: "Hệ thống phải tính toán số lượng sách mượn trả trong một khoảng thời gian nhất định.", correct: false },
+        { text: "Hệ thống phải cho phép người dùng tìm kiếm sách theo tác giả, tựa đề hoặc từ khóa.", correct: false },
+        { text: "Hệ thống phải quản lý thông tin về các loại tài liệu (sách, tạp chí, báo...).", correct: false }
+    ]
+},
+{
+    question: "Yêu cầu 'Hệ thống phải có thời gian đáp ứng trung bình không quá 2 giây khi người dùng thực hiện tìm kiếm' thuộc loại yêu cầu phi chức năng nào?",
+    answers: [
+        { text: "Hiệu suất.", correct: true },
+        { text: "Khả năng mở rộng.", correct: false },
+        { text: "Khả năng sử dụng.", correct: false },
+        { text: "Khả năng bảo mật.", correct: false }
+    ]
+},
+{
+    question: "Để mô tả chi tiết quy trình đặt vé máy bay, bao gồm các bước từ tìm kiếm chuyến bay đến thanh toán, phương pháp nào sau đây sẽ hiệu quả nhất?",
+    answers: [
+        { text: "Viết một đoạn mã giả.", correct: false },
+        { text: "Sử dụng ngôn ngữ tự nhiên để viết một đoạn văn mô tả.", correct: false },
+        { text: "Vẽ biểu đồ hoạt động UML.", correct: true },
+        { text: "Sử dụng mô hình thực thể liên hệ (ERM).", correct: false }
+    ]
+},
+{
+    question: "Trong các yêu cầu sau, yêu cầu nào là yêu cầu chức năng của hệ thống quản lý bán hàng? (Chọn 2 đáp án)",
+    answers: [
+        { text: "Hệ thống phải có khả năng xử lý đồng thời 1000 đơn hàng.", correct: false },
+        { text: "Hệ thống phải có khả năng tạo báo cáo bán hàng hàng tháng.", correct: true },
+        { text: "Hệ thống phải có giao diện người dùng thân thiện, dễ sử dụng.", correct: false },
+        { text: "Hệ thống phải có khả năng bảo mật thông tin khách hàng.", correct: false },
+        { text: "Hệ thống phải cho phép nhân viên tạo hóa đơn bán hàng.", correct: true }
+    ]
+},
+{
+    question: "Để buổi phỏng vấn thành công, người phỏng vấn nên thực hiện đầy đủ các hoạt động nào sau đây? (Chọn 3 đáp án)",
+    answers: [
+        { text: "Đặt cuộc hẹn phù hợp, đúng giờ, hạn chế ghi chép, chú ý vào câu trả lời của Stakeholder.", correct: true },
+        { text: "Đặt cuộc hẹn phù hợp, lịch sự, hiểu người phỏng vấn.", correct: false },
+        { text: "Cởi mở, sẵn sàng lắng nghe Stakeholder, sử dụng những câu hỏi gợi mở.", correct: true },
+        { text: "Đặt cuộc hẹn phù hợp, tìm hiểu kỹ người được phỏng vấn, đúng giờ, có kế hoạch cho buổi phỏng vấn.", correct: true }
+    ]
+},
+{
+    question: "Một trong những thách thức khi phỏng vấn các bên liên quan là:",
+    answers: [
+        { text: "Thiếu thời gian để thu thập yêu cầu.", correct: false },
+        { text: "Vấn đề về rào cản trong giao tiếp.", correct: true },
+        { text: "Khó khăn trong việc ghi âm cuộc phỏng vấn.", correct: false },
+        { text: "Đảm bảo rằng tất cả các bên liên quan đều tham gia.", correct: false }
+    ]
+},
+{
+    question: "Trong đặc tả hình thức, lý do nào dưới đây khiến việc sử dụng ký pháp đại số toán học trở nên quan trọng?",
+    answers: [
+        { text: "Để đảm bảo tính chính xác và nhất quán của yêu cầu.", correct: true },
+        { text: "Để giảm thiểu thời gian phát triển phần mềm.", correct: false },
+        { text: "Để tạo giao diện người dùng trực quan.", correct: false },
+        { text: "Để kết nối với cơ sở dữ liệu.", correct: false }
+    ]
+},
+{
+    question: "Tại sao phỏng vấn lại là phương pháp được sử dụng phổ biến để thu thập các yêu cầu và thông tin của hệ thống cần xây dựng?",
+    answers: [
+        { text: "(1) Vì phỏng vấn thu thập được toàn bộ các hiểu biết về công việc phải làm của Stakeholder và cách họ tương tác với hệ thống, đầy đủ các yêu cầu, dễ thực hiện.", correct: true },
+        { text: "(3) Vì phỏng vấn là phương pháp mất ít thời gian, dễ dàng thu thập đầy đủ, khách quan và chính xác các yêu cầu.", correct: false },
+        { text: "(2) Vì nó dễ dàng thực hiện.", correct: false },
+        { text: "Cả (1) và (2).", correct: false }
+    ]
+},
+{
+    question: "Khái niệm Stakeholder muốn nói đến:",
+    answers: [
+        { text: "Những người chịu trách nhiệm quản lý dự án.", correct: false },
+        { text: "Những người sử dụng hệ thống.", correct: false },
+        { text: "Những người, những tổ chức sử dụng trực tiếp hoặc có liên quan, tác động đến dự án.", correct: true },
+        { text: "Những người tham gia phát triển dự án.", correct: false }
+    ]
+},
+{
+    question: "Yêu cầu của người sử dụng thường có các đặc điểm gì?",
+    answers: [
+        { text: "Đặc tả bằng ngôn ngữ tự nhiên và các bảng biểu đơn giản.", correct: true },
+        { text: "Không đầy đủ, ít mập mờ.", correct: false },
+        { text: "Không rõ ràng nhưng đầy đủ.", correct: false },
+        { text: "Rõ ràng, dễ hiểu, không mập mờ.", correct: false }
+    ]
+},
+{
+    question: "Trong các yêu cầu sau, đâu KHÔNG phải là yêu cầu phi chức năng?",
+    answers: [
+        { text: "Hệ thống phải có giao diện thân thiện với người dùng.", correct: true },
+        { text: "Hệ thống phải cho phép người dùng đăng nhập bằng tài khoản.", correct: false },
+        { text: "Hệ thống phải bảo mật thông tin cá nhân của người dùng.", correct: false },
+        { text: "Hệ thống phải có khả năng phục hồi dữ liệu khi xảy ra sự cố.", correct: false }
+    ]
+},
+{
+    question: "Đặc tả bản hình thức thường kết hợp giữa ngôn ngữ tự nhiên và các yếu tố nào sau đây?",
+    answers: [
+        { text: "Câu lệnh SQL.", correct: false },
+        { text: "Mô hình hình học.", correct: false },
+        { text: "Ngôn ngữ lập trình.", correct: false },
+        { text: "Các ký hiệu và biểu đồ.", correct: true }
+    ]
+},
+{
+    question: "Kết quả của giai đoạn kỹ nghệ yêu cầu là xác định được:",
+    answers: [
+        { text: "Các yêu cầu và quản lý được các yêu cầu của hệ thống.", correct: true },
+        { text: "Chức năng hệ thống.", correct: false },
+        { text: "Hành vi của hệ thống.", correct: false },
+        { text: "Thông tin về hệ thống.", correct: false }
+    ]
+},
+{
+    question: "Khi xác định yêu cầu của một hệ thống quản lý kho, yêu cầu nào sau đây là yêu cầu chức năng? (chọn 3 đáp án)",
+    answers: [
+        { text: "Hệ thống phải có khả năng tạo báo cáo hàng tồn kho định kỳ.", correct: true },
+        { text: "Hệ thống phải hoạt động ổn định trong 24/7.", correct: false },
+        { text: "Hệ thống phải có khả năng tính toán giá trị hàng tồn kho.", correct: true },
+        { text: "Hệ thống phải có giao diện người dùng thân thiện.", correct: false },
+        { text: "Hệ thống phải có khả năng quản lý số lượng hàng tồn kho.", correct: true }
+    ]
+},
+{
+    question: "Để thu thập yêu cầu từ khách hàng về các tính năng mà họ mong muốn có trên ứng dụng đặt vé máy bay, phương pháp nào sau đây là phù hợp nhất?",
+    answers: [
+        { text: "Xây dựng một nguyên mẫu giao diện người dùng.", correct: false },
+        { text: "Viết một đoạn mã để mô tả luồng xử lý đặt vé.", correct: false },
+        { text: "Tiến hành phỏng vấn trực tiếp hoặc qua các cuộc họp trực tuyến.", correct: true },
+        { text: "Sử dụng ngôn ngữ mô hình hóa UML để vẽ các sơ đồ lớp.", correct: false }
+    ]
+},
+{
+    question: "Đặc tả hình thức có ưu điểm gì khi áp dụng vào dự án phát triển ứng dụng đặt vé máy bay?",
+    answers: [
+        { text: "Linh hoạt và dễ thay đổi.", correct: false },
+        { text: "Không cần đến các công cụ hỗ trợ.", correct: false },
+        { text: "Giảm thiểu sự mơ hồ, tăng tính chính xác của yêu cầu.", correct: true },
+        { text: "Dễ hiểu đối với khách hàng không chuyên.", correct: false }
+    ]
+},
+        ];
+
+        let userAnswers = [];
+
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+function getRequiredSelectionCount(questionText) {
+    const match = questionText.match(/chọn\s*(\d+)/i);
+    return match ? parseInt(match[1]) : 1; // Mặc định là chọn 1 nếu không có "chọn X"
+}
+
+function initQuiz() {
+    shuffleArray(questions);
+    const questionsContainer = document.getElementById('questions');
+    questionsContainer.innerHTML = '';
+
+    questions.forEach((q, qIndex) => {
+        const questionDiv = document.createElement('div');
+        questionDiv.className = 'question-container';
+
+        shuffleArray(q.answers);
+
+        questionDiv.innerHTML = `
+            <div class="question-text">${qIndex + 1}. ${q.question}</div>
+            <div class="answers-container"></div>
+        `;
+
+        const answersContainer = questionDiv.querySelector('.answers-container');
+
+        q.answers.forEach(answer => {
+            const button = document.createElement('button');
+            button.className = 'answer-btn';
+            button.textContent = answer.text;
+            button.addEventListener('click', () => {
+                selectAnswer(qIndex, answer);
+                const required = getRequiredSelectionCount(q.question);
+                const selected = userAnswers[qIndex]?.length || 0;
+                if (selected === required) {
+                    showImmediateResult(qIndex);
+                }
+            });
+            answersContainer.appendChild(button);
+        });
+
+        questionsContainer.appendChild(questionDiv);
+    });
+
+    document.querySelector('.submit-btn').style.display = 'none';
+}
+
+function selectAnswer(qIndex, answer) {
+    const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+    const buttons = questionDiv.querySelectorAll('.answer-btn');
+
+    const clickedBtn = [...buttons].find(btn => btn.textContent === answer.text);
+    clickedBtn.classList.toggle('selected');
+
+    if (!userAnswers[qIndex]) userAnswers[qIndex] = [];
+
+    const alreadySelected = userAnswers[qIndex].find(a => a.text === answer.text);
+    if (alreadySelected) {
+        userAnswers[qIndex] = userAnswers[qIndex].filter(a => a.text !== answer.text);
+    } else {
+        userAnswers[qIndex].push(answer);
+    }
+}
+
+function showImmediateResult(qIndex) {
+    const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+    const buttons = questionDiv.querySelectorAll('.answer-btn');
+    const selectedAnswers = userAnswers[qIndex] || [];
+
+    buttons.forEach(btn => {
+        btn.disabled = true;
+        const answerObj = questions[qIndex].answers.find(a => a.text === btn.textContent);
+        const isSelected = selectedAnswers.find(a => a.text === btn.textContent);
+
+        if (answerObj.correct) {
+            btn.classList.add('correct');
+        } else if (isSelected) {
+            btn.classList.add('incorrect');
+        }
+    });
+}
+
+initQuiz();
+    </script>
+</body>
+</html>
