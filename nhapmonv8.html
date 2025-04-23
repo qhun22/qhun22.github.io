@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ig: qhun22</title>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Quicksand', sans-serif;
+        }
+    
+        .quiz-container {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px 25px;
+            max-width: 700px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease;
+        }
+    
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+    
+        .question-container {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+    
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: #222;
+        }
+    
+        .answers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    
+        .answer-btn {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+        
+        .answer:hover {
+            background-color: #ffe6f0;
+            transform: scale(0.5);
+        } 
+        .answer-btn:hover {
+            background-color: #f1f1f1;
+            border-color: #aaa;
+        }
+    
+        .answer-btn.selected {
+            background-color: #ffd966;
+            border-color: #f1c40f;
+            font-weight: bold;
+        }
+    
+        .answer-btn.correct {
+            background-color: #b6e9b1;
+            border-color: #2ecc71;
+            color: #2c3e50;
+        }
+    
+        .answer-btn.incorrect {
+            background-color: #f9b3b3;
+            border-color: #e74c3c;
+            color: #2c3e50;
+        }
+    
+        .submit-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    
+        .submit-btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+    
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+    
+        .result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+    
+        .reset-btn {
+            margin-top: 15px;
+            background-color: #27ae60;
+        }
+    
+        .reset-btn:hover {
+            background-color: #1e8449;
+        }
+        .quiz-container {
+            margin-top: 60px;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        @media (max-width: 600px) {
+            .quiz-container {
+                padding: 15px 20px;
+            }
+    
+            h1 {
+                font-size: 1.5rem;
+            }
+    
+            .answer-btn {
+                font-size: 0.95rem;
+            }
+    
+            .submit-btn {
+                width: 100%;
+            }
+    
+            .result {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>NHAP MON TUAN 8</h1>
+        <div id="timer" style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ffeaa7;
+    color: #d63031;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+    z-index: 999;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+">
+    ⏱ Thời gian còn lại: 15 phút 00 giây
+</div>
+        <div id="questions"></div>
+        <div class="submit-container">
+            <button class="submit-btn">Nộp Bài</button>
+            <div class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+        {
+    question: "Phân chia lớp tương đương là một kỹ thuật được sử dụng trong:",
+    answers: [
+        { text: "Kiểm thử hộp đen.", correct: true },
+        { text: "Kiểm thử hệ thống.", correct: false },
+        { text: "Kiểm thử chấp nhận.", correct: false },
+        { text: "Kiểm thử hộp trắng.", correct: false }
+    ]
+},
+{
+    question: "Một ca kiểm thử (Test case) gồm những gì?",
+    answers: [
+        { text: "Tập dữ liệu kiểm thử, các đánh giá kết quả kiểm thử.", correct: false },
+        { text: "Tập dữ liệu kiểm thử, các bước thực hiện khi kiểm thử.", correct: false },
+        { text: "Tập dữ liệu kiểm thử, điều kiện thực thi, kết quả mong đợi.", correct: true },
+        { text: "Tập dữ liệu kiểm thử.", correct: false }
+    ]
+},
+{
+    question: "Kiểm thử chấp nhận (acceptance testing) thường được thực hiện bởi ai?",
+    answers: [
+        { text: "Quản lý dự án.", correct: false },
+        { text: "Nhà phát triển phần mềm.", correct: false },
+        { text: "Người dùng cuối hoặc khách hàng.", correct: true },
+        { text: "Kiểm thử viên.", correct: false }
+    ]
+},
+{
+    question: "Kiểm thử phần mềm nên được bắt đầu từ giai đoạn nào sau đây?",
+    answers: [
+        { text: "Phân tích và quản lý yêu cầu.", correct: true },
+        { text: "Thiết kế hệ thống.", correct: false },
+        { text: "Bảo trì.", correct: false },
+        { text: "Lập trình.", correct: false }
+    ]
+},
+{
+    question: "Phương pháp kiểm thử nào mà dữ liệu kiểm thử được xác định từ đặc tả yêu cầu?",
+    answers: [
+        { text: "Kiểm thử hộp trắng.", correct: false },
+        { text: "Cả kiểm thử hộp đen và hộp trắng.", correct: false },
+        { text: "Kiểm thử hộp xám.", correct: false },
+        { text: "Kiểm thử hộp đen.", correct: true }
+    ]
+},
+{
+    question: "Phân tích giá trị biên nhằm?",
+    answers: [
+        { text: "Mở rộng giá trị biên để xác định dữ liệu thử.", correct: false },
+        { text: "Thu hẹp giá trị biên để hạn chế dữ liệu thử.", correct: false },
+        { text: "Xem xét trên những miền độc lập để hình thành tập dữ liệu thử.", correct: false },
+        { text: "Kiểm tra phần mềm trên các giá trị biên để phát hiện lỗi.", correct: true }
+    ]
+},
+{
+    question: "Kỹ thuật thiết kế test case nào sau đây thường được sử dụng trong kiểm thử hộp đen?",
+    answers: [
+        { text: "Phân tích giá trị biên.", correct: true },
+        { text: "Kiểm tra điều kiện.", correct: false },
+        { text: "Kiểm tra vòng lặp.", correct: false },
+        { text: "Kiểm tra đường đi.", correct: false }
+    ]
+},
+{
+    question: "Kỹ thuật nào sau đây thường được sử dụng trong kiểm thử hộp trắng?",
+    answers: [
+        { text: "Kiểm thử giá trị biên.", correct: false },
+        { text: "Kiểm thử sử dụng trường hợp sử dụng.", correct: false },
+        { text: "Kiểm thử phân vùng tương đương.", correct: false },
+        { text: "Kiểm thử dựa trên đồ thị luồng điều khiển.", correct: true }
+    ]
+},
+{
+    question: "Kiểm thử hộp trắng thường được thực hiện bởi ai?",
+    answers: [
+        { text: "Người dùng cuối.", correct: false },
+        { text: "Nhà quản lý dự án.", correct: false },
+        { text: "Nhà phát triển phần mềm.", correct: true },
+        { text: "Người kiểm thử độc lập.", correct: false }
+    ]
+},
+{
+    question: "Mục tiêu chính của kiểm thử đơn vị (unit testing) là gì?",
+    answers: [
+        { text: "Kiểm tra sự tương tác giữa các module khác nhau.", correct: false },
+        { text: "Đảm bảo phần mềm đáp ứng các yêu cầu của người dùng cuối.", correct: false },
+        { text: "Kiểm tra tính đúng đắn của từng đơn vị nhỏ nhất của phần mềm.", correct: true },
+        { text: "Kiểm tra hiệu suất của toàn bộ hệ thống.", correct: false }
+    ]
+},
+{
+    question: "Kiểm thử hệ thống (System Testing) tập trung vào việc kiểm tra những yếu tố nào sau đây?",
+    answers: [
+        { text: "Kiểm thử giao diện người dùng của hệ thống.", correct: false },
+        { text: "Kiểm tra toàn bộ hệ thống để đảm bảo nó hoạt động đúng theo yêu cầu của người dùng.", correct: true },
+        { text: "Kiểm thử từng module nhỏ của hệ thống.", correct: false },
+        { text: "Kiểm thử hiệu năng của từng module nhỏ.", correct: false }
+    ]
+},
+{
+    question: "Trong quá trình thực hiện kiểm thử, bạn phát hiện một lỗi nghiêm trọng ảnh hưởng đến chức năng cốt lõi của phần mềm. Hành động đầu tiên bạn nên làm là gì?",
+    answers: [
+        { text: "Báo cáo lỗi ngay lập tức cho nhóm phát triển để khắc phục.", correct: true },
+        { text: "Tiếp tục kiểm thử các chức năng khác.", correct: false },
+        { text: "Bỏ qua lỗi này và tiếp tục kiểm thử.", correct: false },
+        { text: "Tự mình sửa lỗi và tiếp tục kiểm thử.", correct: false }
+    ]
+},
+{
+    question: "Một hệ thống đăng nhập yêu cầu mật khẩu tối thiểu 8 ký tự và phải chứa ít nhất một chữ số. Khi áp dụng kỹ thuật phân vùng tương đương, bạn sẽ thiết kế các trường hợp kiểm thử như thế nào?",
+    answers: [
+        { text: "Mật khẩu 7 ký tự, mật khẩu 8 ký tự chỉ chứa chữ, mật khẩu 8 ký tự có ít nhất 1 số.", correct: false },
+        { text: "Mật khẩu 8 ký tự, mật khẩu 9 ký tự.", correct: false },
+        { text: "Mật khẩu rỗng, mật khẩu 7 ký tự, mật khẩu 8 ký tự chỉ chứa chữ, mật khẩu 8 ký tự có ít nhất 1 số, mật khẩu 10 ký tự.", correct: true },
+        { text: "Mật khẩu 8 ký tự chỉ chứa chữ, mật khẩu 8 ký tự có ít nhất 1 số.", correct: false }
+    ]
+},
+{
+    question: "Một ứng dụng yêu cầu người dùng nhập số điện thoại có đúng 10 chữ số. Các lớp tương đương hợp lệ và không hợp lệ là gì?",
+    answers: [
+        { text: "Lớp hợp lệ: [Số điện thoại từ 9 đến 11 chữ số]; Lớp không hợp lệ: [Số điện thoại khác 10 chữ số].", correct: false },
+        { text: "Lớp hợp lệ: [Số điện thoại 10 chữ số]; Lớp không hợp lệ: [Số điện thoại khác 10 chữ số].", correct: true },
+        { text: "Lớp hợp lệ: [Số điện thoại trên 10 chữ số]; Lớp không hợp lệ: [Số điện thoại dưới 10 chữ số].", correct: false },
+        { text: "Lớp hợp lệ: [Số điện thoại dưới 10 chữ số]; Lớp không hợp lệ: [Số điện thoại trên 10 chữ số].", correct: false }
+    ]
+},
+{
+    question: "Một form yêu cầu người dùng nhập tuổi từ 1 đến 120. Để kiểm thử form này, đâu là lớp tương đương hợp lệ và không hợp lệ cần kiểm tra?",
+    answers: [
+        { text: "Lớp hợp lệ: [0-120]; Lớp không hợp lệ: [Trên 120].", correct: false },
+        { text: "Lớp hợp lệ: [1-100]; Lớp không hợp lệ: [Dưới 0].", correct: false },
+        { text: "Lớp hợp lệ: [1-120]; Lớp không hợp lệ: [Dưới 1], [Trên 120].", correct: true },
+        { text: "Lớp hợp lệ: [1-120]; Lớp không hợp lệ: [0-100].", correct: false }
+    ]
+},
+{
+    question: "Thứ tự các mức trong kiểm thử phần mềm là?",
+    answers: [
+        { text: "Kiểm thử tích hợp, kiểm thử hệ thống, kiểm thử chấp nhận, kiểm thử đơn vị.", correct: false },
+        { text: "Kiểm thử hệ thống, kiểm thử chấp nhận, kiểm thử đơn vị, kiểm thử tích hợp.", correct: false },
+        { text: "Kiểm thử đơn vị, kiểm thử tích hợp, kiểm thử hệ thống, kiểm thử chấp nhận.", correct: true },
+        { text: "Kiểm thử đơn vị, kiểm thử tích hợp, kiểm thử chấp nhận, kiểm thử hệ thống.", correct: false }
+    ]
+},
+{
+    question: "Kiểm thử hộp trắng không phát hiện được lỗi gì?",
+    answers: [
+        { text: "Sai kiểu dữ liệu.", correct: false },
+        { text: "Thiếu chức năng.", correct: true },
+        { text: "Sai thuật toán.", correct: false },
+        { text: "Lặp vô hạn.", correct: false }
+    ]
+},
+{
+    question: "Loại lỗi nào sau đây thường được phát hiện bằng kiểm thử hộp đen?",
+    answers: [
+        { text: "Lỗi trong thuật toán.", correct: false },
+        { text: "Lỗi cú pháp trong mã nguồn.", correct: false },
+        { text: "Lỗi vi phạm các quy tắc lập trình.", correct: false },
+        { text: "Lỗi trong giao diện người dùng.", correct: true }
+    ]
+},
+{
+    question: "Khi nào nên thực hiện kiểm thử chấp nhận (Acceptance Testing)?",
+    answers: [
+        { text: "Trong quá trình phát triển phần mềm.", correct: false },
+        { text: "Trước khi đưa sản phẩm vào sử dụng chính thức.", correct: true },
+        { text: "Sau khi hoàn thành việc viết code cho từng module nhỏ.", correct: false },
+        { text: "Trước khi bắt đầu viết code.", correct: false }
+    ]
+},
+{
+    question: "Bạn đang thiết kế các trường hợp kiểm thử cho một trường nhập liệu mật khẩu có yêu cầu độ dài từ 8 đến 15 ký tự. Theo kỹ thuật phân vùng tương đương, bạn sẽ chọn những giá trị nào để kiểm thử?",
+    answers: [
+        { text: "Chỉ kiểm tra với một chuỗi ngẫu nhiên có độ dài 10 ký tự.", correct: false },
+        { text: "7 ký tự, 8 ký tự, 15 ký tự, 16 ký tự.", correct: true },
+        { text: "7 ký tự, 10 ký tự, 16 ký tự.", correct: false },
+        { text: "8 ký tự, 15 ký tự.", correct: false }
+    ]
+},
+{
+    question: "Một hàm tính giai thừa chỉ chấp nhận số nguyên không âm. Sử dụng kỹ thuật phân vùng tương đương, bạn sẽ chọn những giá trị nào?",
+    answers: [
+        { text: "0, 5, 10.", correct: false },
+        { text: "0, 1, 5, 10.", correct: true },
+        { text: "1, 5, 10.", correct: false },
+        { text: "-1, 0, 1, 5.", correct: false }
+    ]
+},
+{
+    question: "Kiểm thử là gì?",
+    answers: [
+        { text: "Là tiến trình định vị lỗi trong chương trình và tiến hành sửa lỗi.", correct: false },
+        { text: "Là tiến trình xây dựng các bộ dữ liệu thử.", correct: false },
+        { text: "Là tiến trình kiểm tra sự vận hành của hệ thống phần mềm.", correct: false },
+        { text: "Là tiến trình vận hành hệ thống hoặc thành phần hệ thống dưới những điều kiện xác định, quan sát hoặc ghi nhận kết quả và đưa ra đánh giá về hệ thống hoặc thành phần đó.", correct: true }
+    ]
+},
+{
+    question: "Kiểm thử hộp trắng còn được gọi là gì?",
+    answers: [
+        { text: "Kiểm thử chấp thuận.", correct: false },
+        { text: "Kiểm thử cấu trúc.", correct: true },
+        { text: "Kiểm thử hiệu năng.", correct: false },
+        { text: "Kiểm thử hệ thống.", correct: false }
+    ]
+},
+{
+    question: "Kiểm thử động (dynamic testing) gồm những kỹ thuật kiểm thử gì?",
+    answers: [
+        { text: "Là kiểm thử hộp trắng (white box testing) và kiểm thử tĩnh.", correct: false },
+        { text: "Gồm kỹ thuật kiểm thử hộp đen và hộp trắng.", correct: true },
+        { text: "Kiểm thử hộp đen (black-box testing) và thanh tra mã nguồn.", correct: false },
+        { text: "Là kỹ thuật kiểm thử cho các chức năng ứng với các yêu cầu thường biến đổi.", correct: false }
+    ]
+},
+{
+    question: "Kiểm thử tích hợp nhằm mục đích gì?",
+    answers: [
+        { text: "Kiểm thử sự ghép nối, sự trao đổi dữ liệu giữa các thành phần/đơn vị phần mềm.", correct: true },
+        { text: "Kiểm thử trên các thành phần cấu tạo lên hệ thống cần xây dựng.", correct: false },
+        { text: "Xác định xem phần mềm đã vận hành như mong đợi.", correct: false },
+        { text: "Xác định xem phần mềm đã được xây dựng theo đúng đặc tả chỉ ra hay chưa.", correct: false }
+    ]
+},
+{
+    question: "Kiểm thử hộp đen nhằm mục đích gì?",
+    answers: [
+        { text: "Kiểm thử toàn bộ hệ thống và cấu trúc bên trong của hệ thống.", correct: false },
+        { text: "Kiểm thử cấu trúc bên trong của hệ thống.", correct: false },
+        { text: "Kiểm thử chức năng, cả hệ thống có thể xem như một chức năng.", correct: true },
+        { text: "Kiểm tra tính đúng đắn của từng đơn vị nhỏ nhất của phần mềm.", correct: false }
+    ]
+},
+{
+    question: "Kiểm thử tích hợp (integration testing) nhằm mục đích kiểm tra gì?",
+    answers: [
+        { text: "Tính đúng đắn của từng đơn vị nhỏ nhất của phần mềm.", correct: false },
+        { text: "Khả năng sử dụng của phần mềm.", correct: false },
+        { text: "Sự tương tác giữa các module khác nhau trong hệ thống.", correct: true },
+        { text: "Hiệu suất của toàn bộ hệ thống.", correct: false }
+    ]
+},
+{
+    question: "Khi áp dụng kỹ thuật phân vùng tương đương để thiết kế các trường hợp kiểm thử cho một trường nhập dữ liệu số nguyên có phạm vi từ 1 đến 100, bạn sẽ chọn những giá trị nào để đại diện cho các lớp tương đương?",
+    answers: [
+        { text: "Chỉ 50.", correct: false },
+        { text: "0, 50, 101.", correct: false },
+        { text: "0, 1, 50, 100, 101.", correct: true },
+        { text: "1, 50, 100.", correct: false }
+    ]
+},
+{
+    question: "Trong một hệ thống, trường nhập liệu chỉ chấp nhận các giá trị dương. Đâu là các lớp tương đương?",
+    answers: [
+        { text: "[0], [1 trở lên].", correct: false },
+        { text: "[Số âm], [0], [Số dương].", correct: true },
+        { text: "[0-100], [100 trở lên].", correct: false },
+        { text: "[Số dương].", correct: false }
+    ]
+},
+        ];
+
+        let userAnswers = [];
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function getRequiredSelectionCount(questionText) {
+        const match = questionText.match(/chọn\s*(\d+)/i);
+        return match ? parseInt(match[1]) : 1;
+    }
+
+    function initQuiz() {
+        shuffleArray(questions);
+        const questionsContainer = document.getElementById('questions');
+        questionsContainer.innerHTML = '';
+
+        questions.forEach((q, qIndex) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question-container';
+
+            shuffleArray(q.answers);
+
+            questionDiv.innerHTML = `
+                <div class="question-text">${qIndex + 1}. ${q.question}</div>
+                <div class="answers-container"></div>
+            `;
+
+            const answersContainer = questionDiv.querySelector('.answers-container');
+
+            q.answers.forEach(answer => {
+                const button = document.createElement('button');
+                button.className = 'answer-btn';
+                button.textContent = answer.text;
+                button.addEventListener('click', () => {
+                    selectAnswer(qIndex, answer);
+                });
+                answersContainer.appendChild(button);
+            });
+
+            questionsContainer.appendChild(questionDiv);
+        });
+    }
+
+    function selectAnswer(qIndex, answer) {
+        const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+        const buttons = questionDiv.querySelectorAll('.answer-btn');
+
+        const clickedBtn = [...buttons].find(btn => btn.textContent === answer.text);
+        clickedBtn.classList.toggle('selected');
+
+        if (!userAnswers[qIndex]) userAnswers[qIndex] = [];
+
+        const alreadySelected = userAnswers[qIndex].find(a => a.text === answer.text);
+        if (alreadySelected) {
+            userAnswers[qIndex] = userAnswers[qIndex].filter(a => a.text !== answer.text);
+        } else {
+            userAnswers[qIndex].push(answer);
+        }
+    }
+
+    function showResult() {
+        let score = 0;
+        const resultDiv = document.querySelector('.result');
+
+        questions.forEach((q, qIndex) => {
+            const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+            const buttons = questionDiv.querySelectorAll('.answer-btn');
+            const selectedAnswers = userAnswers[qIndex] || [];
+            const correctAnswers = q.answers.filter(a => a.correct);
+
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                const answerObj = q.answers.find(a => a.text === btn.textContent);
+                const isSelected = selectedAnswers.find(a => a.text === btn.textContent);
+
+                if (answerObj.correct) {
+                    btn.classList.add('correct');
+                } else if (isSelected) {
+                    btn.classList.add('incorrect');
+                }
+            });
+
+            // Tính điểm: tất cả đáp án đúng phải được chọn và không chọn nhầm
+            const allCorrectSelected = correctAnswers.every(a =>
+                selectedAnswers.find(sel => sel.text === a.text)
+            );
+            const noIncorrectSelected = selectedAnswers.every(a =>
+                q.answers.find(ans => ans.text === a.text && ans.correct)
+            );
+
+            if (allCorrectSelected && noIncorrectSelected) {
+                score += 10;
+            }
+        });
+
+        resultDiv.innerHTML = `
+            <p>Điểm của bạn: ${score}/${questions.length * 10}</p>
+            <button class="submit-btn reset-btn" onclick="location.reload()">Làm lại</button>
+        `;
+        resultDiv.style.display = 'block';
+        document.querySelector('.submit-btn').style.display = 'none';
+    }
+
+    document.querySelector('.submit-btn').addEventListener('click', showResult);
+    function startTimer(durationInSeconds) {
+    const timerDisplay = document.getElementById('timer');
+    let timeLeft = durationInSeconds;
+
+    const interval = setInterval(() => {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        timerDisplay.textContent = `⏱ Thời gian còn lại: ${minutes} phút ${seconds < 10 ? '0' : ''}${seconds} giây`;
+
+        if (--timeLeft < 0) {
+            clearInterval(interval);
+            timerDisplay.textContent = "⏰ Hết giờ! Bài đã được nộp.";
+            showResult(); // tự động nộp bài
+        }
+    }, 1000);
+}
+    initQuiz();
+    startTimer(900);
+    </script>
+</body>
+</html>

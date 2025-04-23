@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ig: qhun22</title>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Quicksand', sans-serif;
+        }
+    
+        .quiz-container {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px 25px;
+            max-width: 700px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease;
+        }
+    
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+    
+        .question-container {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+    
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: #222;
+        }
+    
+        .answers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    
+        .answer-btn {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+        
+        .answer:hover {
+            background-color: #ffe6f0;
+            transform: scale(0.5);
+        } 
+        .answer-btn:hover {
+            background-color: #f1f1f1;
+            border-color: #aaa;
+        }
+    
+        .answer-btn.selected {
+            background-color: #ffd966;
+            border-color: #f1c40f;
+            font-weight: bold;
+        }
+    
+        .answer-btn.correct {
+            background-color: #b6e9b1;
+            border-color: #2ecc71;
+            color: #2c3e50;
+        }
+    
+        .answer-btn.incorrect {
+            background-color: #f9b3b3;
+            border-color: #e74c3c;
+            color: #2c3e50;
+        }
+    
+        .submit-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    
+        .submit-btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+    
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+    
+        .result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+    
+        .reset-btn {
+            margin-top: 15px;
+            background-color: #27ae60;
+        }
+    
+        .reset-btn:hover {
+            background-color: #1e8449;
+        }
+        .quiz-container {
+            margin-top: 60px;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        @media (max-width: 600px) {
+            .quiz-container {
+                padding: 15px 20px;
+            }
+    
+            h1 {
+                font-size: 1.5rem;
+            }
+    
+            .answer-btn {
+                font-size: 0.95rem;
+            }
+    
+            .submit-btn {
+                width: 100%;
+            }
+    
+            .result {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>NHAP MON TUAN 7</h1>
+        
+        <div id="questions"></div>
+        <div class="submit-container">
+            <button class="submit-btn">Nộp Bài</button>
+            <div class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+        {
+    question: "Mục tiêu chính của quá trình lập trình là gì?",
+    answers: [
+        { text: "Xây dựng cơ sở dữ liệu hiệu quả.", correct: false },
+        { text: "Chuyển đổi bản thiết kế chi tiết thành mã máy có thể thực thi.", correct: true },
+        { text: "Tạo ra một giao diện người dùng đẹp mắt.", correct: false },
+        { text: "Kiểm thử và sửa lỗi chương trình.", correct: false }
+    ]
+},
+{
+    question: "Lập trình logic là gì?",
+    answers: [
+        { text: "Là kiểu lập trình tập trung vào việc mô tả các vấn đề dưới dạng các mệnh đề logic.", correct: true },
+        { text: "Là kiểu lập trình tập trung vào việc thực hiện các phép tính trên các hàm.", correct: false },
+        { text: "Là kiểu lập trình kết hợp cả lập trình hướng đối tượng và lập trình thủ tục.", correct: false },
+        { text: "Là kiểu lập trình tập trung vào việc tương tác với cơ sở dữ liệu.", correct: false }
+    ]
+},
+{
+    question: "Sự khác biệt cơ bản giữa lập trình thủ tục và lập trình hướng đối tượng là gì?",
+    answers: [
+        { text: "Lập trình thủ tục tập trung vào dữ liệu, còn lập trình hướng đối tượng tập trung vào hành động.", correct: false },
+        { text: "Cả hai đều tập trung vào hành động.", correct: false },
+        { text: "Lập trình thủ tục tập trung vào hành động, còn lập trình hướng đối tượng tập trung vào đối tượng.", correct: true },
+        { text: "Cả hai đều tập trung vào dữ liệu.", correct: false }
+    ]
+},
+{
+    question: "Sự khác biệt cơ bản giữa lập trình logic và lập trình hướng đối tượng là gì?",
+    answers: [
+        { text: "Lập trình logic phù hợp cho các bài toán toán học, còn lập trình hướng đối tượng chỉ dùng cho phát triển ứng dụng.", correct: false },
+        { text: "Lập trình logic tập trung vào các quy tắc và sự thật, trong khi lập trình hướng đối tượng tập trung vào các đối tượng và hành động của chúng.", correct: true },
+        { text: "Lập trình logic chỉ sử dụng ngôn ngữ tự nhiên, còn lập trình hướng đối tượng sử dụng các ngôn ngữ lập trình đặc biệt.", correct: false },
+        { text: "Cả (A) và (B) đều đúng.", correct: false }
+    ]
+},
+{
+    question: "Đặc điểm nổi bật nhất của lập trình logic là gì?",
+    answers: [
+        { text: "Dựa trên các mệnh đề logic và quy tắc suy luận.", correct: true },
+        { text: "Tập trung vào các cấu trúc dữ liệu.", correct: false },
+        { text: "Sử dụng nhiều vòng lặp và điều kiện.", correct: false },
+        { text: "Hướng đến việc mô hình hóa các đối tượng thực tế.", correct: false }
+    ]
+},
+{
+    question: "Đặc điểm nổi bật nhất của lập trình functional là gì?",
+    answers: [
+        { text: "Sử dụng nhiều vòng lặp.", correct: false },
+        { text: "Tính bất biến của dữ liệu.", correct: true },
+        { text: "Tập trung vào trạng thái của các đối tượng.", correct: false },
+        { text: "Tính kế thừa giữa các lớp.", correct: false }
+    ]
+},
+{
+    question: "GitHub là gì?",
+    answers: [
+        { text: "Một mạng xã hội dành cho lập trình viên.", correct: false },
+        { text: "Một nền tảng lưu trữ mã nguồn và cộng tác phát triển phần mềm.", correct: true },
+        { text: "Một công cụ quản lý dự án.", correct: false },
+        { text: "Một nền tảng chia sẻ ảnh.", correct: false }
+    ]
+},
+{
+    question: "Có thể sử dụng Git với các nền tảng khác ngoài GitHub không?",
+    answers: [
+        { text: "Chỉ có thể sử dụng Git với các dự án mã nguồn mở.", correct: false },
+        { text: "Không, chỉ có GitHub mới hỗ trợ Git.", correct: false },
+        { text: "Chỉ có thể sử dụng Git với các dự án thương mại.", correct: false },
+        { text: "Có, có nhiều nền tảng khác như Bitbucket, GitLab cũng sử dụng Git làm nền tảng.", correct: true }
+    ]
+},
+{
+    question: "Khi nào nên sử dụng lập trình hướng đối tượng?",
+    answers: [
+        { text: "Khi cần tái sử dụng mã.", correct: false },
+        { text: "Khi cần mô hình hóa các vấn đề phức tạp.", correct: false },
+        { text: "Khi cần xây dựng các hệ thống lớn.", correct: false },
+        { text: "Tất cả các đáp án (A), (B), (C) đều đúng.", correct: true }
+    ]
+},
+{
+    question: "Nếu một dự án yêu cầu tích hợp với nhiều hệ thống khác nhau, yếu tố nào cần đặc biệt quan tâm?",
+    answers: [
+        { text: "Khả năng tương thích và số lượng thư viện hỗ trợ.", correct: true },
+        { text: "Hiệu năng của ngôn ngữ.", correct: false },
+        { text: "Cộng đồng người dùng.", correct: false },
+        { text: "Độ dễ học của ngôn ngữ.", correct: false }
+    ]
+},
+{
+    question: "Khi lựa chọn ngôn ngữ lập trình cho một dự án lớn, phức tạp, yếu tố nào sau đây cần được ưu tiên?",
+    answers: [
+        { text: "Khả năng mở rộng, bảo trì và khả năng làm việc nhóm.", correct: true },
+        { text: "Chi phí phát triển ban đầu.", correct: false },
+        { text: "Hiệu năng tuyệt đối.", correct: false },
+        { text: "Độ dễ học của ngôn ngữ.", correct: false }
+    ]
+},
+{
+    question: "Khi cài đặt một ứng dụng web, bạn nên sử dụng phương pháp nào để đảm bảo tính nhất quán của cấu hình trên các máy chủ?",
+    answers: [
+        { text: "Cài đặt thủ công từng máy chủ.", correct: false },
+        { text: "Tạo một script cài đặt và chạy trên tất cả các máy chủ.", correct: false },
+        { text: "Sử dụng các công cụ quản lý cấu hình như Ansible hoặc Puppet.", correct: true },
+        { text: "Sử dụng một công cụ quản lý cấu hình và kết hợp với một script cài đặt.", correct: false }
+    ]
+},
+{
+    question: "Sau khi cài đặt phần mềm quản lý kho hàng, bạn cần thực hiện bước nào sau đây để đảm bảo dữ liệu được bảo mật:",
+    answers: [
+        { text: "Đặt mật khẩu mạnh cho người dùng.", correct: false },
+        { text: "Sao lưu dữ liệu thường xuyên.", correct: false },
+        { text: "Cài đặt tường lửa.", correct: false },
+        { text: "Tất cả các lựa chọn trên.", correct: true }
+    ]
+},
+{
+    question: "Lợi ích lớn nhất của lập trình khai báo so với lập trình mệnh lệnh là gì?",
+    answers: [
+        { text: "Hiệu suất cao hơn.", correct: false },
+        { text: "Mã code dễ đọc, dễ bảo trì và ít lỗi hơn.", correct: true },
+        { text: "Dễ học hơn.", correct: false },
+        { text: "Phù hợp với mọi loại bài toán.", correct: false }
+    ]
+},
+{
+    question: "Sự khác biệt cơ bản giữa lập trình functional và lập trình hướng đối tượng là gì?",
+    answers: [
+        { text: "Lập trình functional tập trung vào các đối tượng, còn lập trình hướng đối tượng tập trung vào các hàm.", correct: false },
+        { text: "Lập trình functional không cho phép thay đổi trạng thái của đối tượng, còn lập trình hướng đối tượng cho phép.", correct: true },
+        { text: "Lập trình functional sử dụng nhiều vòng lặp hơn, còn lập trình hướng đối tượng sử dụng nhiều hàm đệ quy hơn.", correct: false },
+        { text: "Lập trình functional chỉ sử dụng một loại cấu trúc dữ liệu, còn lập trình hướng đối tượng sử dụng nhiều loại cấu trúc dữ liệu khác nhau.", correct: false }
+    ]
+},
+{
+    question: "Trong một ứng dụng quản lý thư viện, muốn tìm tất cả các sách có từ khóa 'lập trình'. Bạn sẽ sử dụng phương pháp nào hiệu quả hơn?",
+    answers: [
+        { text: "Không có cách nào hiệu quả hơn.", correct: false },
+        { text: "Sử dụng một câu lệnh tìm kiếm trong cơ sở dữ liệu (ví dụ: SQL).", correct: true },
+        { text: "Tạo một hàm đệ quy để tìm kiếm.", correct: false },
+        { text: "Viết một vòng lặp để duyệt qua từng cuốn sách và kiểm tra tiêu đề.", correct: false }
+    ]
+},
+{
+    question: "Bạn đang làm việc trên một dự án cá nhân và muốn chia sẻ mã nguồn lên một nền tảng mở để cộng đồng có thể đóng góp. Nền tảng nào sau đây phù hợp nhất?",
+    answers: [
+        { text: "GitHub.", correct: true },
+        { text: "GitLab.", correct: false },
+        { text: "Bitbucket.", correct: false },
+        { text: "SVN.", correct: false }
+    ]
+},
+{
+    question: "Yếu tố quan trọng nhất khi chọn ngôn ngữ lập trình là gì?",
+    answers: [
+        { text: "Tính phù hợp của ngôn ngữ với yêu cầu của dự án.", correct: true },
+        { text: "Độ phổ biến của ngôn ngữ.", correct: false },
+        { text: "Mức độ dễ học của ngôn ngữ.", correct: false },
+        { text: "Mức lương của lập trình viên sử dụng ngôn ngữ đó.", correct: false }
+    ]
+},
+{
+    question: "Ưu điểm lớn nhất của việc sử dụng phương pháp Lập trình hướng đối tượng là gì?",
+    answers: [
+        { text: "Giảm dung lượng bộ nhớ sử dụng.", correct: false },
+        { text: "Giảm chi phí phát triển phần mềm.", correct: false },
+        { text: "Tăng tính dễ hiểu, bảo trì và mở rộng của phần mềm.", correct: true },
+        { text: "Tăng tốc độ thực thi chương trình.", correct: false }
+    ]
+},
+{
+    question: "Mối quan hệ giữa Git và GitHub là:",
+    answers: [
+        { text: "GitHub sử dụng Git làm nền tảng để quản lý các kho lưu trữ.", correct: true },
+        { text: "GitHub là một phần mở rộng của Git.", correct: false },
+        { text: "Git là một phần mở rộng của GitHub.", correct: false },
+        { text: "Không có mối quan hệ nào giữa Git và GitHub.", correct: false }
+    ]
+},
+{
+    question: "Lập trình cơ sở dữ liệu thường được sử dụng để làm gì?",
+    answers: [
+        { text: "Tạo các mạng thần kinh nhân tạo.", correct: false },
+        { text: "Quản lý và truy xuất dữ liệu.", correct: true },
+        { text: "Phát triển các trò chơi điện tử.", correct: false },
+        { text: "Tạo các ứng dụng đồ họa.", correct: false }
+    ]
+},
+{
+    question: "Ngôn ngữ lập trình nào sau đây thường được sử dụng cho lập trình logic?",
+    answers: [
+        { text: "Prolog.", correct: true },
+        { text: "C++.", correct: false },
+        { text: "Python.", correct: false },
+        { text: "Java.", correct: false }
+    ]
+},
+{
+    question: "Tại sao lập trình logic lại phù hợp để giải quyết các bài toán về trí tuệ nhân tạo?",
+    answers: [
+        { text: "Cả (A), (B), (C) đều đúng.", correct: true },
+        { text: "(A). Vì nó cho phép biểu diễn kiến thức một cách trực quan.", correct: false },
+        { text: "(C). Vì nó dễ dàng tích hợp với các hệ thống chuyên gia.", correct: false },
+        { text: "(B). Vì nó có khả năng suy luận và đưa ra quyết định.", correct: false }
+    ]
+},
+{
+    question: "Trong trường hợp nào sau đây, lập trình khai báo sẽ thích hợp hơn lập trình mệnh lệnh?",
+    answers: [
+        { text: "Khi muốn mô tả kết quả mong muốn mà không cần quan tâm đến quá trình thực hiện.", correct: true },
+        { text: "Khi cần tối ưu hóa hiệu suất của chương trình đến từng câu lệnh.", correct: false },
+        { text: "Khi cần viết một thuật toán sắp xếp phức tạp.", correct: false },
+        { text: "Khi cần kiểm soát từng bước thực hiện của chương trình.", correct: false }
+    ]
+},
+{
+    question: "Khi nào nên kết hợp cả lập trình mệnh lệnh và lập trình khai báo trong một dự án?",
+    answers: [
+        { text: "Khi hiệu suất là yếu tố quan trọng nhất.", correct: false },
+        { text: "Khi dự án quá phức tạp.", correct: false },
+        { text: "Khi bạn chỉ quen với một trong hai phương pháp.", correct: false },
+        { text: "Khi một số phần của ứng dụng yêu cầu kiểm soát chặt chẽ từng bước thực hiện, trong khi các phần khác cần tả kết quả một cách ngắn gọn.", correct: true }
+    ]
+},
+{
+    question: "Git là gì?",
+    answers: [
+        { text: "Một hệ thống quản lý phiên bản phân tán, cho phép theo dõi lịch sử thay đổi của code, tạo các nhánh, hợp nhất mã và làm việc nhóm hiệu quả.", correct: true },
+        { text: "Một ngôn ngữ lập trình.", correct: false },
+        { text: "Một hệ điều hành.", correct: false },
+        { text: "Một công cụ soạn thảo văn bản.", correct: false }
+    ]
+},
+{
+    question: "Khi nào nên sử dụng lập trình logic?",
+    answers: [
+        { text: "Khi giải quyết các bài toán tìm kiếm và chứng minh.", correct: true },
+        { text: "Khi xây dựng các ứng dụng đồ họa.", correct: false },
+        { text: "Khi cần hiệu năng cao.", correct: false },
+        { text: "Khi xử lý các dữ liệu số lớn.", correct: false }
+    ]
+},
+{
+    question: "Đặc điểm nổi bật nhất của lập trình logic là gì?",
+    answers: [
+        { text: "Hướng đến việc mô hình hóa các đối tượng thực tế.", correct: false },
+        { text: "Tập trung vào các cấu trúc dữ liệu.", correct: false },
+        { text: "Dựa trên các mệnh đề logic và quy tắc suy luận.", correct: true },
+        { text: "Sử dụng nhiều vòng lặp và điều kiện.", correct: false }
+    ]
+}
+        ];
+
+        let userAnswers = [];
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function getRequiredSelectionCount(questionText) {
+        const match = questionText.match(/chọn\s*(\d+)/i);
+        return match ? parseInt(match[1]) : 1; // Mặc định là chọn 1 nếu không có "chọn X"
+    }
+
+    function initQuiz() {
+        shuffleArray(questions);
+        const questionsContainer = document.getElementById('questions');
+        questionsContainer.innerHTML = '';
+
+        questions.forEach((q, qIndex) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question-container';
+
+            shuffleArray(q.answers);
+
+            questionDiv.innerHTML = `
+                <div class="question-text">${qIndex + 1}. ${q.question}</div>
+                <div class="answers-container"></div>
+            `;
+
+            const answersContainer = questionDiv.querySelector('.answers-container');
+
+            q.answers.forEach(answer => {
+                const button = document.createElement('button');
+                button.className = 'answer-btn';
+                button.textContent = answer.text;
+                button.addEventListener('click', () => {
+                    selectAnswer(qIndex, answer);
+                    const required = getRequiredSelectionCount(q.question);
+                    const selected = userAnswers[qIndex]?.length || 0;
+                    if (selected === required) {
+                        showImmediateResult(qIndex);
+                    }
+                });
+                answersContainer.appendChild(button);
+            });
+
+            questionsContainer.appendChild(questionDiv);
+        });
+
+        document.querySelector('.submit-btn').style.display = 'none';
+    }
+
+    function selectAnswer(qIndex, answer) {
+        const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+        const buttons = questionDiv.querySelectorAll('.answer-btn');
+
+        const clickedBtn = [...buttons].find(btn => btn.textContent === answer.text);
+        clickedBtn.classList.toggle('selected');
+
+        if (!userAnswers[qIndex]) userAnswers[qIndex] = [];
+
+        const alreadySelected = userAnswers[qIndex].find(a => a.text === answer.text);
+        if (alreadySelected) {
+            userAnswers[qIndex] = userAnswers[qIndex].filter(a => a.text !== answer.text);
+        } else {
+            userAnswers[qIndex].push(answer);
+        }
+    }
+
+    function showImmediateResult(qIndex) {
+        const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+        const buttons = questionDiv.querySelectorAll('.answer-btn');
+        const selectedAnswers = userAnswers[qIndex] || [];
+
+        buttons.forEach(btn => {
+            btn.disabled = true;
+            const answerObj = questions[qIndex].answers.find(a => a.text === btn.textContent);
+            const isSelected = selectedAnswers.find(a => a.text === btn.textContent);
+
+            if (answerObj.correct) {
+                btn.classList.add('correct');
+            } else if (isSelected) {
+                btn.classList.add('incorrect');
+            }
+        });
+    }
+
+    initQuiz();
+    </script>
+</body>
+</html>

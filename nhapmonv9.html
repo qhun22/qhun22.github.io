@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ig: qhun22</title>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Quicksand', sans-serif;
+        }
+    
+        .quiz-container {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px 25px;
+            max-width: 700px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease;
+        }
+    
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+    
+        .question-container {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+    
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: #222;
+        }
+    
+        .answers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    
+        .answer-btn {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+        
+        .answer:hover {
+            background-color: #ffe6f0;
+            transform: scale(0.5);
+        } 
+        .answer-btn:hover {
+            background-color: #f1f1f1;
+            border-color: #aaa;
+        }
+    
+        .answer-btn.selected {
+            background-color: #ffd966;
+            border-color: #f1c40f;
+            font-weight: bold;
+        }
+    
+        .answer-btn.correct {
+            background-color: #b6e9b1;
+            border-color: #2ecc71;
+            color: #2c3e50;
+        }
+    
+        .answer-btn.incorrect {
+            background-color: #f9b3b3;
+            border-color: #e74c3c;
+            color: #2c3e50;
+        }
+    
+        .submit-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    
+        .submit-btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+    
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+    
+        .result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+    
+        .reset-btn {
+            margin-top: 15px;
+            background-color: #27ae60;
+        }
+    
+        .reset-btn:hover {
+            background-color: #1e8449;
+        }
+        .quiz-container {
+            margin-top: 60px;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        @media (max-width: 600px) {
+            .quiz-container {
+                padding: 15px 20px;
+            }
+    
+            h1 {
+                font-size: 1.5rem;
+            }
+    
+            .answer-btn {
+                font-size: 0.95rem;
+            }
+    
+            .submit-btn {
+                width: 100%;
+            }
+    
+            .result {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>NHAP MON TUAN 9</h1>
+        <div id="timer" style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ffeaa7;
+    color: #d63031;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 1.2rem;
+    font-weight: bold;
+    z-index: 999;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+">
+    ⏱ Thời gian còn lại: 15 phút 00 giây
+</div>
+        <div id="questions"></div>
+        <div class="submit-container">
+            <button class="submit-btn">Nộp Bài</button>
+            <div class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+        {
+    question: "Tại sao bước đào tạo nhóm triển khai phần mềm, đào tạo người dùng sử dụng là một phần quan trọng trong quy trình triển khai phần mềm?",
+    answers: [
+        { text: "Để đáp ứng yêu cầu của khách hàng.", correct: false },
+        { text: "Để giảm thiểu chi phí.", correct: false },
+        { text: "Để đảm bảo người dùng hiểu và sử dụng phần mềm hiệu quả.", correct: true },
+        { text: "Để tăng tốc độ triển khai.", correct: false }
+    ]
+},
+{
+    question: "Bước đầu tiên trong quy trình bảo trì hệ thống là gì?",
+    answers: [
+        { text: "Phân tích ảnh hưởng (Impact Analysis).", correct: false },
+        { text: "Lập kế hoạch phát hành hệ thống (System Release Planning).", correct: false },
+        { text: "Xác định các yêu cầu thay đổi (Change Request).", correct: true },
+        { text: "Triển khai các thay đổi (Change Implementation).", correct: false }
+    ]
+},
+{
+    question: "Mục tiêu chính của bước 'Phân tích ảnh hưởng' trong quy trình bảo trì là gì?",
+    answers: [
+        { text: "Xác định các mục tiêu bảo trì.", correct: false },
+        { text: "Đánh giá tác động của sự thay đổi đến hệ thống.", correct: true },
+        { text: "Lập kế hoạch kiểm thử hệ thống sau khi bảo trì.", correct: false },
+        { text: "Thực hiện các thay đổi hệ thống.", correct: false }
+    ]
+},
+{
+    question: "Tái kỹ nghệ phần mềm là gì?",
+    answers: [
+        { text: "Việc chuyển đổi toàn bộ một hệ thống phần mềm từ ngôn ngữ lập trình này sang ngôn ngữ lập trình khác nhằm nâng cao việc bảo trì và mở rộng phần mềm.", correct: false },
+        { text: "Việc sửa chữa các lỗi trong phần mềm hiện có.", correct: false },
+        { text: "Tiến trình cải tiến khả năng bảo trì của sản phẩm bằng cách chuyển dịch nó sang dạng biểu diễn mới trong khi vẫn đảm bảo tính nguyên vẹn của các chức năng phần mềm.", correct: true },
+        { text: "Việc tối ưu hóa hiệu suất của phần mềm, cải tạo phần mềm để tăng cường khả năng bảo trì, dễ dàng nâng cấp và mở rộng trong tương lai.", correct: false }
+    ]
+},
+{
+    question: "Mục tiêu chính của tái kỹ nghệ phần mềm là gì?",
+    answers: [
+        { text: "Tăng tốc độ thực thi của phần mềm.", correct: false },
+        { text: "Cải thiện khả năng bảo trì và nâng cao tuổi thọ của phần mềm.", correct: true },
+        { text: "Giảm chi phí phát triển phần mềm mới.", correct: false },
+        { text: "Tăng cường tính bảo mật của phần mềm.", correct: false }
+    ]
+},
+{
+    question: "Kỹ nghệ đảo ngược (Reverse Engineering) trong tái kỹ nghệ là gì?",
+    answers: [
+        { text: "Việc viết lại mã nguồn từ một ngôn ngữ này sang ngôn ngữ khác.", correct: false },
+        { text: "Quá trình phân tích một hệ thống để khám phá cấu trúc và nguyên lý hoạt động của nó.", correct: true },
+        { text: "Việc tạo ra một hệ thống mới có chức năng tương tự.", correct: false },
+        { text: "Quá trình tối ưu hóa cấu trúc của mã nguồn.", correct: false }
+    ]
+},
+{
+    question: "Tái nền tảng vận hành (Retargeting) trong tái kỹ nghệ có nghĩa là gì?",
+    answers: [
+        { text: "Thay đổi giao diện người dùng của phần mềm.", correct: false },
+        { text: "Chuyển dịch phần mềm sang nền tảng hệ thống mới.", correct: true },
+        { text: "Cải thiện hiệu năng của phần mềm.", correct: false },
+        { text: "Tăng cường tính bảo mật của phần mềm.", correct: false }
+    ]
+},
+{
+    question: "JPA/Hibernate Framework được sử dụng để làm gì trong kỹ nghệ ngược?",
+    answers: [
+        { text: "Dịch ngược mã nhị phân thành mã nguồn.", correct: false },
+        { text: "Tạo biểu đồ lớp từ mã nguồn Java.", correct: false },
+        { text: "Từ cơ sở dữ liệu quan hệ sinh ngược các lớp thực thể.", correct: true },
+        { text: "Tối ưu hóa hiệu suất của cơ sở dữ liệu.", correct: false }
+    ]
+},
+{
+    question: "Mục đích chính của bảo trì phần mềm là gì?",
+    answers: [
+        { text: "Tạo ra một phiên bản phần mềm hoàn toàn mới.", correct: false },
+        { text: "Sửa chữa các lỗi và nâng cao hiệu suất của phần mềm đang hoạt động.", correct: true },
+        { text: "Xoá bỏ phiên bản cũ của phần mềm.", correct: false },
+        { text: "Thay thế hoàn toàn phần mềm cũ bằng phần mềm mới.", correct: false }
+    ]
+},
+{
+    question: "Bảo trì thích ứng (adaptive maintenance) là gì?",
+    answers: [
+        { text: "Sửa chữa các lỗi phát sinh trong quá trình sử dụng phần mềm.", correct: false },
+        { text: "Điều chỉnh phần mềm để phù hợp với những thay đổi trong môi trường hoạt động.", correct: true },
+        { text: "Nâng cao hiệu suất và khả năng của phần mềm.", correct: false },
+        { text: "Thêm các tính năng mới vào phần mềm.", correct: false }
+    ]
+},
+{
+    question: "Nếu trong quá trình triển khai, phát sinh một số lỗi nghiêm trọng mà không thể khắc phục ngay, bạn sẽ xử lý như thế nào?",
+    answers: [
+        { text: "Tiếp tục triển khai và sửa lỗi sau khi hệ thống đi vào hoạt động.", correct: false },
+        { text: "Tạm dừng triển khai và tập trung vào việc sửa lỗi.", correct: true },
+        { text: "Quay trở lại bước thiết kế và điều chỉnh lại hệ thống.", correct: false },
+        { text: "Bỏ qua các lỗi này và tiếp tục triển khai.", correct: false }
+    ]
+},
+{
+    question: "Một công ty phát triển phần mềm nhận thấy rằng phần mềm của họ đang gặp phải nhiều lỗi nhỏ sau khi phát hành. Để giải quyết vấn đề này một cách nhanh chóng và hiệu quả nhất, công ty nên áp dụng loại bảo trì nào?",
+    answers: [
+        { text: "Bảo trì nâng cấp.", correct: false },
+        { text: "Bảo trì thích ứng.", correct: false },
+        { text: "Bảo trì sửa lỗi.", correct: true },
+        { text: "Bảo trì phòng ngừa.", correct: false }
+    ]
+},
+{
+    question: "Một công ty đang sử dụng một hệ thống quản lý cơ sở dữ liệu cũ. Công ty muốn nâng cấp lên một hệ thống quản lý cơ sở dữ liệu mới có hiệu năng cao hơn. Loại bảo trì nào phù hợp nhất với trường hợp này?",
+    answers: [
+        { text: "Bảo trì thích ứng.", correct: false },
+        { text: "Bảo trì nâng cấp.", correct: true },
+        { text: "Bảo trì sửa lỗi.", correct: false },
+        { text: "Bảo trì phòng ngừa.", correct: false }
+    ]
+},
+{
+    question: "Trong quá trình phát triển phần mềm, một nhóm muốn đảm bảo rằng tất cả các thay đổi code đều được kiểm tra và phê duyệt trước khi được merge vào nhánh chính. Họ nên sử dụng công cụ nào để thực hiện việc này?",
+    answers: [
+        { text: "Maven.", correct: false },
+        { text: "Jenkins.", correct: false },
+        { text: "GitHub.", correct: true },
+        { text: "Splunk.", correct: false }
+    ]
+},
+{
+    question: "Một công ty đang chuẩn bị phát hành một phiên bản mới của sản phẩm phần mềm. Để đảm bảo quá trình phát hành diễn ra suôn sẻ và ít rủi ro nhất, công ty nên thực hiện bước nào sau đây đầu tiên?",
+    answers: [
+        { text: "Lập kế hoạch triển khai.", correct: true },
+        { text: "Xây dựng môi trường thử nghiệm để kiểm tra sự hoạt động của phiên bản mới trước khi công khai.", correct: false },
+        { text: "Xác định phạm vi và mục tiêu của phiên bản mới.", correct: false },
+        { text: "Tiến hành kiểm thử tích hợp.", correct: false }
+    ]
+},
+{
+    question: "Trong bước 'Lập kế hoạch phát hành hệ thống', hoạt động nào sau đây không được thực hiện?",
+    answers: [
+        { text: "Xác định loại hình bảo trì.", correct: false },
+        { text: "Xây dựng giải pháp triển khai.", correct: false },
+        { text: "Tiến hành kiểm thử hệ thống.", correct: true },
+        { text: "Xử lý các hiệu ứng phụ.", correct: false }
+    ]
+},
+{
+    question: "Khi sử dụng các công cụ dịch ngược, cần lưu ý điều gì?",
+    answers: [
+        { text: "Các công cụ dịch ngược luôn cho kết quả chính xác 100%.", correct: false },
+        { text: "Mã nguồn dịch ngược luôn dễ đọc và hiểu hơn mã nguồn gốc.", correct: false },
+        { text: "Mã nguồn dịch ngược có thể không hoàn toàn giống với mã nguồn gốc và cần được kiểm tra kỹ lưỡng.", correct: true },
+        { text: "Các công cụ dịch ngược chỉ áp dụng cho các ngôn ngữ lập trình bậc cao.", correct: false }
+    ]
+},
+{
+    question: "Yếu tố nào sau đây không phải là một phần của quá trình bảo trì phần mềm?",
+    answers: [
+        { text: "Phân tích lỗi.", correct: false },
+        { text: "Lập kế hoạch bảo trì.", correct: false },
+        { text: "Thực hiện các thay đổi.", correct: false },
+        { text: "Phát triển phần mềm mới.", correct: true }
+    ]
+},
+{
+    question: "Một công ty phát triển phần mềm muốn cải thiện hiệu suất của một phần mềm đã được sử dụng trong nhiều năm. Họ quyết định tối ưu hóa mã nguồn và thêm một số tính năng mới. Loại bảo trì nào đang được thực hiện?",
+    answers: [
+        { text: "Bảo trì sửa lỗi.", correct: false },
+        { text: "Bảo trì nâng cấp.", correct: true },
+        { text: "Bảo trì thích ứng.", correct: false },
+        { text: "Bảo trì phòng ngừa.", correct: false }
+    ]
+},
+{
+    question: "Một công ty muốn giảm thiểu chi phí bảo trì phần mềm trong tương lai. Biện pháp nào sau đây là hiệu quả nhất?",
+    answers: [
+        { text: "Tăng cường bảo trì sửa lỗi.", correct: false },
+        { text: "Thực hiện bảo trì thích ứng thường xuyên.", correct: false },
+        { text: "Đầu tư vào bảo trì phòng ngừa.", correct: true },
+        { text: "Tăng cường bảo trì nâng cấp.", correct: false }
+    ]
+},
+{
+    question: "Công ty muốn triển khai một tính năng mới vào ứng dụng thương mại điện tử. Bạn sẽ thực hiện các bước nào để đảm bảo việc triển khai diễn ra suôn sẻ và không ảnh hưởng đến các tính năng hiện có?",
+    answers: [
+        { text: "Triển khai trực tiếp lên môi trường sản xuất.", correct: false },
+        { text: "Tạo một môi trường thử nghiệm để kiểm tra kỹ trước khi triển khai.", correct: true },
+        { text: "Chỉ triển khai vào giờ làm việc để có thể theo dõi sát sao.", correct: false },
+        { text: "Tắt tính năng bảo mật để dễ dàng sửa lỗi.", correct: false }
+    ]
+},
+{
+    question: "Công cụ nào sau đây được sử dụng để dịch ngược mã nhị phân của các ứng dụng .NET thành mã nguồn?",
+    answers: [
+        { text: "JD-Eclipse.", correct: false },
+        { text: "EasyUML.", correct: false },
+        { text: "Dotpeek.", correct: true },
+        { text: "JPA/Hibernate Framework.", correct: false }
+    ]
+},
+{
+    question: "Để đảm bảo chất lượng code trước khi merge vào nhánh chính, nhóm của bạn đã thiết lập một quy trình kiểm tra tự động. Quy trình này bao gồm các bước sau: chạy unit tests, kiểm tra code style và build ứng dụng. Bạn sẽ sử dụng công cụ nào của GitHub để tự động hóa quy trình này?",
+    answers: [
+        { text: "GitHub Pages.", correct: false },
+        { text: "GitHub Actions.", correct: true },
+        { text: "GitHub Projects.", correct: false },
+        { text: "GitHub Issues.", correct: false }
+    ]
+},
+{
+    question: "Bước đầu tiên trong quy trình triển khai phần mềm là gì?",
+    answers: [
+        { text: "Cấu hình hệ thống.", correct: false },
+        { text: "Lập kế hoạch triển khai.", correct: true },
+        { text: "Đào tạo nhóm triển khai phần mềm.", correct: false },
+        { text: "Kiểm thử triển khai.", correct: false }
+    ]
+},
+{
+    question: "Bảo trì phòng ngừa (preventive maintenance) có vai trò gì?",
+    answers: [
+        { text: "Sửa chữa các lỗi đã xảy ra.", correct: false },
+        { text: "Ngăn chặn các lỗi có thể xảy ra trong tương lai.", correct: true },
+        { text: "Cải thiện hiệu suất của phần mềm.", correct: false },
+        { text: "Thêm các tính năng mới vào phần mềm.", correct: false }
+    ]
+},
+{
+    question: "Nếu sau khi triển khai, người dùng phản hồi rằng hệ thống mới không đáp ứng được nhu cầu của họ, điều này cho thấy:",
+    answers: [
+        { text: "Quá trình triển khai đã thành công.", correct: false },
+        { text: "Quá trình triển khai đã thất bại.", correct: true },
+        { text: "Khách hàng có yêu cầu quá cao.", correct: false },
+        { text: "Nhóm triển khai đã làm việc rất tốt.", correct: false }
+    ]
+},
+{
+    question: "Bước kiểm thử triển khai có ý nghĩa gì trong quy trình triển khai phần mềm?",
+    answers: [
+        { text: "Kiểm tra xem phần mềm có đáp ứng yêu cầu của khách hàng không.", correct: false },
+        { text: "Kiểm tra xem phần mềm có hoạt động ổn định trên môi trường thực tế không.", correct: true },
+        { text: "Kiểm tra xem quá trình triển khai có diễn ra suôn sẻ và hiệu quả không.", correct: false },
+        { text: "Kiểm tra xem người dùng có hài lòng với phần mềm không.", correct: false }
+    ]
+},
+{
+    question: "Bước cuối cùng trong quy trình bảo trì hệ thống là gì?",
+    answers: [
+        { text: "Quản lý các yêu cầu thay đổi.", correct: false },
+        { text: "Phân tích ảnh hưởng.", correct: false },
+        { text: "Lập kế hoạch phát hành hệ thống.", correct: false },
+        { text: "Phát hành hệ thống.", correct: true }
+    ]
+},
+{
+    question: "Để quản lý cấu hình của một hệ thống lớn với hàng trăm máy chủ, công cụ nào sau đây là phù hợp nhất?",
+    answers: [
+        { text: "Maven.", correct: false },
+        { text: "Jenkins.", correct: false },
+        { text: "Ansible.", correct: true },
+        { text: "Jira.", correct: false }
+    ]
+},
+{
+    question: "Mục tiêu chính của bước Lập kế hoạch triển khai trong quy trình triển khai phần mềm là gì?",
+    answers: [
+        { text: "Xác định ngân sách cho dự án.", correct: false },
+        { text: "Lựa chọn phần mềm phù hợp.", correct: false },
+        { text: "Xây dựng lộ trình triển khai chi tiết, bao gồm các giai đoạn, nguồn lực và thời gian.", correct: true },
+        { text: "Đào tạo đội ngũ kỹ thuật.", correct: false }
+    ]
+}
+        ];
+
+        let userAnswers = [];
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function getRequiredSelectionCount(questionText) {
+        const match = questionText.match(/chọn\s*(\d+)/i);
+        return match ? parseInt(match[1]) : 1;
+    }
+
+    function initQuiz() {
+        shuffleArray(questions);
+        const questionsContainer = document.getElementById('questions');
+        questionsContainer.innerHTML = '';
+
+        questions.forEach((q, qIndex) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question-container';
+
+            shuffleArray(q.answers);
+
+            questionDiv.innerHTML = `
+                <div class="question-text">${qIndex + 1}. ${q.question}</div>
+                <div class="answers-container"></div>
+            `;
+
+            const answersContainer = questionDiv.querySelector('.answers-container');
+
+            q.answers.forEach(answer => {
+                const button = document.createElement('button');
+                button.className = 'answer-btn';
+                button.textContent = answer.text;
+                button.addEventListener('click', () => {
+                    selectAnswer(qIndex, answer);
+                });
+                answersContainer.appendChild(button);
+            });
+
+            questionsContainer.appendChild(questionDiv);
+        });
+    }
+
+    function selectAnswer(qIndex, answer) {
+        const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+        const buttons = questionDiv.querySelectorAll('.answer-btn');
+
+        const clickedBtn = [...buttons].find(btn => btn.textContent === answer.text);
+        clickedBtn.classList.toggle('selected');
+
+        if (!userAnswers[qIndex]) userAnswers[qIndex] = [];
+
+        const alreadySelected = userAnswers[qIndex].find(a => a.text === answer.text);
+        if (alreadySelected) {
+            userAnswers[qIndex] = userAnswers[qIndex].filter(a => a.text !== answer.text);
+        } else {
+            userAnswers[qIndex].push(answer);
+        }
+    }
+
+    function showResult() {
+        let score = 0;
+        const resultDiv = document.querySelector('.result');
+
+        questions.forEach((q, qIndex) => {
+            const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+            const buttons = questionDiv.querySelectorAll('.answer-btn');
+            const selectedAnswers = userAnswers[qIndex] || [];
+            const correctAnswers = q.answers.filter(a => a.correct);
+
+            buttons.forEach(btn => {
+                btn.disabled = true;
+                const answerObj = q.answers.find(a => a.text === btn.textContent);
+                const isSelected = selectedAnswers.find(a => a.text === btn.textContent);
+
+                if (answerObj.correct) {
+                    btn.classList.add('correct');
+                } else if (isSelected) {
+                    btn.classList.add('incorrect');
+                }
+            });
+
+            // Tính điểm: tất cả đáp án đúng phải được chọn và không chọn nhầm
+            const allCorrectSelected = correctAnswers.every(a =>
+                selectedAnswers.find(sel => sel.text === a.text)
+            );
+            const noIncorrectSelected = selectedAnswers.every(a =>
+                q.answers.find(ans => ans.text === a.text && ans.correct)
+            );
+
+            if (allCorrectSelected && noIncorrectSelected) {
+                score += 10;
+            }
+        });
+
+        resultDiv.innerHTML = `
+            <p>Điểm của bạn: ${score}/${questions.length * 10}</p>
+            <button class="submit-btn reset-btn" onclick="location.reload()">Làm lại</button>
+        `;
+        resultDiv.style.display = 'block';
+        document.querySelector('.submit-btn').style.display = 'none';
+    }
+
+    document.querySelector('.submit-btn').addEventListener('click', showResult);
+    function startTimer(durationInSeconds) {
+    const timerDisplay = document.getElementById('timer');
+    let timeLeft = durationInSeconds;
+
+    const interval = setInterval(() => {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        timerDisplay.textContent = `⏱ Thời gian còn lại: ${minutes} phút ${seconds < 10 ? '0' : ''}${seconds} giây`;
+
+        if (--timeLeft < 0) {
+            clearInterval(interval);
+            timerDisplay.textContent = "⏰ Hết giờ! Bài đã được nộp.";
+            showResult(); // tự động nộp bài
+        }
+    }, 1000);
+}
+    initQuiz();
+    startTimer(900);
+    </script>
+</body>
+</html>
