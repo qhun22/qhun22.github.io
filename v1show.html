@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="images/qhun22icon.png" />
+    <link rel="apple-touch-icon" href="images/qhun22icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>qhun22</title>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Quicksand', sans-serif;
+        }
+    
+        .quiz-container {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px 25px;
+            max-width: 700px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease;
+        }
+    
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+    
+        .question-container {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+    
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: #222;
+        }
+    
+        .answers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    
+        .answer-btn {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+        
+        .answer:hover {
+            background-color: #ffe6f0;
+            transform: scale(0.5);
+        } 
+        .answer-btn:hover {
+            background-color: #f1f1f1;
+            border-color: #aaa;
+        }
+    
+        .answer-btn.selected {
+            background-color: #ffd966;
+            border-color: #f1c40f;
+            font-weight: bold;
+        }
+    
+        .answer-btn.correct {
+            background-color: #b6e9b1;
+            border-color: #2ecc71;
+            color: #2c3e50;
+        }
+    
+        .answer-btn.incorrect {
+            background-color: #f9b3b3;
+            border-color: #e74c3c;
+            color: #2c3e50;
+        }
+    
+        .submit-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    
+        .submit-btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+    
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+    
+        .result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+    
+        .reset-btn {
+            margin-top: 15px;
+            background-color: #27ae60;
+        }
+    
+        .reset-btn:hover {
+            background-color: #1e8449;
+        }
+    
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        @media (max-width: 600px) {
+            .quiz-container {
+                padding: 15px 20px;
+            }
+    
+            h1 {
+                font-size: 1.5rem;
+            }
+    
+            .answer-btn {
+                font-size: 0.95rem;
+            }
+    
+            .submit-btn {
+                width: 100%;
+            }
+    
+            .result {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>GDQP</h1>
+        <div id="questions"></div>
+        <div class="submit-container">
+            <button class="submit-btn">Nộp Bài</button>
+            <div class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+       {
+    "question": "Theo quan điểm chủ nghĩa Mác - Lênin chiến tranh ra đời từ mấy nguồn gốc?",
+    "answers": [
+        { "text": "Có 3 nguồn gốc", "correct": false },
+        { "text": "Có 4 nguồn gốc", "correct": false },
+        { "text": "Có 2 nguồn gốc.", "correct": true },
+        { "text": "Có 5 nguồn gốc", "correct": false }
+    ]
+},
+{
+    "question": "Có mấy nguyên tắc xây dựng quân đội kiểu mới của V.I. Lênin?",
+    "answers": [
+        { "text": "Có 6.", "correct": false },
+        { "text": "Có 7.", "correct": false },
+        { "text": "Có 8.", "correct": true },
+        { "text": "Có 9.", "correct": false }
+    ]
+},
+{
+    "question": "Theo tư tưởng Hồ Chí Minh quân đội có mấy nhiệm vụ?",
+    "answers": [
+        { "text": "Có 2.", "correct": true },
+        { "text": "Có 3.", "correct": false },
+        { "text": "Có 4.", "correct": false },
+        { "text": "Có 5.", "correct": false }
+    ]
+},
+{
+    "question": "Theo tư tưởng Hồ Chí Minh quân đội có mấy chức năng?",
+    "answers": [
+        { "text": "Có 2.", "correct": false },
+        { "text": "Có 3.", "correct": true },
+        { "text": "Có 4.", "correct": false },
+        { "text": "Có 5.", "correct": false }
+    ]
+},
+{
+    "question": "Có mấy Quan điểm của chủ nghĩa Mác-Lênin về bảo vệ Tổ quốc xã hội chủ nghĩa?",
+    "answers": [
+        { "text": "Có 2.", "correct": false },
+        { "text": "Có 3.", "correct": false },
+        { "text": "Có 4.", "correct": true },
+        { "text": "Có 5.", "correct": false }
+    ]
+},
+{
+    "question": "Nền quốc phòng toàn dân, an ninh nhân dân có mấy đặc trưng?",
+    "answers": [
+        { "text": "Có 2.", "correct": false },
+        { "text": "Có 3.", "correct": false },
+        { "text": "Có 4.", "correct": false },
+        { "text": "Có 5.", "correct": true }
+    ]
+},
+{
+    "question": "Có mấy nhiệm vụ xây dựng nền quốc phòng toàn dân, an ninh nhân dân vững mạnh?",
+    "answers": [
+        { "text": "Có 2.", "correct": true },
+        { "text": "Có 3.", "correct": false },
+        { "text": "Có 4.", "correct": false },
+        { "text": "Có 5.", "correct": false }
+    ]
+},
+{
+    "question": "Có mấy quan điểm của Đảng trong chiến tranh nhân dân bảo vệ Tổ quốc?",
+    "answers": [
+        { "text": "Có 4.", "correct": false },
+        { "text": "Có 5.", "correct": false },
+        { "text": "Có 6.", "correct": true },
+        { "text": "Có 7.", "correct": false }
+    ]
+},
+{
+    "question": "Lực lượng vũ trang nhân dân gồm mấy thành phần?",
+    "answers": [
+        { "text": "Có 2.", "correct": false },
+        { "text": "Có 3.", "correct": true },
+        { "text": "Có 4.", "correct": false },
+        { "text": "Có 5.", "correct": false }
+    ]
+},
+{
+    "question": "Có mấy quan điểm nguyên tắc xây dựng lực lượng vũ trang nhân dân?",
+    "answers": [
+        { "text": "Có 3.", "correct": false },
+        { "text": "Có 4.", "correct": true },
+        { "text": "Có 5.", "correct": false },
+        { "text": "Có 6.", "correct": false }
+    ]
+},
+{
+    "question": "Có mấy nội dung kết hợp phát triên kinh tế xã hội với tăng cường củng cố quốc phòng, an ninh và đối ngoại ở nước ta hiện nay?",
+    "answers": [
+        { "text": "Có 3.", "correct": false },
+        { "text": "Có 4.", "correct": false },
+        { "text": "Có 5.", "correct": true },
+        { "text": "Có 6.", "correct": false }
+    ]
+},
+{
+    "question": "Nghệ thuật đánh giặc của ông cha có mấy nội dung?",
+    "answers": [
+        { "text": "5.", "correct": false },
+        { "text": "6.", "correct": true },
+        { "text": "7.", "correct": false },
+        { "text": "8.", "correct": false }
+    ]
+},
+{
+    "question": "Có mấy cơ sở hình thành nghệ thuật quân sự Việt Nam?",
+    "answers": [
+        { "text": "5.", "correct": false },
+        { "text": "4.", "correct": false },
+        { "text": "3.", "correct": true },
+        { "text": "2.", "correct": false }
+    ]
+},
+{
+    "question": "Có mấy nội dung nghệ thuật quân sự Việt Nam từ khi có Đảng lãnh đạo?",
+    "answers": [
+        { "text": "5.", "correct": false },
+        { "text": "4.", "correct": false },
+        { "text": "3.", "correct": true },
+        { "text": "2.", "correct": false }
+    ]
+},
+{
+    "question": "Có mấy nội dung xây dựng và bảo vệ biên giới quốc gia?",
+    "answers": [
+        { "text": "5 nội dung", "correct": false },
+        { "text": "6 nội dung", "correct": false },
+        { "text": "7 nội dung", "correct": true },
+        { "text": "8 nội dung", "correct": false }
+    ]
+},
+{
+    "question": "Có mấy quan điểm, nguyên tắc xây dựng lực lượng dự bị động viên?",
+    "answers": [
+        { "text": "3 quan điểm", "correct": true },
+        { "text": "4 quan điểm", "correct": false },
+        { "text": "5 quan điểm", "correct": false },
+        { "text": "6 quan điểm", "correct": false }
+    ]
+},
+{
+    "question": "Có mấy biện pháp xây dựng lực lượng dự bị động viên?",
+    "answers": [
+        { "text": "Có 2 biện pháp", "correct": false },
+        { "text": "Có 3 biện pháp", "correct": false },
+        { "text": "Có 4 biện pháp", "correct": true }
+    ]
+},
+{
+    "question": "Có mấy nguyên tắc động viên công nghiệp quốc phòng?",
+    "answers": [
+        { "text": "2 nguyên tắc", "correct": false },
+        { "text": "3 nguyên tắc", "correct": true },
+        { "text": "4 nguyên tắc", "correct": false },
+        { "text": "5 nguyên tắc", "correct": false }
+    ]
+},
+{
+    "question": "Có mấy yêu cầu động viên công nghiệp quốc phòng?",
+    "answers": [
+        { "text": "2 yêu cầu", "correct": true },
+        { "text": "3 yêu cầu", "correct": false },
+        { "text": "4 yêu cầu", "correct": false },
+        { "text": "5 yêu cầu", "correct": false }
+    ]
+},
+{
+    "question": "Có mấy biện pháp thực hiện động viên công nghiệp quốc phòng?",
+    "answers": [
+        { "text": "2 biện pháp", "correct": false },
+        { "text": "3 biện pháp", "correct": true },
+        { "text": "4 biện pháp", "correct": false },
+        { "text": "5 biện pháp", "correct": false }
+    ]
+},
+{
+    "question": "Có mấy vai trò của quần chúng nhân dân trong bảo vệ an ninh Tổ quốc?",
+    "answers": [
+        { "text": "3 vai trò", "correct": true },
+        { "text": "4 vai trò", "correct": false },
+        { "text": "5 vai trò", "correct": false },
+        { "text": "6 vai trò", "correct": false }
+    ]
+},
+{
+    "question": "Có mấy vị trí của phòng trào toàn dân bảo vệ an ninh Tổ quốc?",
+    "answers": [
+        { "text": "2 vị trí", "correct": true },
+        { "text": "3 vị trí", "correct": false },
+        { "text": "4 vị trí", "correct": false },
+        { "text": "5 vị trí", "correct": false }
+    ]
+},
+{
+    "question": "Có mấy nội dung cơ bản của công tác xây dựng phòng trào toàn dân bảo vệ an ninh Tổ quốc?",
+    "answers": [
+        { "text": "2 nội dung", "correct": false },
+        { "text": "3 nội dung", "correct": false },
+        { "text": "4 nội dung", "correct": true },
+        { "text": "5 nội dung", "correct": false }
+    ]
+},
+{
+    "question": "Có mấy phương pháp xây dựng phòng trào toàn dân bảo vệ an ninh Tổ quốc?",
+    "answers": [
+        { "text": "5 phương pháp", "correct": false },
+        { "text": "6 phương pháp", "correct": true },
+        { "text": "7 phương pháp", "correct": false },
+        { "text": "8 phương pháp", "correct": false }
+    ]
+},
+{
+    "question": "Có mấy nhiệm vụ bảo vệ an ninh quốc gia?",
+    "answers": [
+        { "text": "3 nhiệm vụ", "correct": false },
+        { "text": "4 nhiệm vụ", "correct": false },
+        { "text": "5 nhiệm vụ", "correct": true },
+        { "text": "6 nhiệm vụ", "correct": false }
+    ]
+},
+{
+    "question": "Có mấy nguyên tắc bảo vệ an ninh quốc gia?",
+    "answers": [
+        { "text": "2 nguyên tắc", "correct": false },
+        { "text": "3 nguyên tắc", "correct": true },
+        { "text": "4 nguyên tắc", "correct": false },
+        { "text": "5 nguyên tắc", "correct": false }
+    ]
+},
+{
+    "question": "Có mấy cơ quan chuyên trách bảo vệ an ninh quốc gia?",
+    "answers": [
+        { "text": "2 cơ quan", "correct": false },
+        { "text": "3 cơ quan", "correct": true },
+        { "text": "4 cơ quan", "correct": false },
+        { "text": "5 cơ quan", "correct": false }
+    ]
+},
+{
+    "question": "Có mấy nội dung bảo vệ an ninh quốc?",
+    "answers": [
+        { "text": "4 nội dung", "correct": false },
+        { "text": "5 nội dung", "correct": false },
+        { "text": "6 nội dung", "correct": false },
+        { "text": "7 nội dung", "correct": true }
+    ]
+},
+{
+    "question": "Có mấy nội dung xây dựng lực lượng dân quân tự vệ?",
+    "answers": [
+        { "text": "2 nội dung", "correct": false },
+        { "text": "3 nội dung", "correct": true },
+        { "text": "4 nội dung", "correct": false },
+        { "text": "5 nội dung", "correct": false }
+    ]
+},
+{
+    "question": "Dân quân tự vệ có mấy nhiệm vụ ?",
+    "answers": [
+        { "text": "6 nhiệm vụ", "correct": true },
+        { "text": "5 nhiệm vụ", "correct": false },
+        { "text": "4 nhiệm vụ", "correct": false },
+        { "text": "3 nhiệm vụ", "correct": false }
+    ]
+},
+{
+    "question": "Cuộc khởi nghĩa của hai bà Trưng vào mùa xuân năm nào (TCN)?",
+    "answers": [
+        { "text": "40.", "correct": true },
+        { "text": "44.", "correct": false },
+        { "text": "50.", "correct": false },
+        { "text": "54.", "correct": false }
+    ]
+}
+        ];
+
+         let userAnswers = [];
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function initQuiz() {
+        shuffleArray(questions);
+        const questionsContainer = document.getElementById('questions');
+        questionsContainer.innerHTML = '';
+        
+        questions.forEach((q, qIndex) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question-container';
+            
+            shuffleArray(q.answers);
+            
+            questionDiv.innerHTML = `
+                <div class="question-text">${qIndex + 1}. ${q.question}</div>
+                <div class="answers-container"></div>
+            `;
+            
+            const answersContainer = questionDiv.querySelector('.answers-container');
+            
+            q.answers.forEach(answer => {
+                const button = document.createElement('button');
+                button.className = 'answer-btn';
+                button.textContent = answer.text;
+                button.addEventListener('click', () => {
+                    selectAnswer(qIndex, answer);
+                    showImmediateResult(qIndex, answer);
+                });
+                answersContainer.appendChild(button);
+            });
+            
+            questionsContainer.appendChild(questionDiv);
+        });
+
+        // Ẩn nút nộp bài vì không cần nữa
+        document.querySelector('.submit-btn').style.display = 'none';
+    }
+
+    function selectAnswer(qIndex, answer) {
+        const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+        const buttons = questionDiv.querySelectorAll('.answer-btn');
+        
+        buttons.forEach(btn => btn.classList.remove('selected'));
+        
+        const selectedBtn = [...buttons].find(btn => btn.textContent === answer.text);
+        selectedBtn.classList.add('selected');
+        
+        userAnswers[qIndex] = answer;
+    }
+
+    function showImmediateResult(qIndex, selectedAnswer) {
+        const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+        const buttons = questionDiv.querySelectorAll('.answer-btn');
+
+        buttons.forEach(btn => {
+            btn.disabled = true;
+            const answerObj = questions[qIndex].answers.find(a => a.text === btn.textContent);
+            if (answerObj.correct) {
+                btn.classList.add('correct');
+            } else if (btn.textContent === selectedAnswer.text) {
+                btn.classList.add('incorrect');
+            }
+        });
+    }
+
+    initQuiz();
+    </script>
+</body>
+</html>
