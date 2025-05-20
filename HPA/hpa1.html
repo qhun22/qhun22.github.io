@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="images/qhun22icon.png" />
+    <link rel="apple-touch-icon" href="images/qhun22icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>qhun22</title>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Quicksand', sans-serif;
+        }
+    
+        .quiz-container {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px 25px;
+            max-width: 700px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease;
+        }
+    
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+    
+        .question-container {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+    
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: #222;
+        }
+    
+        .answers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    
+        .answer-btn {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+        
+        .answer:hover {
+            background-color: #ffe6f0;
+            transform: scale(0.5);
+        } 
+        .answer-btn:hover {
+            background-color: #f1f1f1;
+            border-color: #aaa;
+        }
+    
+        .answer-btn.selected {
+            background-color: #ffd966;
+            border-color: #f1c40f;
+            font-weight: bold;
+        }
+    
+        .answer-btn.correct {
+            background-color: #b6e9b1;
+            border-color: #2ecc71;
+            color: #2c3e50;
+        }
+    
+        .answer-btn.incorrect {
+            background-color: #f9b3b3;
+            border-color: #e74c3c;
+            color: #2c3e50;
+        }
+    
+        .submit-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    
+        .submit-btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+    
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+    
+        .result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+    
+        .reset-btn {
+            margin-top: 15px;
+            background-color: #27ae60;
+        }
+    
+        .reset-btn:hover {
+            background-color: #1e8449;
+        }
+    
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        @media (max-width: 600px) {
+            .quiz-container {
+                padding: 15px 20px;
+            }
+    
+            h1 {
+                font-size: 1.5rem;
+            }
+    
+            .answer-btn {
+                font-size: 0.95rem;
+            }
+    
+            .submit-btn {
+                width: 100%;
+            }
+    
+            .result {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>GDQP</h1>
+        <div id="questions"></div>
+        <div class="submit-container">
+            <button class="submit-btn">Nộp Bài</button>
+            <div class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+       {
+        "question": "Nội dung nào dưới đây thuộc quan điểm chủ nghĩa Mác - Lênin về chiến tranh?",
+        "answers": [
+            { "text": "Chiến tranh là một hiện tượng chính trị - xã hội có tính khoa học.", "correct": false },
+            { "text": "Chiến tranh là một hiện tượng chính trị - xã hội có tính thời sự.", "correct": false },
+            { "text": "Chiến tranh là một hiện tượng chính trị - xã hội có tính lâu dài.", "correct": false },
+            { "text": "Chiến tranh là một hiện tượng chính trị - xã hội có tính lịch sử.", "correct": true }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc quan điểm chủ nghĩa Mác - Lênin về chiến tranh?",
+        "answers": [
+            { "text": "Thuộc tính của chiến tranh.", "correct": false },
+            { "text": "Bản chất của chiến tranh.", "correct": true },
+            { "text": "Thủ đoạn của chiến tranh.", "correct": false },
+            { "text": "Âm mưu của chiến tranh.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc quan điểm chủ nghĩa Mác - Lênin về chiến tranh?",
+        "answers": [
+            { "text": "Nguồn gốc nảy sinh ra chiến tranh.", "correct": true },
+            { "text": "Giai đoạn của chiến tranh.", "correct": false },
+            { "text": "Tính chất của chiến tranh.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc tư tưởng Hồ Chí Minh về Chiến tranh?",
+        "answers": [
+            { "text": "Xác định tích chất chính trị của chiến tranh, phân tích tính chất xã hội của chiến tranh xâm lược thuộc địa, chiến tranh ăn cướp của chủ nghĩa đế quốc.", "correct": false },
+            { "text": "Xác định tích chất xã hội của chiến tranh, phân tích tính chất chính trị - xã hội của chiến tranh xâm lược thuộc địa, chiến tranh ăn cướp của chủ nghĩa đế quốc...", "correct": true },
+            { "text": "Xác định tích chất dân tộc của chiến tranh, phân tích tính chất quân sự của chiến tranh xâm lược thuộc địa, chiến tranh ăn cướp của chủ nghĩa đế quốc...", "correct": false },
+            { "text": "Xác định tích chất vũ trang của chiến tranh, phân tích tính chất chính trị - xã hội của chiến tranh xâm lược thuộc địa, chiến tranh vũ trang của chủ nghĩa đế quốc...", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc tư tưởng Hồ Chí Minh về Chiến tranh?",
+        "answers": [
+            { "text": "Hồ Chí Minh Khẳng định: Ngày nay chiến tranh giải phóng dân tộc của nhân dân ta là chiến tranh dân tộc dưới sự lãnh đạo của Đảng.", "correct": false },
+            { "text": "Hồ Chí Minh Khẳng định: Ngày nay chiến tranh giải phóng dân tộc của nhân dân ta là chiến tranh nhân dân dưới sự lãnh đạo của Đảng.", "correct": true },
+            { "text": "Hồ Chí Minh Khẳng định: Ngày nay chiến tranh giải phóng dân tộc của nhân dân ta là chiến tranh giai cấp dưới sự lãnh đạo của Đảng.", "correct": false },
+            { "text": "Hồ Chí Minh Khẳng định: Ngày nay chiến tranh giải phóng dân tộc của nhân dân ta là chiến tranh tôn giáo dưới sự lãnh đạo của Đảng.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc tư tưởng Hồ Chí Minh về chiến tranh?",
+        "answers": [
+            { "text": "Trên cơ sở lập trường duy vật biện chứng, Hồ Chí Minh đã sớm đánh giá đúng đắn bản chất, quy luật của chiến tranh, tác động của chiến tranh đến đời sống xã hội.", "correct": false },
+            { "text": "Hồ Chí Minh Khẳng định: Ngày nay chiến tranh giải phóng dân tộc của nhân dân ta là chiến tranh nhân dân dưới sự lãnh đạo của Đảng.", "correct": false },
+            { "text": "Xác định tích chất xã hội của chiến tranh, phân tích tính chất chính trị - xã hội của chiến tranh xâm lược thuộc địa, chiến tranh ăn cướp của chủ nghĩa đế quốc, chỉ ra tính chất chính nghĩa của chiến tranh giải phóng dân tộc.", "correct": false },
+            { "text": "Cả 3 phương án trên.", "correct": true }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc quan điểm chủ nghĩa Mác - Lênin về quân đội?",
+        "answers": [
+            { "text": "Chiến tranh sinh ra quân đội.", "correct": false },
+            { "text": "Đảng tổ chức ra quân đội.", "correct": false },
+            { "text": "Nhân dân tổ chức ra quân đội.", "correct": false },
+            { "text": "Nguồn gốc ra đời của quân đội.", "correct": true }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc quan điểm chủ nghĩa Mác - Lênin về quân đội?",
+        "answers": [
+            { "text": "Bản chất chiến đấu quân đội.", "correct": false },
+            { "text": "Bản chất hiếu chiến của quân đội.", "correct": false },
+            { "text": "Bản chất giai cấp của quân đội.", "correct": true },
+            { "text": "Bản chất anh hùng của quân đội.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc quan điểm chủ nghĩa Mác - Lênin về quân đội?",
+        "answers": [
+            { "text": "Đơn vị chiến đấu của quân đội.", "correct": false },
+            { "text": "Lực lượng chiến đấu của quân đội.", "correct": false },
+            { "text": "Vũ khí chiến đấu của quân đội.", "correct": false },
+            { "text": "Sức mạnh chiến đấu của quân đội.", "correct": true }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc nguyên tắc xây dựng quân đội kiểu mới của V.I. Lênin?",
+        "answers": [
+            { "text": "Đoàn kết thống nhất quân đội với công nhân.", "correct": false },
+            { "text": "Đoàn kết thống nhất quân đội với nhân dân.", "correct": true },
+            { "text": "Đoàn kết thống nhất quân đội với nông dân.", "correct": false },
+            { "text": "Đoàn kết thống nhất quân đội với trí thức.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc nguyên tắc xây dựng quân đội kiểu mới của V.I. Lênin?",
+        "answers": [
+            { "text": "Sẵn sàng đàm phán.", "correct": false },
+            { "text": "Sẵn sàng cơ động.", "correct": false },
+            { "text": "Sẵn sàng chiến đấu.", "correct": true },
+            { "text": "Cả 3 phương án trên.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc tư tưởng Hồ Chí Minh về quân đội?",
+        "answers": [
+            { "text": "Khẳng định sự ra đời của quân đội là một bắt buộc trong đấu tranh giai cấp, đấu tranh dân tộc ở Việt Nam.", "correct": false },
+            { "text": "Khẳng định sự ra đời của quân đội là một tất yếu, là vấn đề có tính quy luật trong đấu tranh giai cấp, đấu tranh dân tộc ở Việt Nam.", "correct": true },
+            { "text": "Khẳng định sự ra đời của quân đội điều kiện có tính quy luật trong đấu tranh giai cấp, đấu tranh dân tộc ở Việt Nam.", "correct": false },
+            { "text": "Khẳng định sự ra đời của quân đội là một tất yếu, là vấn đề có tính thực tiễn trong đấu tranh giai cấp, đấu tranh dân tộc ở Việt Nam.", "correct": false }
+        ]
+    },
+    {
+        "question": "Quân đội nhân dân Việt Nam được thành lập ngày, tháng, năm nào?",
+        "answers": [
+            { "text": "22/12/1943.", "correct": false },
+            { "text": "22/12/1944.", "correct": true },
+            { "text": "22/12/1945.", "correct": false },
+            { "text": "22/12/1946.", "correct": false }
+        ]
+    },
+    {
+        "question": "Đảng cộng sản Việt Nam lãnh đạo Quân đội nhân dân Việt Nam theo nguyên tắc nào?",
+        "answers": [
+            { "text": "Đảng lãnh đạo, Nhà nước quản lý.", "correct": false },
+            { "text": "Tuyệt đối, trực tiếp, về mọi mặt.", "correct": true },
+            { "text": "Tuyệt đối, dân chủ, về mọi mặt.", "correct": false },
+            { "text": "Trực tiếp, toàn diện, về mọi mặt.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc Quan điểm của chủ nghĩa Mác-Lênin về bảo vệ Tổ quốc xã hội chủ nghĩa?",
+        "answers": [
+            { "text": "Bảo vệ Tổ quốc xã hội chủ nghĩa là một tất yếu khách quan.", "correct": true },
+            { "text": "Bảo vệ Tổ quốc xã hội chủ nghĩa là bắt buộc đối với các nước.", "correct": false },
+            { "text": "Bảo vệ Tổ quốc xã hội chủ nghĩa là một nguyên tắc trong xây dựng đất nước.", "correct": false },
+            { "text": "Bảo vệ Tổ quốc xã hội chủ nghĩa là tất yếu để tăng cường sức mạnh của quân đội.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc Quan điểm của chủ nghĩa Mác-Lênin về bảo vệ Tổ quốc xã hội chủ nghĩa?",
+        "answers": [
+            { "text": "Bảo vệ Tổ quốc XHCN, phải thường xuyên tăng cường tiềm lực kinh tế - xã hội.", "correct": false },
+            { "text": "Bảo vệ Tổ quốc XHCN, phải thường xuyên tăng cường tiềm lực quốc phòng gắn với phát triển kinh tế - xã hội.", "correct": true },
+            { "text": "Bảo vệ Tổ quốc XHCN, phải thường xuyên tăng cường tiềm lực quốc phòng gắn với an ninh nhân dân.", "correct": false },
+            { "text": "Bảo vệ Tổ quốc XHCN, phải thường xuyên tăng cường tiềm lực quốc phòng gắn với phát triển chính trị - xã hội.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc tư tưởng Hồ Chí Minh về bảo vệ Tổ quốc xã hội chủ nghĩa?",
+        "answers": [
+            { "text": "Bảo vệ Tổ quốc Việt Nam XHCN là một nguyên tắc.", "correct": false },
+            { "text": "Bảo vệ Tổ quốc Việt Nam XHCN là một tất yếu khách quan.", "correct": true },
+            { "text": "Bảo vệ Tổ quốc Việt Nam XHCN là một nhiệm vụ lâu dài.", "correct": false },
+            { "text": "Bảo vệ Tổ quốc Việt Nam XHCN là một yêu cầu cấp thiết.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc tư tưởng Hồ Chí Minh về bảo vệ Tổ quốc xã hội chủ nghĩa?",
+        "answers": [
+            { "text": "Mục tiêu bảo vệ Tổ quốc là độc lập dân tộc và CNXH, là nghĩa vụ và trách nhiệm của mọi công dân.", "correct": true },
+            { "text": "Mục tiêu bảo vệ Tổ quốc là CNXH, là nghĩa vụ và trách nhiệm của mọi công dân.", "correct": false },
+            { "text": "Mục tiêu bảo vệ Tổ quốc là độc lập dân tộc, là nghĩa vụ của mọi công dân.", "correct": false },
+            { "text": "Mục tiêu bảo vệ Tổ quốc là nghĩa vụ của dân tộc và là trách nhiệm của mọi công dân.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc tư tưởng Hồ Chí Minh về bảo vệ Tổ quốc xã hội chủ nghĩa?",
+        "answers": [
+            { "text": "Sức mạnh bảo vệ Tổ quốc là sức mạnh tổng hợp của cả dân tộc, kết hợp với sức mạnh thời đại.", "correct": false },
+            { "text": "Sức mạnh bảo vệ Tổ quốc là sức mạnh tổng hợp của cả nước, kết hợp sức mạnh thời đại.", "correct": false },
+            { "text": "Sức mạnh bảo vệ Tổ quốc là sức mạnh tổng hợp của các nước XHCN.", "correct": false },
+            { "text": "Sức mạnh bảo vệ Tổ quốc là sức mạnh tổng hợp của cả dân tộc, cả nước, kết hợp với sức mạnh thời đại.", "correct": true }
+        ]
+    },
+
+        ];
+
+        let userAnswers = [];
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function initQuiz() {
+            shuffleArray(questions);
+            const questionsContainer = document.getElementById('questions');
+            questionsContainer.innerHTML = '';
+            
+            questions.forEach((q, qIndex) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container';
+                
+                shuffleArray(q.answers);
+                
+                questionDiv.innerHTML = `
+                    <div class="question-text">${qIndex + 1}. ${q.question}</div>
+                    <div class="answers-container"></div>
+                `;
+                
+                const answersContainer = questionDiv.querySelector('.answers-container');
+                
+                q.answers.forEach(answer => {
+                    const button = document.createElement('button');
+                    button.className = 'answer-btn';
+                    button.textContent = answer.text;
+                    button.addEventListener('click', () => selectAnswer(qIndex, answer));
+                    answersContainer.appendChild(button);
+                });
+                
+                questionsContainer.appendChild(questionDiv);
+            });
+        }
+
+        function selectAnswer(qIndex, answer) {
+            const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+            const buttons = questionDiv.querySelectorAll('.answer-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('selected'));
+            
+            const selectedBtn = [...buttons].find(btn => btn.textContent === answer.text);
+            selectedBtn.classList.add('selected');
+            
+            userAnswers[qIndex] = answer;
+        }
+
+        function showResult() {
+            let score = 0;
+            const resultDiv = document.querySelector('.result');
+            
+            questions.forEach((q, qIndex) => {
+                const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+                const buttons = questionDiv.querySelectorAll('.answer-btn');
+                
+                buttons.forEach(btn => {
+                    btn.disabled = true;
+                    const answer = q.answers.find(a => a.text === btn.textContent);
+                    if (answer.correct) {
+    btn.classList.add('correct');
+} else if (btn.classList.contains('selected')) {
+    btn.classList.add('incorrect');
+}
+
+                });
+                
+                if (userAnswers[qIndex]?.correct) {
+                    score += 10;
+                }
+            });
+            
+            resultDiv.innerHTML = `
+                <p>Điểm của bạn: ${score}/${questions.length * 10}</p>
+                <button class="submit-btn reset-btn" onclick="location.reload()">Làm lại</button>
+            `;
+            resultDiv.style.display = 'block';
+            document.querySelector('.submit-btn').style.display = 'none';
+        }
+
+        document.querySelector('.submit-btn').addEventListener('click', showResult);
+        initQuiz();
+    </script>
+</body>
+</html>

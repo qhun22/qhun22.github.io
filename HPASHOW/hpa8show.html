@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="images/qhun22icon.png" />
+    <link rel="apple-touch-icon" href="images/qhun22icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>qhun22</title>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Quicksand', sans-serif;
+        }
+    
+        .quiz-container {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px 25px;
+            max-width: 700px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease;
+        }
+    
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+    
+        .question-container {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+    
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: #222;
+        }
+    
+        .answers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    
+        .answer-btn {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+        
+        .answer:hover {
+            background-color: #ffe6f0;
+            transform: scale(0.5);
+        } 
+        .answer-btn:hover {
+            background-color: #f1f1f1;
+            border-color: #aaa;
+        }
+    
+        .answer-btn.selected {
+            background-color: #ffd966;
+            border-color: #f1c40f;
+            font-weight: bold;
+        }
+    
+        .answer-btn.correct {
+            background-color: #b6e9b1;
+            border-color: #2ecc71;
+            color: #2c3e50;
+        }
+    
+        .answer-btn.incorrect {
+            background-color: #f9b3b3;
+            border-color: #e74c3c;
+            color: #2c3e50;
+        }
+    
+        .submit-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    
+        .submit-btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+    
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+    
+        .result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+    
+        .reset-btn {
+            margin-top: 15px;
+            background-color: #27ae60;
+        }
+    
+        .reset-btn:hover {
+            background-color: #1e8449;
+        }
+    
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        @media (max-width: 600px) {
+            .quiz-container {
+                padding: 15px 20px;
+            }
+    
+            h1 {
+                font-size: 1.5rem;
+            }
+    
+            .answer-btn {
+                font-size: 0.95rem;
+            }
+    
+            .submit-btn {
+                width: 100%;
+            }
+    
+            .result {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>GDQP</h1>
+        <div id="questions"></div>
+        <div class="submit-container">
+            <button class="submit-btn">Nộp Bài</button>
+            <div class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+         {
+        "question": "Luật biên giới quốc gia Việt Nam được Quốc hội thông qua năm nào?",
+        "answers": [
+            { "text": "Năm 2001", "correct": false },
+            { "text": "Năm 2002", "correct": false },
+            { "text": "Năm 2003", "correct": true },
+            { "text": "Năm 2004", "correct": false }
+        ]
+    },
+    {
+        "question": "Việt Nam có đường biên giới quốc gia trên đất liền dài bao nhiêu Km?",
+        "answers": [
+            { "text": "4.550Km", "correct": true },
+            { "text": "4.650Km", "correct": false },
+            { "text": "4.700Km", "correct": false },
+            { "text": "5000Km", "correct": false }
+        ]
+    },
+    {
+        "question": "Đường biên giới trên đất liền Việt Nam tiếp giáp với các quốc gia nào?",
+        "answers": [
+            { "text": "Với Trung Quốc, Cămpuchia, Philippines.", "correct": false },
+            { "text": "Với Trung Quốc, Indonesia, Lào.", "correct": false },
+            { "text": "Với Trung Quốc, Cămpuchia, Lào.", "correct": true },
+            { "text": "Với Trung Quốc, Cămpuchia, Thái Lan.", "correct": false }
+        ]
+    },
+    {
+        "question": "Ý nào dưới đây thuộc nội dung xây dựng và bảo vệ biên giới quốc gia?",
+        "answers": [
+            { "text": "Ưu tiên đầu tư xây dựng phát triển, kinh tế nông nghiệp hiện đại.", "correct": false },
+            { "text": "Ưu tiên đầu tư xây dựng về mọi mặt của đời sống xã hội.", "correct": false },
+            { "text": "Ưu tiên đầu tư xây dựng triển khai một cách toàn diện nhất.", "correct": false },
+            { "text": "Ưu tiên đầu tư xây dựng khu vực biên giới vững mạnh toàn diện về chính trị, kinh tế - xã hội…", "correct": true }
+        ]
+    },
+    {
+        "question": "Ý nào dưới đây thuộc nội dung xây dựng và bảo vệ biên giới quốc gia?",
+        "answers": [
+            { "text": "Tăng cường mở rộng quan hệ đối ngoại các cấp trên khu vực biên giới…", "correct": true },
+            { "text": "Tăng cường mở rộng đấu tranh để xây dựng phát triển, về mọi mặt.", "correct": false },
+            { "text": "Tăng cường mở rộng đấu tranh để phát triển một cách toàn diện.", "correct": false },
+            { "text": "Tăng cường mở rộng đấu tranh để làm thất bại mọi âm mưu và hành động phá hoại biên giới.", "correct": false }
+        ]
+    },
+    {
+        "question": "Ý nào dưới đây thuộc nội dung xây dựng và bảo vệ biên giới quốc gia?",
+        "answers": [
+            { "text": "Bảo vệ toàn vẹn vùng trời của Tổ quốc.", "correct": false },
+            { "text": "Bảo vệ toàn vẹn vùng biển của Tổ quốc.", "correct": false },
+            { "text": "Bảo vệ toàn vẹn vùng đất của Tổ quốc.", "correct": false },
+            { "text": "Bảo vệ sự toàn vẹn lãnh thổ của Tổ quốc.", "correct": true }
+        ]
+    },
+    {
+        "question": "Ý nào dưới đây thuộc nội dung xây dựng và bảo vệ biên giới quốc gia?",
+        "answers": [
+            { "text": "Bảo vệ để phát triển, kinh tế toàn diện nhất.", "correct": false },
+            { "text": "Bảo vệ để xây dựng phát triển, về mọi mặt của đời sống nhân dân.", "correct": false },
+            { "text": "Bảo vệ phát triển một cách toàn diện nhất trong các lĩnh vực.", "correct": false },
+            { "text": "Bảo vệ tài nguyên môi sinh, môi trường.", "correct": true }
+        ]
+    },
+    {
+        "question": "Ý nào dưới đây thuộc nội dung xây dựng và bảo vệ biên giới quốc gia?",
+        "answers": [
+            { "text": "Bảo vệ lợi ích kinh tế toàn diện nhất.", "correct": false },
+            { "text": "Bảo vệ mọi mặt của đời sống nhân dân.", "correct": false },
+            { "text": "Bảo vệ lợi ích toàn diện nhất trong các lĩnh vực.", "correct": false },
+            { "text": "Bảo vệ lợi ích quốc gia trên khu vực biên giới.", "correct": true }
+        ]
+    },
+    {
+        "question": "Ý nào dưới đây thuộc nội dung xây dựng và bảo vệ biên giới quốc gia?",
+        "answers": [
+            { "text": "Giữ gìn tình hình chính trị khu vực biên giới.", "correct": false },
+            { "text": "Giữ gìn an ninh, an toàn mọi mặt của đời sống nhân dân khu vực biên giới.", "correct": false },
+            { "text": "Giữ gìn trật tự an toàn khu vực biên giới.", "correct": false },
+            { "text": "Giữ gìn an ninh chính trị, trật tự an toàn xã hội ở khu vực biên giới.", "correct": true }
+        ]
+    },
+    {
+        "question": "Ý nào dưới đây thuộc nội dung xây dựng và bảo vệ biên giới quốc gia?",
+        "answers": [
+            { "text": "Phối hợp với các nước trong khu vực để phát triển, kinh tế toàn diện nhất.", "correct": false },
+            { "text": "Phối hợp với các nước để đấu tranh bảo vệ khu vực biên giới.", "correct": false },
+            { "text": "Phối hợp với các quốc gia có chung đường biên giới để ngăn chặn các hoạt động phá hoại.", "correct": false },
+            { "text": "Phối hợp với các nước, đấu tranh ngăn chặn mọi hành động phá hoại tình đoàn kết…", "correct": true }
+        ]
+    }
+
+
+        ];
+
+        let userAnswers = [];
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function initQuiz() {
+        shuffleArray(questions);
+        const questionsContainer = document.getElementById('questions');
+        questionsContainer.innerHTML = '';
+        
+        questions.forEach((q, qIndex) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question-container';
+            
+            shuffleArray(q.answers);
+            
+            questionDiv.innerHTML = `
+                <div class="question-text">${qIndex + 1}. ${q.question}</div>
+                <div class="answers-container"></div>
+            `;
+            
+            const answersContainer = questionDiv.querySelector('.answers-container');
+            
+            q.answers.forEach(answer => {
+                const button = document.createElement('button');
+                button.className = 'answer-btn';
+                button.textContent = answer.text;
+                button.addEventListener('click', () => {
+                    selectAnswer(qIndex, answer);
+                    showImmediateResult(qIndex, answer);
+                });
+                answersContainer.appendChild(button);
+            });
+            
+            questionsContainer.appendChild(questionDiv);
+        });
+
+        // Ẩn nút nộp bài vì không cần nữa
+        document.querySelector('.submit-btn').style.display = 'none';
+    }
+
+    function selectAnswer(qIndex, answer) {
+        const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+        const buttons = questionDiv.querySelectorAll('.answer-btn');
+        
+        buttons.forEach(btn => btn.classList.remove('selected'));
+        
+        const selectedBtn = [...buttons].find(btn => btn.textContent === answer.text);
+        selectedBtn.classList.add('selected');
+        
+        userAnswers[qIndex] = answer;
+    }
+
+    function showImmediateResult(qIndex, selectedAnswer) {
+        const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+        const buttons = questionDiv.querySelectorAll('.answer-btn');
+
+        buttons.forEach(btn => {
+            btn.disabled = true;
+            const answerObj = questions[qIndex].answers.find(a => a.text === btn.textContent);
+            if (answerObj.correct) {
+                btn.classList.add('correct');
+            } else if (btn.textContent === selectedAnswer.text) {
+                btn.classList.add('incorrect');
+            }
+        });
+    }
+
+    initQuiz();
+    </script>
+</body>
+</html>

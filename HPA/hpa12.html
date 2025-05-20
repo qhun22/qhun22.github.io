@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="images/qhun22icon.png" />
+    <link rel="apple-touch-icon" href="images/qhun22icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>qhun22</title>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Quicksand', sans-serif;
+        }
+    
+        .quiz-container {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px 25px;
+            max-width: 700px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease;
+        }
+    
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+    
+        .question-container {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+    
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: #222;
+        }
+    
+        .answers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    
+        .answer-btn {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+        
+        .answer:hover {
+            background-color: #ffe6f0;
+            transform: scale(0.5);
+        } 
+        .answer-btn:hover {
+            background-color: #f1f1f1;
+            border-color: #aaa;
+        }
+    
+        .answer-btn.selected {
+            background-color: #ffd966;
+            border-color: #f1c40f;
+            font-weight: bold;
+        }
+    
+        .answer-btn.correct {
+            background-color: #b6e9b1;
+            border-color: #2ecc71;
+            color: #2c3e50;
+        }
+    
+        .answer-btn.incorrect {
+            background-color: #f9b3b3;
+            border-color: #e74c3c;
+            color: #2c3e50;
+        }
+    
+        .submit-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    
+        .submit-btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+    
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+    
+        .result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+    
+        .reset-btn {
+            margin-top: 15px;
+            background-color: #27ae60;
+        }
+    
+        .reset-btn:hover {
+            background-color: #1e8449;
+        }
+    
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        @media (max-width: 600px) {
+            .quiz-container {
+                padding: 15px 20px;
+            }
+    
+            h1 {
+                font-size: 1.5rem;
+            }
+    
+            .answer-btn {
+                font-size: 0.95rem;
+            }
+    
+            .submit-btn {
+                width: 100%;
+            }
+    
+            .result {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>GDQP</h1>
+        <div id="questions"></div>
+        <div class="submit-container">
+            <button class="submit-btn">Nộp Bài</button>
+            <div class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+        {
+        "question": "Nội dung nào dưới đây thuộc nhiệm vụ bảo vệ an ninh quốc gia?",
+        "answers": [
+            { "text": "Bảo vệ về mọi mặt trong xã hội và mọi đất nước...", "correct": false },
+            { "text": "Bảo vệ các dân tộc, con người...", "correct": false },
+            { "text": "Bảo vệ các dân tộc luôn phát triển tồn tại tiến bộ...", "correct": false },
+            { "text": "Bảo vệ chế độ chính trị và Nhà nước cộng hòa xã hội chủ nghĩa Việt Nam…", "correct": true }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc nhiệm vụ bảo vệ an ninh quốc gia?",
+        "answers": [
+            { "text": "Bảo vệ an ninh các tổ chức kinh tế...", "correct": false },
+            { "text": "Bảo vệ an ninh tinh thần người dân...", "correct": false },
+            { "text": "Bảo vệ an ninh tư tưởng và văn hóa…", "correct": true },
+            { "text": "Bảo vệ an ninh các dân tộc tiến bộ ...", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc nguyên tắc bảo vệ an ninh quốc gia?",
+        "answers": [
+            { "text": "Tuân thủ các qui định trong xã hội.", "correct": false },
+            { "text": "Tuân thủ các qui định bảo vệ các dân tộc, quốc gia...", "correct": false },
+            { "text": "Tuân thủ nguyên tắc bảo vệ các dân tộc luôn phát triển tồn tại...", "correct": false },
+            { "text": "Tuân thủ hiến pháp, pháp luật, bảo đảm lợi ích của Nhà nước…", "correct": true }
+        ]
+    },
+    {
+        "question": "Tổ chức nào dưới đây thuộc cơ quan chuyên trách bảo vệ an ninh quốc gia?",
+        "answers": [
+            { "text": "Cơ quan chỉ đạo, chỉ huy lực lượng dân quân, tự vệ ở các địa phương.", "correct": false },
+            { "text": "Cơ quan chỉ đạo, chỉ huy và các đơn vị an ninh, tình báo, cảnh sát, cảnh vệ công an nhân dân.", "correct": true },
+            { "text": "Cơ quan chỉ đạo cảnh vệ ở các nhà máy, xí nghiệp.", "correct": false },
+            { "text": "Cơ quan chỉ đạo, chỉ huy và các lực lượng vũ trang.", "correct": false }
+        ]
+    }
+
+
+        ];
+
+        let userAnswers = [];
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function initQuiz() {
+            shuffleArray(questions);
+            const questionsContainer = document.getElementById('questions');
+            questionsContainer.innerHTML = '';
+            
+            questions.forEach((q, qIndex) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container';
+                
+                shuffleArray(q.answers);
+                
+                questionDiv.innerHTML = `
+                    <div class="question-text">${qIndex + 1}. ${q.question}</div>
+                    <div class="answers-container"></div>
+                `;
+                
+                const answersContainer = questionDiv.querySelector('.answers-container');
+                
+                q.answers.forEach(answer => {
+                    const button = document.createElement('button');
+                    button.className = 'answer-btn';
+                    button.textContent = answer.text;
+                    button.addEventListener('click', () => selectAnswer(qIndex, answer));
+                    answersContainer.appendChild(button);
+                });
+                
+                questionsContainer.appendChild(questionDiv);
+            });
+        }
+
+        function selectAnswer(qIndex, answer) {
+            const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+            const buttons = questionDiv.querySelectorAll('.answer-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('selected'));
+            
+            const selectedBtn = [...buttons].find(btn => btn.textContent === answer.text);
+            selectedBtn.classList.add('selected');
+            
+            userAnswers[qIndex] = answer;
+        }
+
+        function showResult() {
+            let score = 0;
+            const resultDiv = document.querySelector('.result');
+            
+            questions.forEach((q, qIndex) => {
+                const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+                const buttons = questionDiv.querySelectorAll('.answer-btn');
+                
+                buttons.forEach(btn => {
+                    btn.disabled = true;
+                    const answer = q.answers.find(a => a.text === btn.textContent);
+                    if (answer.correct) {
+    btn.classList.add('correct');
+} else if (btn.classList.contains('selected')) {
+    btn.classList.add('incorrect');
+}
+
+                });
+                
+                if (userAnswers[qIndex]?.correct) {
+                    score += 10;
+                }
+            });
+            
+            resultDiv.innerHTML = `
+                <p>Điểm của bạn: ${score}/${questions.length * 10}</p>
+                <button class="submit-btn reset-btn" onclick="location.reload()">Làm lại</button>
+            `;
+            resultDiv.style.display = 'block';
+            document.querySelector('.submit-btn').style.display = 'none';
+        }
+
+        document.querySelector('.submit-btn').addEventListener('click', showResult);
+        initQuiz();
+    </script>
+</body>
+</html>

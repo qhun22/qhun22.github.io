@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="images/qhun22icon.png" />
+    <link rel="apple-touch-icon" href="images/qhun22icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>qhun22</title>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Quicksand', sans-serif;
+        }
+    
+        .quiz-container {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px 25px;
+            max-width: 700px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease;
+        }
+    
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+    
+        .question-container {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+    
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: #222;
+        }
+    
+        .answers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    
+        .answer-btn {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+        
+        .answer:hover {
+            background-color: #ffe6f0;
+            transform: scale(0.5);
+        } 
+        .answer-btn:hover {
+            background-color: #f1f1f1;
+            border-color: #aaa;
+        }
+    
+        .answer-btn.selected {
+            background-color: #ffd966;
+            border-color: #f1c40f;
+            font-weight: bold;
+        }
+    
+        .answer-btn.correct {
+            background-color: #b6e9b1;
+            border-color: #2ecc71;
+            color: #2c3e50;
+        }
+    
+        .answer-btn.incorrect {
+            background-color: #f9b3b3;
+            border-color: #e74c3c;
+            color: #2c3e50;
+        }
+    
+        .submit-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    
+        .submit-btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+    
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+    
+        .result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+    
+        .reset-btn {
+            margin-top: 15px;
+            background-color: #27ae60;
+        }
+    
+        .reset-btn:hover {
+            background-color: #1e8449;
+        }
+    
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        @media (max-width: 600px) {
+            .quiz-container {
+                padding: 15px 20px;
+            }
+    
+            h1 {
+                font-size: 1.5rem;
+            }
+    
+            .answer-btn {
+                font-size: 0.95rem;
+            }
+    
+            .submit-btn {
+                width: 100%;
+            }
+    
+            .result {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>GDQP</h1>
+        <div id="questions"></div>
+        <div class="submit-container">
+            <button class="submit-btn">Nộp Bài</button>
+            <div class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+        {
+        "question": "Kết hợp phát triển kinh tế- xã hội với tăng cường củng cố quốc phòng- an ninh là gì?",
+        "answers": [
+            { "text": "Là hoạt động phát triển kinh tế - xã hội và xây dựng quốc phòng - an ninh.", "correct": false },
+            { "text": "Là hoạt động tích cực, chủ động của Đảng trong việc gắn kết chặt chẽ hoạt động kinh tế- xã hội với quốc phòng - an ninh.", "correct": false },
+            { "text": "Là hoạt động tích cực, chủ động của nhân dân trong việc phát triển kinh tế- xã hội và quốc phòng - an ninh.", "correct": false },
+            { "text": "Là hoạt động tích cực, chủ động của Nhà nước và nhân dân trong việc gắn kết chặt chẽ hoạt động kinh tế- xã hội, quốc phòng - an ninh trong một chỉnh thể thống nhất trên phạm vi cả nước cũng như ở từng địa phương...", "correct": true }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc cơ sở lý luận của việc kết hợp phát triển kinh tế - xã hội với tăng cường củng cố quốc phòng - an ninh?",
+        "answers": [
+            { "text": "Kinh tế, quốc phòng, an ninh là những mặt hoạt động cơ bản của mỗi quốc gia, dân tộc độc lập có chủ quyền. Mỗi lĩnh vực có mục đích, cách thức hoạt động riêng và chịu sự chi phối của hệ thống quy luật riêng, song giữa chúng lại có mối quan hệ, tác động qua lại lẫn nhau.", "correct": true },
+            { "text": "Kinh tế, quốc phòng, an ninh là những mặt hoạt động của các quốc gia; chịu sự chi phối của hệ thống quy luật riêng và chúng không có mối quan hệ với nhau.", "correct": false },
+            { "text": "Kinh tế, quốc phòng, an ninh là những phạm trù riêng biết. Mỗi lĩnh vực có mục đích, cách thức hoạt động riêng và chúng không có liên quan đến nhau.", "correct": false },
+            { "text": "Kinh tế, quốc phòng, an ninh là những nội dung để xây dựng và bảo vệ đất nước. Mỗi lĩnh vực có các bộ, ngành lãnh đạo riêng và chúng không có mối quan hệ với nhau.", "correct": false }
+        ]
+    },
+    {
+        "question": "Kinh tế - xã hội quyết định tới quốc phòng - an ninh ở nội dung nào?",
+        "answers": [
+            { "text": "Kinh tế quyết định đến việc đối ngoại của của quốc phòng - an ninh.", "correct": false },
+            { "text": "Kinh tế quyết định đến chính trị của quốc phòng - an ninh.", "correct": false },
+            { "text": "Kinh tế quyết định đến sức mạnh văn hóa nghệ thuật của quốc phòng - an ninh.", "correct": false },
+            { "text": "Kinh tế quyết định đến nguồn gốc ra đời, sức mạnh của quốc phòng - an ninh.", "correct": true }
+        ]
+    },
+    {
+        "question": "Kinh tế - xã hội quyết định tới quốc phòng - an ninh ở nội dung nào?",
+        "answers": [
+            { "text": "Kinh tế quyết định mối quan hệ của nhà nước với hoạt động quốc phòng - an ninh.", "correct": false },
+            { "text": "Kinh tế quyết định đến việc cung cấp cơ sở vật chất kĩ thuật, nhân lực cho hoạt động quốc phòng- an ninh.", "correct": true },
+            { "text": "Kinh tế quyết định đến sự lãnh đạo của Đảng với hoạt động quốc phòng- an ninh.", "correct": false },
+            { "text": "Kinh tế quyết định các mối quan hệ trong hoạt động quốc phòng- an ninh.", "correct": false }
+        ]
+    },
+    {
+        "question": "Kinh tế - xã hội quyết định tới quốc phòng - an ninh ở nội dung nào?",
+        "answers": [
+            { "text": "Kinh tế còn quyết định đến việc cung cấp số lượng, chất lượng nguồn nhân lực cho quốc phòng - an ninh, qua đó quyết định đến tổ chức biên chế của lực lượng vũ trang; quyết định đến đường lối chiến lược quốc phòng- an ninh.", "correct": false },
+            { "text": "Kinh tế quyết định đến nguồn gốc ra đời, sức mạnh của QP-AN.", "correct": false },
+            { "text": "Bản chất của chế độ kinh tế- xã hội quyết định đến bản chất của quốc phòng - an ninh.", "correct": false },
+            { "text": "Cả 3 phương án trên.", "correct": true }
+        ]
+    },
+    {
+        "question": "Quốc phòng - an ninh tác động trở lại kinh tế - xã hội như thế nào?",
+        "answers": [
+            { "text": "Quốc phòng - an ninh vững mạnh sẽ sản xuất được nhiều vũ khí hiện đại để trao đổi, buôn bán làm cho kinh tế phát triển.", "correct": false },
+            { "text": "Quốc phòng - an ninh vững mạnh sẽ tạo được áp lực với các nước để ký kết các hợp đồng kinh tế.", "correct": false },
+            { "text": "Quốc phòng - An ninh vững mạnh sẽ tạo môi trường hoà bình, ổn định lâu dài, tạo điều kiện thuận lợi cho phát triển kinh tế - xã hội.", "correct": true },
+            { "text": "Quốc phòng - an ninh vững mạnh sẽ xây dựng được đội ngũ cán bộ có tri thức để làm kinh tế phát triển.", "correct": false }
+        ]
+    },
+    {
+        "question": "Để kết hợp phát triển kinh tế xã hội với tăng cường củng cố quốc phòng, an ninh và đối ngoại ở nước ta hiện nay cần thực hiện tốt nội dung nào?",
+        "answers": [
+            { "text": "Kết hợp trong dự toán ngân sách của Nhà nước.", "correct": false },
+            { "text": "Kết hợp trong xác định chiến lược phát triển kinh tế- xã hội.", "correct": true },
+            { "text": "Kết hợp trong xác định đường lối phát triển kinh tế- xã hội ở cấp xã, phường.", "correct": false },
+            { "text": "Kết hợp trong xác định phát triển kinh tế ở từng địa phương.", "correct": false }
+        ]
+    },
+    {
+        "question": "Để kết hợp phát triển kinh tế xã hội với tăng cường củng cố quốc phòng, an ninh và đối ngoại ở nước ta hiện nay cần thực hiện tốt nội dung nào?",
+        "answers": [
+            { "text": "Kết hợp phát triển kinh tế xã hội với tăng cường, củng cố quốc phòng, an ninh trong ngành địa chất.", "correct": false },
+            { "text": "Kết hợp phát triển kinh tế xã hội với tăng cường, củng cố quốc phòng, an ninh trong ngành khai khoáng.", "correct": false },
+            { "text": "Kết hợp phát triển kinh tế xã hội với tăng cường, củng cố quốc phòng, an ninh trong các ngành kinh tế mũi nhọn.", "correct": false },
+            { "text": "Kết hợp phát triển kinh tế xã hội với tăng cường, củng cố quốc phòng, an ninh trong các ngành, các lĩnh vực kinh tế chủ yếu.", "correct": true }
+        ]
+    },
+    {
+        "question": "Để kết hợp phát triển kinh tế xã hội với tăng cường củng cố quốc phòng, an ninh và đối ngoại ở nước ta hiện nay cần thực hiện tốt nội dung nào?",
+        "answers": [
+            { "text": "Kết hợp trong xác định chiến lược phát triển kinh tế- xã hội.", "correct": false },
+            { "text": "Kết hợp phát triển kinh tế- xã hội với tăng cường củng cố quốc phòng- an ninh trong phát triển các vùng lãnh thổ.", "correct": false },
+            { "text": "Kết hợp phát triển kinh tế xã hội với tăng cường, củng cố quốc phòng, an ninh trong các ngành, các lĩnh vực kinh tế chủ yếu.", "correct": false },
+            { "text": "Cả 3 phương án trên.", "correct": true }
+        ]
+    },
+    {
+        "question": "Kết hợp phát triển kinh tế- xã hội với tăng cường củng cố quốc phòng- an ninh đối với vùng núi, biên giới cần thực hiện tốt nội dung nào?",
+        "answers": [
+            { "text": "Phải quan tâm đầu tư phát triển kinh tế, củng cố quốc phòng, an ninh ở các vùng cửa khẩu, các vùng giáp biên giới với các nước.", "correct": true },
+            { "text": "Phải quan tâm đầu tư phát triển kinh tế, củng cố quốc phòng, an ninh ở các vùng du lịch ở cửa khẩu.", "correct": false },
+            { "text": "Phải quan tâm đầu tư phát triển kinh tế, củng cố quốc phòng, an ninh ở các vùng núi cao, rừng sâu.", "correct": false },
+            { "text": "Phải quan tâm đầu tư phát triển kinh tế, củng cố quốc phòng, an ninh ở các vùng giáp biên giới với Lào.", "correct": false }
+        ]
+    },
+    {
+        "question": "Kết hợp phát triển kinh tế- xã hội với tăng cường củng cố quốc phòng- an ninh đối với vùng núi, biên giới cần thực hiện tốt nội dung nào?",
+        "answers": [
+            { "text": "Thực hiện tốt chương trình xây dựng nông thôn mới đối với các xã nghèo.", "correct": false },
+            { "text": "Thực hiện tốt chương trình văn hóa - thể thao đối với các xã nghèo.", "correct": false },
+            { "text": "Thực hiện tốt chương trình xóa đói, giảm nghèo, chương trình 135 về phát triển kinh tế - xã hội đối với các xã nghèo.", "correct": true },
+            { "text": "Thực hiện tốt chương trình viện trợ kinh tế đối với các xã nghèo.", "correct": false }
+        ]
+    },
+    {
+        "question": "Kết hợp phát triển kinh tế- xã hội với tăng cường củng cố quốc phòng- an ninh đối với vùng núi, biên giới cần thực hiện tốt nội dung nào?",
+        "answers": [
+            { "text": "Đối với những nơi có địa thế quan trọng, vùng sâu, vùng xa còn nhiều khó khăn, cần kết hợp mọi nguồn lực, mọi lực lượng của cả Trung ương và địa phương để cùng giải quyết.", "correct": true },
+            { "text": "Đối với những nơi có địa thế quan trọng, vùng sâu, vùng xa, cần kết hợp mọi nguồn lực của cả Trung ương để giải quyết.", "correct": false },
+            { "text": "Đối với những nơi có địa thế quan trọng, vùng sâu, vùng xa, cần kết hợp mọi nguồn lực của địa phương để giải quyết.", "correct": false },
+            { "text": "Cả 3 phương án trên.", "correct": false }
+        ]
+    },
+    {
+        "question": "Kết hợp phát triển kinh tế- xã hội với tăng cường củng cố quốc phòng - an ninh đối với biển đảo cần thực hiện tốt nội dung nào?",
+        "answers": [
+            { "text": "Tập trung trước hết vào xây dựng, hoàn thiện chiến lược phát triển kinh tế và xây dựng thế trận quốc phòng, an ninh bảo vệ biển, đảo trong tình hình mới.", "correct": true },
+            { "text": "Tập trung trước hết vào phát triển kinh tế, văn hóa biển, đảo trong tình hình mới.", "correct": false },
+            { "text": "Tập trung trước hết vào xây dựng quốc phòng, an ninh bảo vệ biển, đảo trong tình hình mới.", "correct": false },
+            { "text": "Tập trung trước hết vào phát triển du lịch biển, đảo trong tình hình mới.", "correct": false }
+        ]
+    },
+    {
+        "question": "Kết hợp phát triển kinh tế- xã hội với tăng cường củng cố quốc phòng - an ninh trong công nghiệp cần thực hiện tốt nội dung nào?",
+        "answers": [
+            { "text": "Kết hợp ngay từ khâu quy hoạch bố trí các đơn vị kinh tế của ngành công nghiệp. Bố trí một cách hợp lý trên các vùng lãnh thổ, quan tâm đến vùng sâu, vùng xa…", "correct": true },
+            { "text": "Kết hợp ngay từ khâu lập dự án các đơn vị kinh tế của ngành công nghiệp. Bố trí dàn đều trên các vùng lãnh thổ …", "correct": false },
+            { "text": "Kết hợp ngay từ khâu ký kết các dự án các đơn vị kinh tế của ngành công nghiệp. Bố trí vào địa bàn vùng sâu, vùng xa…", "correct": false },
+            { "text": "Kết hợp ngay từ khâu xây dựng kế hoạch phát triển các đơn vị kinh tế của ngành công nghiệp.", "correct": false }
+        ]
+    },
+    {
+        "question": "Kết hợp phát triển kinh tế- xã hội với tăng cường củng cố quốc phòng - an ninh trong lĩnh vực y tế cần thực hiện tốt nội dung nào?",
+        "answers": [
+            { "text": "Phối hợp, kết hợp chặt chẽ giữa ngành y tế dân sự với y tế công an trong khám chữa bệnh cho nhân dân, bộ đội và cho người nước ngoài.", "correct": false },
+            { "text": "Đào tạo nguồn nhân lực y tế quân đội, đáp ứng nhu cầu khám chữa bệnh cho nhân dân, bộ đội và cho người nước ngoài.", "correct": false },
+            { "text": "Phối hợp, kết hợp chặt chẽ giữa ngành y tế quân đội và công an trong khám chữa bệnh cho nhân dân, bộ đội và cho người nước ngoài.", "correct": false },
+            { "text": "Phối hợp, kết hợp chặt chẽ giữa ngành y tế dân sự với y tế quân sự trong nghiên cứu, ứng dụng, trong đào tạo nguồn nhân lực, trong khám chữa bệnh cho nhân dân, bộ đội.", "correct": true }
+        ]
+    },
+    {
+        "question": "Kết hợp phát triển kinh tế- xã hội với tăng cường củng cố quốc phòng - an ninh trong nhiệm vụ chiến lược bảo vệ Tổ quốc là nội dung nào?",
+        "answers": [
+            { "text": "Tổ chức biên chế và bố trí lực lượng vũ trang phải phù hợp với điều kiện kinh tế và nhu cầu phòng thủ đất nước.", "correct": true },
+            { "text": "Tổ chức biên chế và bố trí lực lượng vũ trang có số lượng đông, vũ khí hiện đại.", "correct": false },
+            { "text": "Tổ chức biên chế và bố trí lực lượng quân đội phải hiện đại đáp ứng nhu cầu phòng thủ đất nước.", "correct": false },
+            { "text": "Tổ chức biên chế và bố trí lực lượng công an mạnh, quân đông, trang bị vũ khí hiện đại để bảo vệ đất nước.", "correct": false }
+        ]
+    },
+    {
+        "question": "Kết hợp phát triển kinh tế- xã hội với tăng cường củng cố quốc phòng - an ninh trong nhiệm vụ chiến lược bảo vệ Tổ quốc là nội dung nào?",
+        "answers": [
+            { "text": "Sử dụng tối đa tài chính, cơ sở vật chất kĩ thuật cho huấn luyện, chiến đấu và sẵn sàng chiến đấu của lực lượng vũ trang.", "correct": false },
+            { "text": "Sử dụng tiết kiệm, hiệu quả nhân lực, tài chính, cơ sở vật chất kĩ thuật trong huấn luyện, chiến đấu và sẵn sàng chiến đấu của lực lượng vũ trang.", "correct": false },
+            { "text": "Sử dụng tối thiểu nguồn nhân lực, tài chính cho huấn luyện, chiến đấu và sẵn sàng chiến đấu của lực lượng vũ trang để tiết kiệm xây dựng đất nước.", "correct": false },
+            { "text": "Cả 3 phương án trên.", "correct": true }
+        ]
+    },
+    {
+        "question": "Kết hợp phát triển kinh tế- xã hội với tăng cường củng cố quốc phòng - an ninh trong nhiệm vụ chiến lược bảo vệ Tổ quốc là nội dung nào?",
+        "answers": [
+            { "text": "Phát huy tốt vai trò tham mưu của các tổ chức chính trị - xã hội trong việc thẩm định, đánh giá các dự án đầu tư, nhất là các dự án đầu tư có vốn nước ngoài.", "correct": false },
+            { "text": "Phát huy tốt vai trò tham mưu của các tổ chức quần chúng trong việc thẩm định, đánh giá các dự án đầu tư, nhất là các dự án đầu tư có vốn nước ngoài.", "correct": true },
+            { "text": "Phát huy tốt vai trò tham mưu của dân quân tự vệ trong việc thẩm định, đánh giá các dự án đầu tư, nhất là các dự án đầu tư có vốn nước ngoài.", "correct": false },
+            { "text": "Phát huy tốt vai trò tham mưu của các cơ quan quân sự, công an các cấp trong việc thẩm định, đánh giá các dự án đầu tư, nhất là các dự án đầu tư có vốn nước ngoài.", "correct": false }
+        ]
+    },
+    {
+        "question": "Kết hợp phát triển kinh tế- xã hội với tăng cường củng cố quốc phòng - an ninh trong nhiệm vụ chiến lược bảo vệ Tổ quốc là nội dung nào?",
+        "answers": [
+            { "text": "Phát huy tốt vai trò tham mưu của các cơ quan quân sự, công an các cấp trong việc thẩm định, đánh giá các dự án đầu tư, nhất là các dự án đầu tư có vốn nước ngoài.", "correct": false },
+            { "text": "Tổ chức biên chế và bố trí lực lượng vũ trang phải phù hợp với điều kiện kinh tế và nhu cầu phòng thủ đất nước.", "correct": false },
+            { "text": "Sử dụng tiết kiệm, hiệu quả nhân lực, tài chính, cơ sở vật chất kĩ thuật trong huấn luyện, chiến đấu và sẵn sàng chiến đấu của lực lượng vũ trang.", "correct": false },
+            { "text": "Cả 3 phương án trên.", "correct": true }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc giải pháp thực hiện kết hợp phát triển kinh tế - xã hội gắn với tăng cường củng cố quốc phòng - an ninh ở nước ta hiện nay?",
+        "answers": [
+            { "text": "Xây dựng các cơ quan chỉ đạo kết hợp phát triển kinh tế - xã hội với tăng cường củng cố quốc phòng - an ninh trong tình hình mới.", "correct": false },
+            { "text": "Hoàn chỉnh hệ thống pháp luật, cơ chế chính sách có liên quan đến thực hiện kết hợp phát triển kinh tế - xã hội với tăng cường củng cố quốc phòng - an ninh trong tình hình mới.", "correct": true },
+            { "text": "Hoàn chỉnh hệ thống văn bản chỉ đạo kết hợp phát triển kinh tế - xã hội với tăng cường củng cố quốc phòng - an ninh trong tình hình mới.", "correct": false },
+            { "text": "Cả 3 phương án trên.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc giải pháp thực hiện kết hợp phát triển kinh tế - xã hội gắn với tăng cường củng cố quốc phòng - an ninh ở nước ta hiện nay?",
+        "answers": [
+            { "text": "Củng cố kiện toàn và phát huy vai trò tham mưu của đơn vị quân đội các cấp.", "correct": false },
+            { "text": "Củng cố kiện toàn và phát huy vai trò tham mưu của cơ quan chuyên trách quốc phòng, an ninh các cấp.", "correct": true },
+            { "text": "Củng cố kiện toàn và phát huy vai trò tham mưu đơn vị công an các cấp.", "correct": false },
+            { "text": "Củng cố kiện toàn và phát huy vai trò tham mưu Dân quân tự vệ các cấp.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc giải pháp thực hiện kết hợp phát triển kinh tế - xã hội gắn với tăng cường củng cố quốc phòng - an ninh ở nước ta hiện nay?",
+        "answers": [
+            { "text": "Xây dựng chiến lược tổng thể kết hợp phát triển kinh tế - xã hội với tăng cường củng cố quốc phòng, an ninh trong thời kỳ mới.", "correct": false },
+            { "text": "Hoàn chỉnh hệ thống pháp luật, cơ chế chính sách có liên quan đến thực hiện kết hợp phát triển kinh tế - xã hội với tăng cường củng cố quốc phòng, an ninh trong tình hình mới.", "correct": false },
+            { "text": "Củng cố kiện toàn và phát huy vai trò tham mưu của cơ quan chuyên trách quốc phòng, an ninh các cấp.", "correct": false },
+            { "text": "Cả 3 phương án trên.", "correct": true }
+        ]
+    },
+
+        ];
+
+        let userAnswers = [];
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function initQuiz() {
+        shuffleArray(questions);
+        const questionsContainer = document.getElementById('questions');
+        questionsContainer.innerHTML = '';
+        
+        questions.forEach((q, qIndex) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question-container';
+            
+            shuffleArray(q.answers);
+            
+            questionDiv.innerHTML = `
+                <div class="question-text">${qIndex + 1}. ${q.question}</div>
+                <div class="answers-container"></div>
+            `;
+            
+            const answersContainer = questionDiv.querySelector('.answers-container');
+            
+            q.answers.forEach(answer => {
+                const button = document.createElement('button');
+                button.className = 'answer-btn';
+                button.textContent = answer.text;
+                button.addEventListener('click', () => {
+                    selectAnswer(qIndex, answer);
+                    showImmediateResult(qIndex, answer);
+                });
+                answersContainer.appendChild(button);
+            });
+            
+            questionsContainer.appendChild(questionDiv);
+        });
+
+        // Ẩn nút nộp bài vì không cần nữa
+        document.querySelector('.submit-btn').style.display = 'none';
+    }
+
+    function selectAnswer(qIndex, answer) {
+        const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+        const buttons = questionDiv.querySelectorAll('.answer-btn');
+        
+        buttons.forEach(btn => btn.classList.remove('selected'));
+        
+        const selectedBtn = [...buttons].find(btn => btn.textContent === answer.text);
+        selectedBtn.classList.add('selected');
+        
+        userAnswers[qIndex] = answer;
+    }
+
+    function showImmediateResult(qIndex, selectedAnswer) {
+        const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+        const buttons = questionDiv.querySelectorAll('.answer-btn');
+
+        buttons.forEach(btn => {
+            btn.disabled = true;
+            const answerObj = questions[qIndex].answers.find(a => a.text === btn.textContent);
+            if (answerObj.correct) {
+                btn.classList.add('correct');
+            } else if (btn.textContent === selectedAnswer.text) {
+                btn.classList.add('incorrect');
+            }
+        });
+    }
+
+    initQuiz();
+    </script>
+</body>
+</html>

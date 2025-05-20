@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="images/qhun22icon.png" />
+    <link rel="apple-touch-icon" href="images/qhun22icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>qhun22</title>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Quicksand', sans-serif;
+        }
+    
+        .quiz-container {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px 25px;
+            max-width: 700px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease;
+        }
+    
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+    
+        .question-container {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+    
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: #222;
+        }
+    
+        .answers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    
+        .answer-btn {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+        
+        .answer:hover {
+            background-color: #ffe6f0;
+            transform: scale(0.5);
+        } 
+        .answer-btn:hover {
+            background-color: #f1f1f1;
+            border-color: #aaa;
+        }
+    
+        .answer-btn.selected {
+            background-color: #ffd966;
+            border-color: #f1c40f;
+            font-weight: bold;
+        }
+    
+        .answer-btn.correct {
+            background-color: #b6e9b1;
+            border-color: #2ecc71;
+            color: #2c3e50;
+        }
+    
+        .answer-btn.incorrect {
+            background-color: #f9b3b3;
+            border-color: #e74c3c;
+            color: #2c3e50;
+        }
+    
+        .submit-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    
+        .submit-btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+    
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+    
+        .result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+    
+        .reset-btn {
+            margin-top: 15px;
+            background-color: #27ae60;
+        }
+    
+        .reset-btn:hover {
+            background-color: #1e8449;
+        }
+    
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        @media (max-width: 600px) {
+            .quiz-container {
+                padding: 15px 20px;
+            }
+    
+            h1 {
+                font-size: 1.5rem;
+            }
+    
+            .answer-btn {
+                font-size: 0.95rem;
+            }
+    
+            .submit-btn {
+                width: 100%;
+            }
+    
+            .result {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>GDQP</h1>
+        <div id="questions"></div>
+        <div class="submit-container">
+            <button class="submit-btn">Nộp Bài</button>
+            <div class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+       {
+        "question": "Mục đích của chiến tranh nhân dân nhằm:",
+        "answers": [
+            { "text": "Đánh bại ý đồ xâm lược lật đổ của kẻ thù đối với cách mạng Việt Nam.", "correct": true },
+            { "text": "Đánh bại ý đồ chiến tranh kinh tế của chủ nghĩa tư bản với cách mạng Việt Nam.", "correct": false },
+            { "text": "Đánh bại xâm lược của Chủ nghĩa đế quốc đối với Việt Nam.", "correct": false },
+            { "text": "Đánh bại chủ nghĩa đế quốc đối với cách mạng Việt Nam.", "correct": false }
+        ]
+    },
+    {
+        "question": "Mục đích của chiến tranh nhân dân nhằm:",
+        "answers": [
+            { "text": "Bảo vệ vững chắc vùng đất, vùng trời của đất nước, trật tự an toàn xã hội và nền văn hoá.", "correct": false },
+            { "text": "Bảo vệ nền kinh tế, chính trị, xã hội và nền văn hoá.", "correct": false },
+            { "text": "Bảo vệ vững chắc độc lập, chủ quyền, thống nhất, toàn vẹn lãnh thổ, bảo vệ an ninh quốc gia, trật tự an toàn xã hội và nền văn hoá.", "correct": true },
+            { "text": "Bảo vệ vững chắc vùng trời, vùng biển của Tổ quốc.", "correct": false }
+        ]
+    },
+    {
+        "question": "Mục đích của chiến tranh nhân dân nhằm:",
+        "answers": [
+            { "text": "Bảo vệ nền kinh tế xã hội chủ nghĩa.", "correct": false },
+            { "text": "Bảo vệ Đảng, Nhà nước, nhân dân và chế độ xã hội chủ nghĩa.", "correct": true },
+            { "text": "Bảo vệ chế độ chính trị xã hội chủ nghĩa.", "correct": false },
+            { "text": "Bảo vệ nền dân chủ xã hội chủ nghĩa.", "correct": false }
+        ]
+    },
+    {
+        "question": "Mục đích của chiến tranh nhân dân nhằm:",
+        "answers": [
+            { "text": "Bảo vệ lợi ích các nước xã hội chủ nghĩa.", "correct": false },
+            { "text": "Bảo vệ lợi ích quốc gia, dân tộc.", "correct": true },
+            { "text": "Bảo vệ lợi ích của giai cấp công nhân.", "correct": false },
+            { "text": "Bảo vệ lợi ích của các dân tộc bị áp bức, bóc lột.", "correct": false }
+        ]
+    },
+    {
+        "question": "Mục đích của chiến tranh nhân dân nhằm:",
+        "answers": [
+            { "text": "Giữ vững hòa bình, phát triển đất nước để nhanh chóng hội nhập quốc tế.", "correct": false },
+            { "text": "Giữ vững ổn định chính trị và môi trường hòa bình, phát triển đất nước theo định hướng tư bản chủ nghĩa.", "correct": false },
+            { "text": "Giữ vững ổn định đất nước và phát triển nền văn hóa xã hội chủ nghĩa.", "correct": false },
+            { "text": "Giữ vững ổn định chính trị và môi trường hòa bình, phát triển đất nước theo định hướng xã hội chủ nghĩa.", "correct": true }
+        ]
+    },
+    {
+        "question": "Đối tượng tác chiến của cách mạng Việt Nam hiện nay là đối tượng nào?",
+        "answers": [
+            { "text": "Là chủ nghĩa đế quốc và các thế lực phản động.", "correct": true },
+            { "text": "Là chủ nghĩa tư bản độc quyền.", "correct": false },
+            { "text": "Là Trung Quốc và các thế lực phản động.", "correct": false },
+            { "text": "Là chủ nghĩa đế quốc và tay sai.", "correct": false }
+        ]
+    },
+    {
+        "question": "Âm mưu, thủ đoạn chủ yếu của kẻ thù khi xâm lược nước ta là nội dung nào?",
+        "answers": [
+            { "text": "Thực hiện đánh hợp đồng tác chiến với các nước trong phe đồng minh.", "correct": false },
+            { "text": "Thực hiện lâu dài.", "correct": false },
+            { "text": "Thực hiện đánh nhanh, thắng nhanh.", "correct": true },
+            { "text": "Thực hiện đánh nhanh bằng vũ khí công nghệ cao.", "correct": false }
+        ]
+    },
+    {
+        "question": "Âm mưu, thủ đoạn chủ yếu của kẻ thù khi xâm lược nước ta là nội dung nào?",
+        "answers": [
+            { "text": "Kết hợp tiến công quân sự từ bên ngoài vào với bọn quá kích từ bên trong.", "correct": false },
+            { "text": "Kết hợp tiến công quân sự từ bên ngoài vào và nổi dậy của nhân dân từ bên trong.", "correct": false },
+            { "text": "Kết hợp tiến công quân sự và ngoại giao.", "correct": false },
+            { "text": "Kết hợp tiến công quân sự từ bên ngoài vào với hành động bạo loạn lật đổ từ bên trong.", "correct": true }
+        ]
+    },
+    {
+        "question": "Âm mưu, thủ đoạn chủ yếu của kẻ thù khi xâm lược nước ta là nội dung nào?",
+        "answers": [
+            { "text": "Kết hợp với các biện pháp phi vũ trang để lừa bịp dư luận.", "correct": true },
+            { "text": "Kết hợp với các biện pháp dân tộc, tôn giáo để lừa bịp dư luận.", "correct": false },
+            { "text": "Kết hợp với các biện pháp dăn đe để lừa bịp dư luận.", "correct": false },
+            { "text": "Kết hợp với các biện pháp văn hóa để lừa bịp dư luận.", "correct": false }
+        ]
+    },
+    {
+        "question": "Âm mưu, thủ đoạn chủ yếu của kẻ thù khi xâm lược nước ta là nội dung nào?",
+        "answers": [
+            { "text": "Khi tiến công thường trong giai đoạn đầu sử dụng hoả lực đánh bất ngờ, ồ ạt.", "correct": false },
+            { "text": "Khi tiến công thường trong giai đoạn đầu sẽ bao vây, phong toả sau sử dụng hoả lực đánh bất ngờ, ồ ạt.", "correct": true },
+            { "text": "Khi tiến công thường đánh hiệp đồng quân, binh chủng.", "correct": false },
+            { "text": "Khi tiến công thường đánh bằng không quân và hải quân.", "correct": false }
+        ]
+    },
+    {
+        "question": "Khi tiến hành chiến tranh xâm lược địch có điểm mạnh gì?",
+        "answers": [
+            { "text": "Có ưu thế tuyệt đối về quân số đông.", "correct": false },
+            { "text": "Có ưu thế tuyệt đối về vũ khí trang bị.", "correct": false },
+            { "text": "Có ưu thế tuyệt đối về sức mạnh quân sự, kinh tế và tiềm lực khoa học công nghệ.", "correct": true },
+            { "text": "Có ưu thế tuyệt đối về tiềm lực khoa học hiện đại.", "correct": false }
+        ]
+    },
+    {
+        "question": "Khi tiến hành chiến tranh xâm lược địch có điểm yếu gì?",
+        "answers": [
+            { "text": "Đây là cuộc chiến tranh bằng vũ khí công nghệ cao chắc chắn bị nhân loại phản đối.", "correct": false },
+            { "text": "Đây là cuộc chiến tranh hiện đại chắc chắn bị nhân loại phản đối.", "correct": false },
+            { "text": "Đây là cuộc chiến tranh hủy diệt, chắc chắn bị nhân loại phản đối.", "correct": false },
+            { "text": "Đây là cuộc chiến tranh phi nghĩa, chắc chắn bị nhân loại phản đối.", "correct": true }
+        ]
+    },
+    {
+        "question": "Khi tiến hành chiến tranh xâm lược địch có điểm yếu gì?",
+        "answers": [
+            { "text": "Chúng gặp phải một dân tộc Việt Nam có truyền thống chống giặc ngoại xâm và có nền kinh tế, văn hóa phát triển.", "correct": false },
+            { "text": "Chúng gặp phải một dân tộc Việt Nam có các nước xã hội chủ nghĩa ủng hộ.", "correct": false },
+            { "text": "Chúng gặp phải một dân tộc Việt Nam có các nước trên thế giới ủng hộ.", "correct": false },
+            { "text": "Chúng gặp phải một dân tộc Việt Nam có truyền thống yêu nước, chống xâm lược, chắc chắn sẽ làm cho chúng bị tổn thất năng nề, đánh bại xâm lược của địch.", "correct": true }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc tính chất của chiến tranh nhân dân bảo vệ Tổ quốc?",
+        "answers": [
+            { "text": "Là cuộc chiến tranh phòng ngự.", "correct": false },
+            { "text": "Là cuộc chiến tranh chính nghĩa, tự vệ cách mạng.", "correct": true },
+            { "text": "Là cuộc chiến tranh tổng hợp.", "correct": false },
+            { "text": "Là cuộc chiến tranh tiến công.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc tính chất của chiến tranh nhân dân bảo vệ Tổ quốc?",
+        "answers": [
+            { "text": "Là cuộc chiến tranh du kích.", "correct": false },
+            { "text": "Là cuộc chiến tranh tương đối hiện đại.", "correct": false },
+            { "text": "Là cuộc chiến công nghệ cao.", "correct": false },
+            { "text": "Là cuộc chiến tranh mang tính hiện đại.", "correct": true }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc tính chất của chiến tranh nhân dân bảo vệ Tổ quốc?",
+        "answers": [
+            { "text": "Là cuộc chiến tranh toàn dân, toàn diện, lấy lực lượng vũ trang ba thứ quân làm nòng cốt, dưới sự lãnh đạo của Đảng cộng sản Việt Nam.", "correct": false },
+            { "text": "Là cuộc chiến tranh chính nghĩa, tự vệ cách mạng.", "correct": false },
+            { "text": "Là cuộc chiến tranh mang tính hiện đại.", "correct": false },
+            { "text": "Cả 3 phương án trên.", "correct": true }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc đặc điểm của chiến tranh nhân dân bảo vệ Tổ quốc?",
+        "answers": [
+            { "text": "Chiến tranh diễn ra khẩn trương, quyết liệt phức tạp ngay từ đầu và trong suốt quá trình chiến tranh.", "correct": true },
+            { "text": "Chiến tranh diễn ra theo lần lượt theo từng trạng thái chiến đấu.", "correct": false },
+            { "text": "Chiến tranh hủy diệt ngay từ đầu và trong suốt quá trình chiến tranh.", "correct": false },
+            { "text": "Chiến tranh ngoại giao diễn ra ngay từ đầu và trong suốt quá trình chiến tranh.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc đặc điểm của chiến tranh nhân dân bảo vệ Tổ quốc?",
+        "answers": [
+            { "text": "Kinh tế đất nước được chuẩn bị sẵn, quân đội nhân dân ngày càng chính quy.", "correct": false },
+            { "text": "Hình thái đất nước được chuẩn bị sẵn sàng, thế trận quốc phòng, an ninh nhân dân ngày càng được củng cố vững chắc.", "correct": true },
+            { "text": "Chính trị đất nước được chuẩn bị sẵn, công an nhân dân ngày càng chính quy.", "correct": false },
+            { "text": "Văn hóa - xã hội được chuẩn bị sẵn, dân quân tự vệ được xây dựng vững mạnh.", "correct": false }
+        ]
+    },
+    {
+        "question": "Quan điểm của Đảng trong chiến tranh nhân dân bảo vệ Tổ quốc là quan điểm nào?",
+        "answers": [
+            { "text": "Tiến hành chiến tranh nhân dân, thực hiện toàn dân đánh giặc lấy lực lượng vũ trang nhân dân làm nòng cốt…", "correct": true },
+            { "text": "Tiến hành chiến tranh tiến công, lấy quân đội nhân dân làm nòng cốt. Kết hợp tác chiến của lực lượng vũ trang địa phương với dân quân tự vệ.", "correct": false },
+            { "text": "Tiến hành chiến phòng ngự lấy lực lượng vũ trang nhân dân làm nòng cốt. Kết hợp tác của nhân dân địa phương.", "correct": false },
+            { "text": "Tiến hành chiến tranh tổng hợp, lấy quân đội nhân dân làm nòng cốt. Kết hợp tác chiến của công an và dân quân tự vệ.", "correct": false }
+        ]
+    },
+    {
+        "question": "Quan điểm của Đảng trong chiến tranh nhân dân bảo vệ Tổ quốc là quan điểm nào?",
+        "answers": [
+            { "text": "Chuẩn bị sức mạnh quân sự để đủ sức đánh được lâu dài, rút ngắn thời gian của chiến tranh giành thắng lợi càng sớm càng tốt.", "correct": false },
+            { "text": "Chuẩn bị kinh tế để đủ sức đánh được lâu dài, ra sức thu hẹp không gian của chiến tranh giành thắng lợi càng sớm càng tốt.", "correct": false },
+            { "text": "Chuẩn bị sức mạnh văn hóa, tư tưởng trên cả nước cũng như từng khu vực để giành thắng lợi trong chiến tranh.", "correct": false },
+            { "text": "Chuẩn bị mọi mặt trên cả nước cũng như từng khu vực để đủ sức đánh được lâu dài, ra sức thu hẹp không gian, rút ngắn thời gian của chiến tranh.", "correct": true }
+        ]
+    },
+    {
+        "question": "Quan điểm của Đảng trong chiến tranh nhân dân bảo vệ Tổ quốc là quan điểm nào?",
+        "answers": [
+            { "text": "Tiến hành chiến tranh nhân dân, thực hiện toàn dân đánh giặc lấy lực lượng vũ trang nhân dân làm nòng cốt...", "correct": false },
+            { "text": "Tiến hành chiến tranh toàn diện, kết hợp chặt chẽ giữa đấu tranh quân sự, chính trị, ngoại giao, kinh tế, văn hoá và tư tưởng, lấy đấu tranh quân sự là chủ yếu...", "correct": false },
+            { "text": "Chuẩn bị mọi mặt trên cả nước cũng như từng khu vực để đủ sức đánh được lâu dài, ra sức thu hẹp không gian, rút ngắn thời gian của chiến tranh ...", "correct": false },
+            { "text": "Cả 3 phương án trên.", "correct": true }
+        ]
+    },
+    {
+        "question": "Tổ chức lực lượng chiến tranh nhân dân bao gồm nội dung nào?",
+        "answers": [
+            { "text": "Lực lượng chiến tranh nhân dân là toàn dân đánh giặc kết hợp với dân quân du tự vệ dưới sự lãnh đạo của Đảng.", "correct": false },
+            { "text": "Lực lượng chiến tranh nhân dân là quân đội kết hợp với nhân dân đánh giặc.", "correct": false },
+            { "text": "Lực lượng chiến tranh nhân dân là toàn dân đánh giặc, đánh giặc toàn diện lấy lực lượng vũ trang nhân dân gồm 3 thứ quân làm nòng cốt.", "correct": true },
+            { "text": "Lực lượng chiến tranh nhân dân là nông dân đánh giặc dưới sự lãnh đạo của Đảng.", "correct": false }
+        ]
+    },
+    {
+        "question": "Tổ chức lực lượng chiến tranh nhân dân bao gồm nội dung nào?",
+        "answers": [
+            { "text": "Lực lượng chiến tranh nhân dân là toàn dân đánh giặc, đánh giặc toàn diện lấy lực lượng vũ trang nhân dân gồm 3 thứ quân làm nòng cốt.", "correct": false },
+            { "text": "Lực lượng toàn dân được tổ chức chặt chẽ thành lực lượng quần chúng rộng rãi và lực lượng quân sự.", "correct": false },
+            { "text": "Lực lượng vũ trang nhân dân được xây dựng vững mạnh toàn diện, coi trọng cả số lượng và chất lượng, trong đó lấy chất lượng là chính, lấy xây dựng chính trị làm cơ sở.", "correct": false },
+            { "text": "Cả 3 phương án trên.", "correct": true }
+        ]
+    },
+
+        ];
+
+        let userAnswers = [];
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function initQuiz() {
+        shuffleArray(questions);
+        const questionsContainer = document.getElementById('questions');
+        questionsContainer.innerHTML = '';
+        
+        questions.forEach((q, qIndex) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question-container';
+            
+            shuffleArray(q.answers);
+            
+            questionDiv.innerHTML = `
+                <div class="question-text">${qIndex + 1}. ${q.question}</div>
+                <div class="answers-container"></div>
+            `;
+            
+            const answersContainer = questionDiv.querySelector('.answers-container');
+            
+            q.answers.forEach(answer => {
+                const button = document.createElement('button');
+                button.className = 'answer-btn';
+                button.textContent = answer.text;
+                button.addEventListener('click', () => {
+                    selectAnswer(qIndex, answer);
+                    showImmediateResult(qIndex, answer);
+                });
+                answersContainer.appendChild(button);
+            });
+            
+            questionsContainer.appendChild(questionDiv);
+        });
+
+        // Ẩn nút nộp bài vì không cần nữa
+        document.querySelector('.submit-btn').style.display = 'none';
+    }
+
+    function selectAnswer(qIndex, answer) {
+        const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+        const buttons = questionDiv.querySelectorAll('.answer-btn');
+        
+        buttons.forEach(btn => btn.classList.remove('selected'));
+        
+        const selectedBtn = [...buttons].find(btn => btn.textContent === answer.text);
+        selectedBtn.classList.add('selected');
+        
+        userAnswers[qIndex] = answer;
+    }
+
+    function showImmediateResult(qIndex, selectedAnswer) {
+        const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+        const buttons = questionDiv.querySelectorAll('.answer-btn');
+
+        buttons.forEach(btn => {
+            btn.disabled = true;
+            const answerObj = questions[qIndex].answers.find(a => a.text === btn.textContent);
+            if (answerObj.correct) {
+                btn.classList.add('correct');
+            } else if (btn.textContent === selectedAnswer.text) {
+                btn.classList.add('incorrect');
+            }
+        });
+    }
+
+    initQuiz();
+    </script>
+</body>
+</html>

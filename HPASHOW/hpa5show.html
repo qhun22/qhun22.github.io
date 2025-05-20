@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="images/qhun22icon.png" />
+    <link rel="apple-touch-icon" href="images/qhun22icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>qhun22</title>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Quicksand', sans-serif;
+        }
+    
+        .quiz-container {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px 25px;
+            max-width: 700px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease;
+        }
+    
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+    
+        .question-container {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+    
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: #222;
+        }
+    
+        .answers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    
+        .answer-btn {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+        
+        .answer:hover {
+            background-color: #ffe6f0;
+            transform: scale(0.5);
+        } 
+        .answer-btn:hover {
+            background-color: #f1f1f1;
+            border-color: #aaa;
+        }
+    
+        .answer-btn.selected {
+            background-color: #ffd966;
+            border-color: #f1c40f;
+            font-weight: bold;
+        }
+    
+        .answer-btn.correct {
+            background-color: #b6e9b1;
+            border-color: #2ecc71;
+            color: #2c3e50;
+        }
+    
+        .answer-btn.incorrect {
+            background-color: #f9b3b3;
+            border-color: #e74c3c;
+            color: #2c3e50;
+        }
+    
+        .submit-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    
+        .submit-btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+    
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+    
+        .result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+    
+        .reset-btn {
+            margin-top: 15px;
+            background-color: #27ae60;
+        }
+    
+        .reset-btn:hover {
+            background-color: #1e8449;
+        }
+    
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        @media (max-width: 600px) {
+            .quiz-container {
+                padding: 15px 20px;
+            }
+    
+            h1 {
+                font-size: 1.5rem;
+            }
+    
+            .answer-btn {
+                font-size: 0.95rem;
+            }
+    
+            .submit-btn {
+                width: 100%;
+            }
+    
+            .result {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>GDQP</h1>
+        <div id="questions"></div>
+        <div class="submit-container">
+            <button class="submit-btn">Nộp Bài</button>
+            <div class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+       {
+        "question": "Nội dung nào dưới đây thuộc khái niệm lực lượng vũ trang nhân dân?",
+        "answers": [
+            { "text": "Là các tổ chức vũ trang của nhân dân Việt Nam, do Đảng Cộng sản Việt Nam lãnh đạo, Nhà nước cộng hòa xã hội chủ nghĩa Việt Nam quản lí...", "correct": true },
+            { "text": "Là quân đội nhân dân Việt Nam, do Đảng Cộng sản Việt Nam lãnh đạo, Nhà nước cộng hòa xã hội chủ nghĩa Việt Nam quản lí.", "correct": false },
+            { "text": "Là công an nhân dân Việt Nam, do Đảng Cộng sản Việt Nam lãnh đạo, Nhà nước cộng hòa xã hội chủ nghĩa Việt Nam quản lí.", "correct": false },
+            { "text": "Là dân quân tự vệ của nhân dân Việt Nam, do Đảng Cộng sản Việt Nam lãnh đạo, Nhà nước cộng hòa xã hội chủ nghĩa Việt Nam quản lí.", "correct": false }
+        ]
+    },
+    {
+        "question": "Trong khái niệm lực lượng vũ trang nhân dân có nhiệm vụ gì?",
+        "answers": [
+            { "text": "Chiến đấu giành độc lập thống nhất Tổ quốc.", "correct": false },
+            { "text": "Chiến đấu giành và giữ vững độc lập, chủ quyền thống nhất và toàn vẹn lãnh thổ của Tổ quốc.", "correct": false },
+            { "text": "Chống 'Diễn biến hòa bình' bảo vệ chế độ xã hội chủ nghĩa.", "correct": true },
+            { "text": "Chiến đấu giành thắng lợi cho Tổ quốc.", "correct": false }
+        ]
+    },
+    {
+        "question": "Trong khái niệm lực lượng vũ trang nhân dân có nhiệm vụ gì?",
+        "answers": [
+            { "text": "Bảo vệ an ninh quốc gia giữ gìn an ninh chính trị và trật tự an toàn xã hội, bảo vệ nhân dân, bảo vệ chế độ xã hội chủ nghĩa và những thành quả cách mạng.", "correct": true },
+            { "text": "Bảo vệ nền văn hóa xã hội chủ nghĩa.", "correct": false },
+            { "text": "Bảo vệ chế độ chính trị xã hội chủ nghĩa.", "correct": false },
+            { "text": "Bảo vệ an ninh tư tưởng văn hóa, an ninh chính trị và an ninh kinh tế xã hội chủ nghĩa.", "correct": false }
+        ]
+    },
+    {
+        "question": "Trong khái niệm lực lượng vũ trang nhân dân có nhiệm vụ gì?",
+        "answers": [
+            { "text": "Là lực lượng nòng cốt trong xây dựng nền quốc phòng toàn dân và chiến tranh nhân dân.", "correct": true },
+            { "text": "Là lực lượng nòng cốt xây dựng kinh tế và quốc phòng.", "correct": false },
+            { "text": "Là lực lượng nòng cốt trong xây dựng căn cứ quân sự và chiến tranh nhân dân.", "correct": false },
+            { "text": "Là lực lượng nòng cốt trong đấu tranh chính trị và đấu tranh vũ trang.", "correct": false }
+        ]
+    },
+    {
+        "question": "Lực lượng vũ trang nhân dân gồm những thành phần nào?",
+        "answers": [
+            { "text": "Quân đội nhân dân.", "correct": false },
+            { "text": "Công an nhân dân.", "correct": false },
+            { "text": "Dân quân tự vệ.", "correct": false },
+            { "text": "Cả 3 phương án trên.", "correct": true }
+        ]
+    },
+    {
+        "question": "Quân đội bao gồm những lực lượng nào?",
+        "answers": [
+            { "text": "Lực lượng thường trực.", "correct": true },
+            { "text": "Lực lượng cơ động.", "correct": false },
+            { "text": "Lực lượng tại chỗ.", "correct": false },
+            { "text": "Cả 3 phương án trên.", "correct": false }
+        ]
+    },
+    {
+        "question": "Quân đội bao gồm những lực lượng nào?",
+        "answers": [
+            { "text": "Lực lượng dân quân.", "correct": false },
+            { "text": "Lực lượng du kích.", "correct": false },
+            { "text": "Lực lượng dự bị động viên.", "correct": true },
+            { "text": "Cả 3 phương án trên.", "correct": false }
+        ]
+    },
+    {
+        "question": "Công an nhân dân Việt Nam được thành lập ngày, tháng, năm nào?",
+        "answers": [
+            { "text": "19/8/1944.", "correct": false },
+            { "text": "19/8/1945.", "correct": true },
+            { "text": "19/8/1946.", "correct": false },
+            { "text": "19/8/1947.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc quan điểm nguyên tắc xây dựng lực lượng vũ trang nhân dân trong thời kỳ mới của Đảng ta?",
+        "answers": [
+            { "text": "Giữ vững và tăng cường sự lãnh đạo của Đảng Cộng sản Việt Nam đối với các lực lượng vũ trang nhân dân.", "correct": true },
+            { "text": "Giữ vững và tăng cường sự quản lý của Nhà nước đối với các lực lượng vũ trang nhân dân.", "correct": false },
+            { "text": "Giữ vững và tăng cường sự lãnh đạo của giai cấp công nhân đối với các lực lượng vũ trang nhân dân.", "correct": false },
+            { "text": "Giữ vững và tăng cường sự liên minh giai cấp công, nông, binh trong các lực lượng vũ trang nhân dân.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc quan điểm nguyên tắc xây dựng lực lượng vũ trang nhân dân trong thời kỳ mới của Đảng ta?",
+        "answers": [
+            { "text": "Tăng cường đối ngoại để xây dựng lực lượng vũ trang nhân dân.", "correct": false },
+            { "text": "Tự lực, tự cường xây dựng lực lượng vũ trang nhân dân.", "correct": true },
+            { "text": "Kêu gọi viện trợ của nước ngoài để xây dựng lực lượng vũ trang nhân dân.", "correct": false },
+            { "text": "Tự lực, tự cường xây dựng cán bộ, chiến sĩ lực lượng vũ trang nhân dân.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc quan điểm nguyên tắc xây dựng lực lượng vũ trang nhân dân trong thời kỳ mới của Đảng ta?",
+        "answers": [
+            { "text": "Bảo đảm cho lực lượng vũ trang nhân dân luôn trong trạng thái sẵn sàng chiến đấu và chiến đấu thắng lợi.", "correct": true },
+            { "text": "Bảo đảm cho lực lượng vũ trang nhân dân luôn được trang bị hiện đại.", "correct": false },
+            { "text": "Bảo đảm cho lực lượng vũ trang nhân dân luôn trong trạng thái sẵn sàng chiến đấu và đi làm kinh tế.", "correct": false },
+            { "text": "Cả 3 phương án trên.", "correct": false }
+        ]
+    },
+    {
+        "question": "Đảng Cộng sản Việt Nam lãnh đạo lực lượng vũ trang nhân dân theo nguyên tắc nào?",
+        "answers": [
+            { "text": "“Tuyệt đối, về mọi mặt”.", "correct": false },
+            { "text": "“Trực tiếp về mọi mặt”.", "correct": false },
+            { "text": "“Về mọi mặt”.", "correct": false },
+            { "text": "“Tuyệt đối, trực tiếp về mọi mặt”.", "correct": true }
+        ]
+    },
+    {
+        "question": "Quán triệt quan điểm “Tự lực tự cường trong xây dựng lực lượng vũ trang” hiện nay cần tập trung vào nội dung nào?",
+        "answers": [
+            { "text": "Tích cực tham gia nghiên cứu khoa học.", "correct": false },
+            { "text": "Tích cực tham gia xây dựng nông thôn mới.", "correct": false },
+            { "text": "Tích cực tham gia xây dựng phát triển kinh tế, thực hành tiết kiệm.", "correct": true },
+            { "text": "Tích cực tham gia xây dựng phát triển kinh tế vùng 135.", "correct": false }
+        ]
+    },
+    {
+        "question": "Quán triệt quan điểm “Xây dựng lực lượng vũ trang nhân dân lấy chất lượng là chính, lấy xây dựng chính trị làm cơ sở” cần thực hiện tốt nội dung nào?",
+        "answers": [
+            { "text": "Phải xây dựng quân đông, vũ khí hiện đại để đáp ứng yêu cầu chiến tranh.", "correct": false },
+            { "text": "Giải quyết tốt mối quan hệ giữa số lượng và chất lượng, lấy số lượng là chính.", "correct": false },
+            { "text": "Giải quyết tốt mối quan hệ giữa con người và vũ khí trang bị, trong đó vũ khí là quyết định.", "correct": false },
+            { "text": "Nắm vững và giải quyết tốt mối quan hệ giữa số lượng và chất lượng. Nâng cao chất lượng là chính, đồng thời có số lượng phù hợp với tình hình nhiệm vụ và khả năng kinh tế của đất nước…", "correct": true }
+        ]
+    },
+    {
+        "question": "Quán triệt quan điểm “Xây dựng lực lượng vũ trang nhân dân lấy chất lượng là chính, lấy xây dựng chính trị làm cơ sở” cần thực hiện tốt nội dung nào?",
+        "answers": [
+            { "text": "Làm tốt công tác xây dựng công sự trận địa của lực lượng vũ trang nhân dân.", "correct": false },
+            { "text": "Thường xuyên làm tốt công tác huấn luyện, diễn tập nâng cao trình độ sẵn sàng chiến đấu của lực lượng vũ trang nhân dân.", "correct": true },
+            { "text": "Làm tốt công tác huấn luyện chiến sĩ mới của lực lượng vũ trang nhân dân.", "correct": false },
+            { "text": "Thường xuyên làm tốt công tác xây dựng chính quy để nâng cao trình độ sẵn sàng chiến đấu của lực lượng vũ trang nhân dân.", "correct": false }
+        ]
+    },
+    {
+        "question": "Phương hướng cơ bản xây dựng lực lượng vũ trang nhân dân là nội dung nào?",
+        "answers": [
+            { "text": "Xây dựng quân đội, công an nhân dân theo hướng cách mạng, chính quy, tinh nhuệ, từng bước hiện đại.", "correct": true },
+            { "text": "Xây dựng quân đội, công an nhân dân theo hướng hiện đại.", "correct": false },
+            { "text": "Xây dựng quân đội, công an theo hướng cách mạng, chính quy.", "correct": false },
+            { "text": "Xây dựng quân đội, công an nhân dân theo hướng tinh nhuệ, hiện đại.", "correct": false }
+        ]
+    },
+    {
+        "question": "Phương hướng cơ bản xây dựng lực lượng vũ trang nhân dân là nội dung nào?",
+        "answers": [
+            { "text": "Xây dựng lực lượng cảnh sát biển hùng hậu được huấn luyện và động viên nhanh theo kế hoạch.", "correct": false },
+            { "text": "Xây dựng lực lượng dự bị động viên hùng hậu được huấn luyện và quản lý tốt, đảm bảo khi cần thiết động viên nhanh theo kế hoạch.", "correct": true },
+            { "text": "Xây dựng lực lượng sinh viên hùng hậu được huấn luyện quốc phòng an ninh, khi cần thiết động viên nhanh theo kế hoạch.", "correct": false },
+            { "text": "Xây dựng lực lượng bộ đội biên phòng hùng hậu được huấn luyện và khi cần thiết động viên nhanh theo kế hoạch.", "correct": false }
+        ]
+    },
+    {
+        "question": "Phương hướng cơ bản xây dựng lực lượng vũ trang nhân dân là nội dung nào?",
+        "answers": [
+            { "text": "Xây dựng lực lượng vệ binh vững mạnh, lấy chất lượng làm chính.", "correct": false },
+            { "text": "Xây dựng lực lượng an ninh vững mạnh, rộng khắp, lấy chất lượng làm chính.", "correct": false },
+            { "text": "Xây dựng lực lượng dân quân tự vệ vững mạnh, rộng khắp, lấy chất lượng làm chính.", "correct": true },
+            { "text": "Cả 3 phương án trên.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây là biện pháp chủ yếu xây dựng lực lượng vũ trang nhân dân?",
+        "answers": [
+            { "text": "Tổ chức các đơn vị quân phải đông, có sức chiến đấu cao.", "correct": false },
+            { "text": "Tổ chức các đơn vị phải gọn, mạnh, cơ động; có sức chiến đấu cao. Có số lượng phù hợp, chất lượng tốt...", "correct": true },
+            { "text": "Tổ chức các đơn vị phải mạnh, số lượng đông, có sức chiến đấu cao.", "correct": false },
+            { "text": "Tổ chức các đơn vị phải có sức chiến đấu cao. Có số lượng đông, chất lượng tốt.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây là biện pháp chủ yếu xây dựng lực lượng vũ trang nhân dân?",
+        "answers": [
+            { "text": "Nâng cao chất lượng văn hóa trong xây dựng và phát triển quân đội và công an Việt Nam.", "correct": false },
+            { "text": "Nâng cao chất lượng huấn luyện thể lực, xây dựng và phát triển các môn nghệ thuật trong quân đội và công an.", "correct": false },
+            { "text": "Nâng cao chất lượng huấn luyện, giáo dục, xây dựng và phát triển khoa học nghệ thuật quân sự, khoa học công an Việt Nam.", "correct": true },
+            { "text": "Cả 3 phương án trên.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây là biện pháp chủ yếu xây dựng lực lượng vũ trang nhân dân?",
+        "answers": [
+            { "text": "Xây dựng đội ngũ cán bộ, chiến sĩ có giác ngộ tốt.", "correct": false },
+            { "text": "Xây dựng đội ngũ cán bộ lực lượng vũ trang có trình độ tiên tiến.", "correct": false },
+            { "text": "Xây dựng đội ngũ cán bộ giỏi về chiến đấu.", "correct": false },
+            { "text": "Xây dựng đội ngũ cán bộ lực lượng vũ trang có phẩm chất, năng lực tốt.", "correct": true }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây là biện pháp chủ yếu xây dựng lực lượng vũ trang nhân dân?",
+        "answers": [
+            { "text": "Thực hiện nghiêm túc và đầy đủ các chính sách của Đảng, nhà nước đối với lực lượng vũ trang nhân dân.", "correct": false },
+            { "text": "Từng bước giải quyết yêu cầu về vũ khí, trang bị kỹ thuật của lực lượng vũ trang.", "correct": false },
+            { "text": "Xây dựng đội ngũ cán bộ lực lượng vũ trang có phẩm chất, năng lực tốt.", "correct": false },
+            { "text": "Cả 3 phương án trên.", "correct": true }
+        ]
+    }
+
+        ];
+
+        let userAnswers = [];
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function initQuiz() {
+        shuffleArray(questions);
+        const questionsContainer = document.getElementById('questions');
+        questionsContainer.innerHTML = '';
+        
+        questions.forEach((q, qIndex) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question-container';
+            
+            shuffleArray(q.answers);
+            
+            questionDiv.innerHTML = `
+                <div class="question-text">${qIndex + 1}. ${q.question}</div>
+                <div class="answers-container"></div>
+            `;
+            
+            const answersContainer = questionDiv.querySelector('.answers-container');
+            
+            q.answers.forEach(answer => {
+                const button = document.createElement('button');
+                button.className = 'answer-btn';
+                button.textContent = answer.text;
+                button.addEventListener('click', () => {
+                    selectAnswer(qIndex, answer);
+                    showImmediateResult(qIndex, answer);
+                });
+                answersContainer.appendChild(button);
+            });
+            
+            questionsContainer.appendChild(questionDiv);
+        });
+
+        // Ẩn nút nộp bài vì không cần nữa
+        document.querySelector('.submit-btn').style.display = 'none';
+    }
+
+    function selectAnswer(qIndex, answer) {
+        const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+        const buttons = questionDiv.querySelectorAll('.answer-btn');
+        
+        buttons.forEach(btn => btn.classList.remove('selected'));
+        
+        const selectedBtn = [...buttons].find(btn => btn.textContent === answer.text);
+        selectedBtn.classList.add('selected');
+        
+        userAnswers[qIndex] = answer;
+    }
+
+    function showImmediateResult(qIndex, selectedAnswer) {
+        const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+        const buttons = questionDiv.querySelectorAll('.answer-btn');
+
+        buttons.forEach(btn => {
+            btn.disabled = true;
+            const answerObj = questions[qIndex].answers.find(a => a.text === btn.textContent);
+            if (answerObj.correct) {
+                btn.classList.add('correct');
+            } else if (btn.textContent === selectedAnswer.text) {
+                btn.classList.add('incorrect');
+            }
+        });
+    }
+
+    initQuiz();
+    </script>
+</body>
+</html>

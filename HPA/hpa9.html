@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="images/qhun22icon.png" />
+    <link rel="apple-touch-icon" href="images/qhun22icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>qhun22</title>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Quicksand', sans-serif;
+        }
+    
+        .quiz-container {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px 25px;
+            max-width: 700px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease;
+        }
+    
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+    
+        .question-container {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+    
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: #222;
+        }
+    
+        .answers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    
+        .answer-btn {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+        
+        .answer:hover {
+            background-color: #ffe6f0;
+            transform: scale(0.5);
+        } 
+        .answer-btn:hover {
+            background-color: #f1f1f1;
+            border-color: #aaa;
+        }
+    
+        .answer-btn.selected {
+            background-color: #ffd966;
+            border-color: #f1c40f;
+            font-weight: bold;
+        }
+    
+        .answer-btn.correct {
+            background-color: #b6e9b1;
+            border-color: #2ecc71;
+            color: #2c3e50;
+        }
+    
+        .answer-btn.incorrect {
+            background-color: #f9b3b3;
+            border-color: #e74c3c;
+            color: #2c3e50;
+        }
+    
+        .submit-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    
+        .submit-btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+    
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+    
+        .result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+    
+        .reset-btn {
+            margin-top: 15px;
+            background-color: #27ae60;
+        }
+    
+        .reset-btn:hover {
+            background-color: #1e8449;
+        }
+    
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        @media (max-width: 600px) {
+            .quiz-container {
+                padding: 15px 20px;
+            }
+    
+            h1 {
+                font-size: 1.5rem;
+            }
+    
+            .answer-btn {
+                font-size: 0.95rem;
+            }
+    
+            .submit-btn {
+                width: 100%;
+            }
+    
+            .result {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>GDQP</h1>
+        <div id="questions"></div>
+        <div class="submit-container">
+            <button class="submit-btn">Nộp Bài</button>
+            <div class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+        {
+        "question": "Nội dung nào dưới đây được nêu trong khái niệm dân quân tự vệ?",
+        "answers": [
+            { "text": "Dân quân tự vệ là lực lượng vũ trang quần chúng không thoát ly sản xuất, công tác.", "correct": true },
+            { "text": "Dân quân tự vệ là lực lượng bảo vệ Đảng, bảo vệ chính quyền, bảo vệ tính mạng, tài sản...", "correct": true },
+            { "text": "Dân quân tự vệ là thành phần của lực lượng vũ trang nhân dân nước Cộng hòa xã hội chủ nghĩa Việt Nam.", "correct": true },
+            { "text": "Cả 3 nội dung trên.", "correct": true }
+        ]
+    },
+    {
+        "question": "Theo khái niệm dân quân tự vệ thì lực lượng nào được bố trí ở cấp xã, phường, thị trấn?",
+        "answers": [
+            { "text": "Dân quân.", "correct": true },
+            { "text": "Tự vệ.", "correct": false },
+            { "text": "Bộ đội chủ lực.", "correct": false },
+            { "text": "Bảo vệ.", "correct": false }
+        ]
+    },
+    {
+        "question": "Theo khái niệm dân quân tự vệ thì lực lượng nào được bố trí ở cơ quan, tổ chức?",
+        "answers": [
+            { "text": "Dân quân.", "correct": false },
+            { "text": "Tự vệ.", "correct": true },
+            { "text": "Bộ đội chủ lực.", "correct": false },
+            { "text": "Bảo vệ.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc nhiệm vụ của lực lượng dân quân tự vệ?",
+        "answers": [
+            { "text": "Sẵn sàng chiến đấu, chiến đấu và phục vụ chiến đấu để bảo vệ địa phương, cơ sở…", "correct": true },
+            { "text": "Sẵn sàng chiến đấu có tác động mạnh mẽ đến ý chí, tinh thần của lực lượng vũ trang.", "correct": false },
+            { "text": "Sẵn sàng chiến đấu có tác động tích cực và trực tiếp đến trình độ của toàn dân trong nhiệm vụ bảo vệ Tổ quốc.", "correct": false },
+            { "text": "Sẵn sàng chiến đấu tác động trực tiếp đến trình độ nhận thức của toàn dân về quốc phòng.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc nhiệm vụ của lực lượng dân quân tự vệ?",
+        "answers": [
+            { "text": "Học tập và thực hiện theo Hiến pháp và luật pháp.", "correct": false },
+            { "text": "Học tập chính trị, pháp luật, huấn luyện quân sự và diễn tập.", "correct": true },
+            { "text": "Học tập đường lối, chủ trương, chính sách của Đảng, Nhà nước.", "correct": false },
+            { "text": "Học tập các môn chính trị, xã hội.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung dưới đây thuộc phương châm xây dựng lực lượng dân quân tự vệ?",
+        "answers": [
+            { "text": "Là xây dựng về nhiều lĩnh vực.", "correct": false },
+            { "text": "Là xây dựng sẵn sàng chiến đấu của lực lượng vũ trang.", "correct": false },
+            { "text": "Là xây dựng vững mạnh.", "correct": true },
+            { "text": "Là xây dựng trình độ nhận thức của toàn dân về quốc phòng.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung dưới đây thuộc phương châm xây dựng lực lượng dân quân tự vệ?",
+        "answers": [
+            { "text": "Là xây dựng về nhiều lĩnh vực.", "correct": false },
+            { "text": "Là xây dựng sẵn sàng chiến đấu của lực lượng vũ trang.", "correct": false },
+            { "text": "Là xây dựng trình độ nhận thức của toàn dân về quốc phòng.", "correct": false },
+            { "text": "Là xây dựng rộng khắp.", "correct": true }
+        ]
+    },
+    {
+        "question": "Nội dung dưới đây thuộc phương châm xây dựng lực lượng dân quân tự vệ?",
+        "answers": [
+            { "text": "Là xây dựng về nhiều mặt trận.", "correct": false },
+            { "text": "Là xây dựng sẵn sàng chiến đấu của lực lượng tự vệ.", "correct": false },
+            { "text": "Là xây dựng coi trọng chất lượng là chính.", "correct": true },
+            { "text": "Là xây dựng trình độ nhận thức của toàn dân về chiến tranh.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung xây dựng lực lượng dân quân tự vệ là nội dung nào?",
+        "answers": [
+            { "text": "Là xây dựng coi trọng chất lượng là chính.", "correct": false },
+            { "text": "Là xây dựng vững mạnh.", "correct": false },
+            { "text": "Là xây dựng rộng khắp.", "correct": false },
+            { "text": "Cả 3 nội dung trên.", "correct": true }
+        ]
+    },
+    {
+        "question": "Trong khái niệm lực lượng dự bị động viên được xác định gồm 2 lực lượng nào?",
+        "answers": [
+            { "text": "Quân nhân dự bị và phương tiện kỹ thuật.", "correct": true },
+            { "text": "Quân chủ lực và công an.", "correct": false },
+            { "text": "Quân nhân dự bị và bộ đội địa phương.", "correct": false },
+            { "text": "Quân nhân dự bị và dân quân tự vệ.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung dưới đây thuộc quan điểm, nguyên tắc xây dựng lực lượng dự bị động viên?",
+        "answers": [
+            { "text": "Xây dựng ý thức tham gia chiến đấu cao nhất.", "correct": false },
+            { "text": "Xây dựng lực lượng dự bị động viên bảo đảm số lượng đủ, chất lượng cao.", "correct": true },
+            { "text": "Xây dựng ý chí, tinh thần của lực lượng vũ trang.", "correct": false },
+            { "text": "Xây dựng có tác động trực tiếp đến trình độ nhận thức của toàn dân về quốc phòng.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc phương thức tổ chức các đơn vị dự bị động viên?",
+        "answers": [
+            { "text": "Đơn vị biên chế khung thường trực và đơn vị không biên chế khung thường trực.", "correct": true },
+            { "text": "Đơn vị biên chế dự bị động viên.", "correct": false },
+            { "text": "Xây dựng ý chí, tinh thần của lực lượng vũ trang.", "correct": false },
+            { "text": "Xây dựng có tác động trực tiếp đến trình độ nhận thức của toàn dân về quốc phòng.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung dưới đây thuộc biện pháp xây dựng lực lượng dự bị động viên?",
+        "answers": [
+            { "text": "Thường xuyên giáo dục, sâu rộng trong toàn Đảng, toàn dân, toàn quân về vị trí nhiệm vụ quan điểm của Đảng, Nhà nước đối với lực lượng dự bị động viên.", "correct": true },
+            { "text": "Thường xuyên thực hiện đường lối, chủ trương của Đảng về lực lượng dự bị động viên.", "correct": false },
+            { "text": "Thường xuyên thực hiện chính sách, pháp luật của Nhà nước về lực lượng dự bị động viên.", "correct": false },
+            { "text": "Thường xuyên thực hiện chấp hành các qui định của địa phương về lực lượng dự bị động viên.", "correct": false }
+        ]
+    }
+
+        ];
+
+        let userAnswers = [];
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function initQuiz() {
+            shuffleArray(questions);
+            const questionsContainer = document.getElementById('questions');
+            questionsContainer.innerHTML = '';
+            
+            questions.forEach((q, qIndex) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container';
+                
+                shuffleArray(q.answers);
+                
+                questionDiv.innerHTML = `
+                    <div class="question-text">${qIndex + 1}. ${q.question}</div>
+                    <div class="answers-container"></div>
+                `;
+                
+                const answersContainer = questionDiv.querySelector('.answers-container');
+                
+                q.answers.forEach(answer => {
+                    const button = document.createElement('button');
+                    button.className = 'answer-btn';
+                    button.textContent = answer.text;
+                    button.addEventListener('click', () => selectAnswer(qIndex, answer));
+                    answersContainer.appendChild(button);
+                });
+                
+                questionsContainer.appendChild(questionDiv);
+            });
+        }
+
+        function selectAnswer(qIndex, answer) {
+            const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+            const buttons = questionDiv.querySelectorAll('.answer-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('selected'));
+            
+            const selectedBtn = [...buttons].find(btn => btn.textContent === answer.text);
+            selectedBtn.classList.add('selected');
+            
+            userAnswers[qIndex] = answer;
+        }
+
+        function showResult() {
+            let score = 0;
+            const resultDiv = document.querySelector('.result');
+            
+            questions.forEach((q, qIndex) => {
+                const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+                const buttons = questionDiv.querySelectorAll('.answer-btn');
+                
+                buttons.forEach(btn => {
+                    btn.disabled = true;
+                    const answer = q.answers.find(a => a.text === btn.textContent);
+                    if (answer.correct) {
+    btn.classList.add('correct');
+} else if (btn.classList.contains('selected')) {
+    btn.classList.add('incorrect');
+}
+
+                });
+                
+                if (userAnswers[qIndex]?.correct) {
+                    score += 10;
+                }
+            });
+            
+            resultDiv.innerHTML = `
+                <p>Điểm của bạn: ${score}/${questions.length * 10}</p>
+                <button class="submit-btn reset-btn" onclick="location.reload()">Làm lại</button>
+            `;
+            resultDiv.style.display = 'block';
+            document.querySelector('.submit-btn').style.display = 'none';
+        }
+
+        document.querySelector('.submit-btn').addEventListener('click', showResult);
+        initQuiz();
+    </script>
+</body>
+</html>

@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="images/qhun22icon.png" />
+    <link rel="apple-touch-icon" href="images/qhun22icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>qhun22</title>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Quicksand', sans-serif;
+        }
+    
+        .quiz-container {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px 25px;
+            max-width: 700px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease;
+        }
+    
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+    
+        .question-container {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+    
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: #222;
+        }
+    
+        .answers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    
+        .answer-btn {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+        
+        .answer:hover {
+            background-color: #ffe6f0;
+            transform: scale(0.5);
+        } 
+        .answer-btn:hover {
+            background-color: #f1f1f1;
+            border-color: #aaa;
+        }
+    
+        .answer-btn.selected {
+            background-color: #ffd966;
+            border-color: #f1c40f;
+            font-weight: bold;
+        }
+    
+        .answer-btn.correct {
+            background-color: #b6e9b1;
+            border-color: #2ecc71;
+            color: #2c3e50;
+        }
+    
+        .answer-btn.incorrect {
+            background-color: #f9b3b3;
+            border-color: #e74c3c;
+            color: #2c3e50;
+        }
+    
+        .submit-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    
+        .submit-btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+    
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+    
+        .result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+    
+        .reset-btn {
+            margin-top: 15px;
+            background-color: #27ae60;
+        }
+    
+        .reset-btn:hover {
+            background-color: #1e8449;
+        }
+    
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        @media (max-width: 600px) {
+            .quiz-container {
+                padding: 15px 20px;
+            }
+    
+            h1 {
+                font-size: 1.5rem;
+            }
+    
+            .answer-btn {
+                font-size: 0.95rem;
+            }
+    
+            .submit-btn {
+                width: 100%;
+            }
+    
+            .result {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>GDQP</h1>
+        <div id="questions"></div>
+        <div class="submit-container">
+            <button class="submit-btn">Nộp Bài</button>
+            <div class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+       {
+        "question": "Nội dung nào dưới đây thuộc khái niệm Quốc phòng toàn dân?",
+        "answers": [
+            { "text": "Là nền quốc phòng mang tính chất 'Của dân, do dân, vì dân', phát triển theo phương hướng toàn dân, toàn diện và ngày càng hiện đại...", "correct": false },
+            { "text": "Là nền quốc phòng mang tính chất 'Của dân, do dân, vì dân', phát triển theo phương hướng độc lập, tự chủ, tự lực, tự cường và ngày càng hiện đại...", "correct": false },
+            { "text": "Là nền quốc phòng phát triển theo phương hướng toàn dân, toàn diện, độc lập, tự chủ, tự lực, tự cường và ngày càng hiện đại...", "correct": false },
+            { "text": "Là nền quốc phòng mang tính chất 'Của dân, do dân, vì dân', phát triển theo phương hướng toàn dân, toàn diện, độc lập, tự chủ, tự lực, tự cường và ngày càng hiện đại...", "correct": true }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc khái niệm Nền quốc phòng toàn dân?",
+        "answers": [
+            { "text": "Là sức mạnh quốc phòng của đất nước được xây dựng trên nền tảng nhân lực, vật lực, tinh thần mang tính chất toàn dân, toàn diện, độc lập, tự chủ, tự cường.", "correct": true },
+            { "text": "Là sức mạnh quốc phòng của đất nước được xây dựng trên nền tảng nhân lực, vật lực, tinh thần của dân tộc.", "correct": false },
+            { "text": "Là sức mạnh quốc phòng của đất nước được xây dựng trên nền tảng nhân lực, vật lực và tinh thần.", "correct": false },
+            { "text": "Là sức mạnh quốc phòng của đất nước được xây dựng trên nền tảng vật lực, tinh thần mang tính chất toàn dân, tự chủ, tự cường.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc khái niệm An ninh nhân dân?",
+        "answers": [
+            { "text": "Là sự nghiệp của lực lượng an ninh nhân dân dưới sự lãnh đạo của Đảng và sự quản lí của Nhà nước...", "correct": false },
+            { "text": "Là sự nghiệp của toàn dân, do nhân dân tiến hành dưới sự lãnh đạo của Đảng và sự quản lí của Nhà nước...", "correct": false },
+            { "text": "Là sự nghiệp của toàn dân, do nhân dân tiến hành, lực lượng an ninh nhân dân làm nòng cốt dưới sự lãnh đạo của Đảng và sự quản lí của Nhà nước...", "correct": true },
+            { "text": "Là sự nghiệp của toàn dân, do nhân dân tiến hành, lực lượng quân đội nhân dân làm nòng cốt.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc khái niệm Nền an ninh?",
+        "answers": [
+            { "text": "Là sức mạnh về tinh thần của toàn dân tộc được huy động vào sự nghiệp bảo vệ an ninh quốc gia...", "correct": false },
+            { "text": "Là sức mạnh về tinh thần, vật chất, sự đoàn kết và truyền thống dựng nước, giữ nước của toàn dân tộc được huy động vào sự nghiệp bảo vệ an ninh quốc gia...", "correct": true },
+            { "text": "Là sức mạnh về vật chất và truyền thống dựng nước, giữ nước của toàn dân tộc được huy động vào sự nghiệp bảo vệ an ninh quốc gia...", "correct": false },
+            { "text": "Là sức mạnh về truyền thống dựng nước, giữ nước của toàn dân tộc được huy động vào sự nghiệp bảo vệ an ninh quốc gia...", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc vị trí nền quốc phòng toàn dân, an ninh nhân dân?",
+        "answers": [
+            { "text": "Xây dựng nền quốc phòng, an ninh nhân dân vững mạnh là tạo ra sức mạnh quân sự để đánh bại mọi âm mưu, hành động xâm lược của chủ nghĩa đế quốc.", "correct": false },
+            { "text": "Xây dựng nền quốc phòng, an ninh nhân dân vững mạnh là tạo ra sức mạnh để ngăn ngừa, đẩy lùi, đánh bại mọi âm mưu, hành động xâm hại đến mục tiêu trong sự nghiệp xây dựng và bảo vệ Tổ quốc Việt Nam XHCN.", "correct": true },
+            { "text": "Xây dựng nền quốc phòng, an ninh nhân dân vững mạnh là tạo ra sức mạnh của các lực lượng vũ trang để bảo vệ Tổ quốc Việt Nam XHCN.", "correct": false },
+            { "text": "Xây dựng nền quốc phòng, an ninh nhân dân vững mạnh để đánh bại mọi hành động xâm hại sự nghiệp xây dựng và bảo vệ Tổ quốc Việt Nam XHCN.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc vị trí nền quốc phòng toàn dân, an ninh nhân dân?",
+        "answers": [
+            { "text": "Đảng ta đã khẳng định: 'Trong khi đặt trọng tâm vào nhiệm vụ xây dựng chủ nghĩa xã hội, chúng ta không một chút lơi lỏng nhiệm vụ đối ngoại'.", "correct": false },
+            { "text": "Đảng ta đã khẳng định: 'Trong khi đặt trọng tâm vào nhiệm vụ xây dựng chủ nghĩa xã hội, chúng ta luôn coi trọng phát triển văn hóa'.", "correct": false },
+            { "text": "Đảng ta đã khẳng định: 'Trong khi đặt trọng tâm vào nhiệm vụ bảo vệ Tổ quốc, luôn luôn coi trọng phát triển khoa học, kỹ thuật'.", "correct": false },
+            { "text": "Đảng ta đã khẳng định: 'Trong khi đặt trọng tâm vào nhiệm vụ xây dựng chủ nghĩa xã hội, chúng ta không một chút lơi lỏng nhiệm vụ bảo vệ Tổ quốc...'.", "correct": true }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc đặc trưng nền quốc phòng toàn dân, an ninh nhân dân?",
+        "answers": [
+            { "text": "Nền quốc phòng toàn dân, an ninh nhân dân chỉ có mục đích duy nhất là chống chiến tranh xâm lược.", "correct": false },
+            { "text": "Nền quốc phòng toàn dân, an ninh nhân dân chỉ có mục đích duy nhất là xây dựng quân đội và công an hùng mạnh.", "correct": false },
+            { "text": "Nền quốc phòng toàn dân, an ninh nhân dân chỉ có mục đích duy nhất là tự vệ chính đáng.", "correct": false },
+            { "text": "Nền quốc phòng toàn dân, an ninh nhân dân chỉ có mục đích duy nhất là xây dựng các lực lượng vũ trang vững mạnh.", "correct": true }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc đặc trưng nền quốc phòng toàn dân, an ninh nhân dân?",
+        "answers": [
+            { "text": "Đó là nền quốc phòng, an ninh do toàn thể nhân dân tiến hành.", "correct": false },
+            { "text": "Đó là nền quốc phòng, an ninh của dân và do nhân dân tiến hành.", "correct": false },
+            { "text": "Đó là nền quốc phòng, an ninh vì dân, của dân và do toàn thể nhân dân tiến hành.", "correct": true },
+            { "text": "Đó là nền quốc phòng, an ninh vì dân, của dân.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc đặc trưng nền quốc phòng toàn dân, an ninh nhân dân?",
+        "answers": [
+            { "text": "Đó là nền quốc phòng, an ninh có sức mạnh tổng hợp do nhiều yếu tố tạo thành.", "correct": true },
+            { "text": "Đó là nền quốc phòng, an ninh có sức mạnh kinh tế và chính trị tạo thành.", "correct": false },
+            { "text": "Đó là nền quốc phòng, an ninh có sức mạnh tổng hợp về quân sự tạo thành.", "correct": false },
+            { "text": "Đó là nền quốc phòng, an ninh có sức mạnh của các lực lượng vũ trang tạo thành.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc đặc trưng nền quốc phòng toàn dân, an ninh nhân dân?",
+        "answers": [
+            { "text": "Nền quốc phòng, an ninh nhân dân được xây dựng toàn diện và đồng bộ.", "correct": false },
+            { "text": "Nền quốc phòng, an ninh nhân dân được xây dựng toàn diện và từng bước hiện đại.", "correct": true },
+            { "text": "Nền quốc phòng, an ninh nhân dân được xây dựng hiện đại.", "correct": false },
+            { "text": "Nền quốc phòng, an ninh nhân dân được xây dựng đồng bộ và hiện đại hóa.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc đặc trưng nền quốc phòng toàn dân, an ninh nhân dân?",
+        "answers": [
+            { "text": "Nền quốc phòng toàn dân gắn chặt với nền kinh tế.", "correct": false },
+            { "text": "Nền quốc phòng toàn dân gắn chặt với nền văn hóa dân tộc.", "correct": false },
+            { "text": "Nền quốc phòng toàn dân gắn chặt với nền an ninh nhân dân.", "correct": true },
+            { "text": "Cả 3 phương án trên.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc đặc trưng nền quốc phòng toàn dân, an ninh nhân dân?",
+        "answers": [
+            { "text": "Nền quốc phòng toàn dân, an ninh nhân dân chỉ có mục đích duy nhất là tự vệ chính đáng.", "correct": false },
+            { "text": "Đó là nền quốc phòng, an ninh có sức mạnh tổng hợp do nhiều yếu tố tạo thành.", "correct": false },
+            { "text": "Đó là nền quốc phòng, an ninh vì dân, của dân và do toàn thể nhân dân tiến hành.", "correct": false },
+            { "text": "Cả 3 phương án trên.", "correct": true }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc đặc trưng nền quốc phòng toàn dân, an ninh nhân dân?",
+        "answers": [
+            { "text": "Đó là nền quốc phòng, an ninh vì dân, của dân và do toàn thể nhân dân tiến hành.", "correct": false },
+            { "text": "Nền quốc phòng, an ninh nhân dân được xây dựng toàn diện và từng bước hiện đại.", "correct": false },
+            { "text": "Nền quốc phòng toàn dân gắn chặt với nền an ninh nhân dân.", "correct": false },
+            { "text": "Cả 3 phương án trên.", "correct": true }
+        ]
+    },
+    {
+        "question": "Xây dựng nền quốc phòng toàn dân, an ninh nhân dân vững mạnh nhằm mục đích gì?",
+        "answers": [
+            { "text": "Tạo sức mạnh tổng hợp của đất nước cả về chính trị, quân sự, an ninh, kinh tế, văn hoá, xã hội, khoa học, công nghệ để giữ vững hoà bình, ổn định, đẩy lùi, ngăn chặn nguy cơ chiến tranh...", "correct": true },
+            { "text": "Tạo sức mạnh tổng hợp của đất nước cả về chính trị, quân sự, an ninh, kinh tế, văn hoá, xã hội, khoa học, công nghệ để giữ vững hoà bình xây dựng đất nước...", "correct": false },
+            { "text": "Tạo sức mạnh tổng hợp của đất nước cả về chính trị, quân sự, kinh tế, văn hoá, xã hội, khoa học để đánh bại chiến tranh xâm lược của kẻ thù.", "correct": false },
+            { "text": "Tạo sức mạnh tổng hợp của đất nước để giữ vững hoà bình, ổn định, đẩy lùi, ngăn chặn nguy cơ chiến tranh dưới mọi hình thức và quy mô...", "correct": false }
+        ]
+    },
+    {
+        "question": "Xây dựng nền quốc phòng toàn dân, an ninh nhân dân vững mạnh nhằm mục đích gì?",
+        "answers": [
+            { "text": "Tạo thế chủ động cho sự nghiệp bảo vệ Tổ quốc và phát triển khoa học.", "correct": false },
+            { "text": "Tạo thế chủ động cho sự nghiệp xây dựng kinh tế.", "correct": false },
+            { "text": "Tạo thế chủ động cho sự nghiệp xây dựng và bảo vệ Tổ quốc...", "correct": true },
+            { "text": "Tạo thế chủ động cho sự nghiệp quốc phòng, an ninh và đối ngoại.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nhiệm vụ xây dựng nền quốc phòng toàn dân, an ninh nhân dân vững mạnh là gì?",
+        "answers": [
+            { "text": "Xây dựng lực lượng quốc phòng, an ninh đáp ứng yêu cầu bảo vệ nhân dân trong mọi tình huống.", "correct": false },
+            { "text": "Xây dựng lực lượng quốc phòng, an ninh đáp ứng yêu cầu bảo vệ vững chắc Tổ quốc Việt Nam xã hội chủ nghĩa.", "correct": true },
+            { "text": "Xây dựng lực lượng quốc phòng, an ninh đáp ứng yêu cầu bảo vệ vững chắc chế độ chính trị, kinh tế xã hội chủ nghĩa.", "correct": false },
+            { "text": "Xây dựng lực lượng quốc phòng, an ninh đáp ứng yêu cầu làm nhiệm vụ quốc tế.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nhiệm vụ xây dựng nền quốc phòng toàn dân, an ninh nhân dân vững mạnh là gì?",
+        "answers": [
+            { "text": "Xây dựng lực lượng quốc phòng, an ninh là xây dựng lực lượng chính trị và lực lượng vũ trang nhân dân đáp ứng yêu cầu của quốc phòng, an ninh, bảo vệ Tổ quốc...", "correct": true },
+            { "text": "Xây dựng lực lượng quốc phòng, an ninh là xây dựng lực lượng quân đội và công an đáp ứng yêu cầu của quốc phòng, an ninh, bảo vệ Tổ quốc Việt Nam XHCN.", "correct": false },
+            { "text": "Xây dựng lực lượng quốc phòng, an ninh là xây dựng lực lượng chính trị và lực lượng vũ trang nhân dân đáp ứng yêu cầu của quân đội bảo vệ Tổ quốc Việt Nam XHCN.", "correct": false },
+            { "text": "Xây dựng lực lượng quốc phòng, an ninh là xây dựng lực lượng kinh tế, chính trị, quân sự đáp ứng yêu cầu của quốc phòng, an ninh, bảo vệ Tổ quốc Việt Nam XHCN.", "correct": false }
+        ]
+    },
+    {
+        "question": "Khái niệm tiềm lực quốc phòng, an ninh là gì?",
+        "answers": [
+            { "text": "Là khả năng về nhân lực có thể huy động để thực hiện nhiệm vụ quốc phòng, an ninh.", "correct": false },
+            { "text": "Là khả năng về tài chính có thể huy động để thực hiện nhiệm vụ quốc phòng, an ninh.", "correct": false },
+            { "text": "Là khả năng của các lực lượng vũ trang có thể huy động để thực hiện nhiệm vụ quốc phòng, an ninh.", "correct": false },
+            { "text": "Là khả năng về nhân lực, vật lực, tài chính có thể huy động để thực hiện nhiệm vụ quốc phòng, an ninh.", "correct": true }
+        ]
+    },
+    {
+        "question": "Xây dựng tiềm lực quốc phòng, an ninh ngày càng vững mạnh cần tập trung ở những tiềm lực nào?",
+        "answers": [
+            { "text": "Tiềm lực văn hóa, xã hội; tiềm lực kinh tế; tiềm lực khoa học, công nghệ; tiềm lực quân sự, an ninh.", "correct": false },
+            { "text": "Tiềm lực chính trị, tinh thần; tiềm lực tiềm lực kinh tế, tiềm lực khoa học, công nghệ; tiềm lực quân sự an ninh.", "correct": true },
+            { "text": "Tiềm lực kinh tế; tiềm lực đối ngoại; tiềm lực văn hóa; tiềm lực quốc phòng, an ninh.", "correct": false },
+            { "text": "Cả 3 phương án trên.", "correct": false }
+        ]
+    },
+    {
+        "question": "Tiềm lực chính trị, tinh thần của nền quốc phòng toàn dân, an ninh nhân dân là gì?",
+        "answers": [
+            { "text": "Là khả năng về văn hóa có thể huy động tạo nên sức mạnh để thực hiện nhiệm vụ quốc phòng, an ninh.", "correct": false },
+            { "text": "Là khả năng về tình yêu quê hương, đất nước có thể huy động tạo nên sức mạnh để thực hiện nhiệm vụ quốc phòng, an ninh.", "correct": false },
+            { "text": "Là khả năng về chính trị, tinh thần có thể huy động tạo nên sức mạnh để thực hiện nhiệm vụ quốc phòng, an ninh.", "correct": true },
+            { "text": "Là khả năng về ngoại giao có thể huy động tạo nên sức mạnh để thực hiện nhiệm vụ quốc phòng, an ninh.", "correct": false }
+        ]
+    },
+    {
+        "question": "Tiềm lực chính trị, tinh thần được biểu hiện ở đâu?",
+        "answers": [
+            { "text": "Được biểu hiện ở năng lực lãnh đạo của Đảng, quản lí điều hành của Nhà nước; ý chí, quyết tâm của nhân dân, của các lực lượng vũ trang...", "correct": true },
+            { "text": "Được biểu hiện ở năng lực quản lí điều hành của Nhà nước; ý chí, quyết tâm của nhân dân, của các lực lượng vũ trang và của dân tộc.", "correct": false },
+            { "text": "Được biểu hiện ở năng lực lãnh đạo của Đảng, của giai cấp công nhân, của nhân dân lao động và của các lực lượng vũ trang.", "correct": false },
+            { "text": "Được biểu hiện ở năng lực của toàn dân tộc, của các lực lượng vũ trang và sự giúp đỡ của nước ngoài.", "correct": false }
+        ]
+    },
+    {
+        "question": "Vị trí tiềm lực chính trị, tinh thần được biểu hiện ở nội dung nào?",
+        "answers": [
+            { "text": "Là nhân tố cơ bản tạo nên sức mạnh của quốc phòng, an ninh, có tác động to lớn đến hiệu quả xây dựng và sử dụng các tiềm lực khác, là cơ sở, nền tảng của tiềm lực quân sự, an ninh.", "correct": true },
+            { "text": "Là nhân tố cơ bản tạo nên sức mạnh của quân đội, có tác động to lớn đến hiệu quả xây dựng các tiềm lực khác, là cơ sở, nền tảng của tiềm lực quân sự, an ninh.", "correct": false },
+            { "text": "Là nhân tố cơ bản tạo nên sức mạnh của quốc gia, có tác động to lớn đến hiệu quả xây dựng và sử dụng các tiềm lực quân sự, an ninh.", "correct": false },
+            { "text": "Cả 3 phương án trên.", "correct": false }
+        ]
+    },
+    {
+        "question": "Xây dựng tiềm lực chính trị, tinh thần cần tập trung vào nội dung nào?",
+        "answers": [
+            { "text": "Xây dựng tình yêu đất nước, yêu chủ nghĩa xã hội.", "correct": false },
+            { "text": "Xây dựng tình yêu quê hương đất nước, ý chí căm thù giặc sâu sắc.", "correct": false },
+            { "text": "Xây dựng tình yêu quê hương đất nước, niềm tin đối với sự lãnh đạo của Đảng, quản lí của nhà nước, đối với chế độ xã hội chủ nghĩa.", "correct": true },
+            { "text": "Xây dựng niềm tin vào sự lãnh đạo của Đảng, quản lí của nhà nước đối với xây dựng nền văn hóa Việt Nam tiên tiến đậm đà bản sắc dân tộc.", "correct": false }
+        ]
+    },
+    {
+        "question": "Xây dựng tiềm lực chính trị, tinh thần cần tập trung vào nội dung nào?",
+        "answers": [
+            { "text": "Xây dựng nhà nước trong sạch vững mạnh, phát huy quyền làm chủ tập thể của nhân dân.", "correct": false },
+            { "text": "Xây dựng hệ thống chính trị trong sạch vững mạnh, phát huy quyền làm chủ của nhân dân.", "correct": true },
+            { "text": "Xây dựng Đảng trong sạch vững mạnh, phát huy quyền làm chủ tập thể của nhân dân.", "correct": false },
+            { "text": "Xây dựng bộ máy công quyền vững mạnh, phát huy quyền làm chủ của nhân dân.", "correct": false }
+        ]
+    },
+    {
+        "question": "Xây dựng tiềm lực chính trị, tinh thần cần tập trung vào nội dung nào?",
+        "answers": [
+            { "text": "Xây dựng nhà nước; khối đại đoàn kết toàn dân; giữ vững ổn định trật tự an toàn xã hội.", "correct": false },
+            { "text": "Xây dựng tổ chức đảng vững mạnh; nâng cao cảnh giác cách mạng; giữ vững ổn định chính trị, trật tự an toàn xã hội.", "correct": false },
+            { "text": "Xây dựng khối đại đoàn kết quốc tế; bảo đảm an ninh chính trị, trật tự an toàn xã hội.", "correct": false },
+            { "text": "Xây dựng khối đại đoàn kết toàn dân; nâng cao cảnh giác cách mạng; giữ vững ổn định chính trị, trật tự an toàn xã hội.", "correct": true }
+        ]
+    },
+    {
+        "question": "Xây dựng tiềm lực chính trị, tinh thần cần tập trung vào nội dung nào?",
+        "answers": [
+            { "text": "Xây dựng tình yêu quê hương đất nước, niềm tin đối với sự lãnh đạo của Đảng, quản lí của nhà nước, đối với chế độ xã hội chủ nghĩa.", "correct": false },
+            { "text": "Xây dựng khối đại đoàn kết toàn dân; nâng cao cảnh giác cách mạng; giữ vững ổn định chính trị, trật tự an toàn xã hội.", "correct": false },
+            { "text": "Xây dựng hệ thống chính trị trong sạch vững mạnh, phát huy quyền làm chủ của nhân dân.", "correct": false },
+            { "text": "Cả 3 phương án trên.", "correct": true }
+        ]
+    },
+    {
+        "question": "Xây dựng tiềm lực chính trị, tinh thần cần tập trung vào biện pháp nào?",
+        "answers": [
+            { "text": "Thực hiện tốt giáo dục quốc phòng, an ninh cho toàn thể quần chúng nhân dân nắm chắc đường lối, chính sách của đảng và nhà nước về QP,AN.", "correct": true },
+            { "text": "Thực hiện tốt giáo dục quốc phòng, an ninh cho sinh viên nắm chắc đường lối, chính sách của đảng và nhà nước về QP,AN.", "correct": false },
+            { "text": "Thực hiện tốt giáo dục quốc phòng, an ninh cho lực lượng vũ trang nắm chắc đường lối, chính sách của đảng và nhà nước về QP,AN.", "correct": false },
+            { "text": "Thực hiện tốt giáo dục quốc phòng, an ninh cho dân quân tự vệ nắm chắc đường lối, chính sách của đảng và nhà nước về QP,AN.", "correct": false }
+        ]
+    },
+    {
+        "question": "Xây dựng tiềm lực chính trị, tinh thần cần tập trung vào biện pháp nào?",
+        "answers": [
+            { "text": "Tích cực chủ động trong phòng chống 'Diễn biến hòa bình', bạo loạn lật đổ.", "correct": false },
+            { "text": "Tích cực chủ động trong đề ra đường lối chiến lược xây dựng hệ thống chính trị.", "correct": false },
+            { "text": "Tích cực chủ động trong xây dựng đội ngũ cán bộ các cấp.", "correct": false },
+            { "text": "Tích cực chủ động trong phòng chống tham ô, tham nhũng, lãng phí.", "correct": true }
+        ]
+    },
+    {
+        "question": "Tiềm lực kinh tế của nền quốc phòng toàn dân, an ninh nhân dân là gì?",
+        "answers": [
+            { "text": "Là khả năng về vật chất của đất nước có thể khai thác, huy động nhằm phục vụ cho quốc phòng, an ninh.", "correct": false },
+            { "text": "Là khả năng về lương thực của đất nước có thể khai thác, huy động nhằm phục vụ cho quốc phòng, an ninh.", "correct": false },
+            { "text": "Là khả năng về kinh tế của đất nước có thể khai thác, huy động nhằm phục vụ cho quốc phòng, an ninh.", "correct": true },
+            { "text": "Là khả năng về cơ sở hạ tầng của đất nước có thể khai thác, huy động nhằm phục vụ cho quốc phòng, an ninh.", "correct": false }
+        ]
+    },
+    {
+        "question": "Tiềm lực kinh tế được biểu hiện ở đâu?",
+        "answers": [
+            { "text": "Ở nhân lực của quốc gia có thể huy động cho quốc phòng, an ninh.", "correct": false },
+            { "text": "Ở nhân lực, vật lực, tài lực của quốc gia có thể huy động cho quốc phòng, an ninh và tính cơ động của nền kinh tế đất nước trong mọi điều kiện hoàn cảnh.", "correct": true },
+            { "text": "Ở vật lực của quốc gia có thể huy động cho quốc phòng, an ninh và tính cơ động của nền kinh tế đất nước.", "correct": false },
+            { "text": "Ở tài chính của quốc gia có thể huy động cho quốc phòng, an ninh và tính cơ động của nền kinh tế đất nước trong mọi điều kiện hoàn cảnh.", "correct": false }
+        ]
+    },
+    {
+        "question": "Vị trí tiềm lực kinh tế được biểu hiện ở nội dung nào?",
+        "answers": [
+            { "text": "Tiềm lực kinh tế tạo sức mạnh vật chất cho nền quốc phòng toàn dân, an ninh nhân dân, là cơ sở vật chất của các tiềm lực khác.", "correct": true },
+            { "text": "Tiềm lực kinh tế tạo sức mạnh vũ khí cho nền quốc phòng toàn dân, an ninh nhân dân, là cơ sở vật chất của các tiềm lực khác.", "correct": false },
+            { "text": "Tiềm lực kinh tế tạo sức mạnh con người cho nền quốc phòng toàn dân, an ninh nhân dân, là cơ sở vật chất của các tiềm lực khác.", "correct": false },
+            { "text": "Cả 3 phương án trên.", "correct": false }
+        ]
+    },
+    {
+        "question": "Xây dựng tiềm lực kinh tế cần tập trung vào nội dung nào?",
+        "answers": [
+            { "text": "Là tạo nên khả năng về vũ khí trang bị hiện đại.", "correct": false },
+            { "text": "Là tạo nên khả năng về quốc phòng, an ninh.", "correct": false },
+            { "text": "Là tạo nên khả năng về văn hóa, khoa học, kỹ thuật của đất nước.", "correct": false },
+            { "text": "Là tạo nên khả năng về kinh tế của đất nước.", "correct": true }
+        ]
+    },
+    {
+        "question": "Xây dựng tiềm lực kinh tế cần tập trung vào biện pháp nào?",
+        "answers": [
+            { "text": "Đẩy mạnh cách mạng khoa học công nghệ, xây dựng nền kinh tế độc lập, tự chủ.", "correct": false },
+            { "text": "Đẩy mạnh công nghiệp nhẹ của đất nước, xây dựng nền kinh tế độc lập, tự chủ.", "correct": false },
+            { "text": "Đẩy mạnh công nghiệp hoá, hiện đại hoá đất nước, xây dựng nền kinh tế độc lập, tự chủ.", "correct": true },
+            { "text": "Đẩy mạnh phát triển nông nghiệp công nghệ cao, xây dựng nền kinh tế độc lập, tự chủ.", "correct": false }
+        ]
+    },
+    {
+        "question": "Xây dựng tiềm lực kinh tế cần tập trung vào biện pháp nào?",
+        "answers": [
+            { "text": "Kết hợp chặt chẽ phát triển kinh tế - xã hội với tăng cường an ninh kinh tế; trang bị kĩ thuật hiện đại cho Quân đội và Công an.", "correct": false },
+            { "text": "Kết hợp chặt chẽ phát triển kinh tế - xã hội với tăng cường quốc phòng, an ninh; phát triển công nghiệp quốc phòng, trang bị kĩ thuật hiện đại cho Quân đội và Công an.", "correct": true },
+            { "text": "Kết hợp chặt chẽ phát triển kinh tế - xã hội với tăng cường quốc phòng; phát triển công nghiệp quốc phòng, trang bị kĩ thuật hiện đại cho các lực lượng vũ trang.", "correct": false },
+            { "text": "Kết hợp chặt chẽ phát triển kinh tế - xã hội với phát triển công nghiệp quốc phòng, trang bị kĩ thuật hiện đại cho dân quân tự vệ.", "correct": false }
+        ]
+    },
+    {
+        "question": "Xây dựng tiềm lực kinh tế cần tập trung vào biện pháp nào?",
+        "answers": [
+            { "text": "Kết hợp xây dựng cơ sở hạ tầng kinh tế với cơ sở hạ tầng quốc phòng; không ngừng cải thiện đời sống vật chất, tinh thần cho các lực lượng vũ trang nhân dân.", "correct": true },
+            { "text": "Kết hợp xây dựng kinh tế với quốc phòng; không ngừng cải thiện trang bị vũ khí hiện đại cho các lực lượng vũ trang nhân dân.", "correct": false },
+            { "text": "Kết hợp xây dựng cơ sở hạ tầng kinh tế với không ngừng cải thiện đời sống vật chất, tinh thần cho các quân đội nhân dân.", "correct": false },
+            { "text": "Kết hợp xây dựng cơ sở hạ tầng kinh tế với phát triển khoa học quân sự; nâng cao đời sống vật chất, tinh thần cho quân đội và công an nhân dân.", "correct": false }
+        ]
+    },
+    {
+        "question": "Xây dựng tiềm lực kinh tế cần tập trung vào biện pháp nào?",
+        "answers": [
+            { "text": "Có kế hoạch tổng động viên kinh tế thời chiến và duy trì sự phát triển của nền kinh tế.", "correct": false },
+            { "text": "Có kế hoạch động viên công nghiệp thời chiến và duy trì sự phát triển của nền kinh tế.", "correct": false },
+            { "text": "Có kế hoạch chuyển sản xuất từ thời bình sang thời chiến và duy trì sự phát triển của nền kinh tế.", "correct": true },
+            { "text": "Cả 3 phương án trên.", "correct": false }
+        ]
+    },
+    {
+        "question": "Xây dựng tiềm lực kinh tế cần tập trung vào biện pháp nào?",
+        "answers": [
+            { "text": "Đẩy mạnh công nghiệp hoá, hiện đại hoá đất nước, xây dựng nền kinh tế độc lập, tự chủ.", "correct": false },
+            { "text": "Kết hợp chặt chẽ phát triển kinh tế - xã hội với tăng cường quốc phòng, an ninh; phát triển công nghiệp quốc phòng, trang bị kĩ thuật hiện đại cho Quân đội và Công an.", "correct": false },
+            { "text": "Có kế hoạch chuyển sản xuất từ thời bình sang thời chiến và duy trì sự phát triển của nền kinh tế.", "correct": false },
+            { "text": "Cả 3 phương án trên.", "correct": true }
+        ]
+    },
+    {
+        "question": "Tiềm lực tiềm lực khoa học, công nghệ của nền quốc phòng toàn dân, an ninh nhân dân là gì?",
+        "answers": [
+            { "text": "Là khả năng về khoa học tự nhiên có thể khai thác, huy động để phục vụ cho quốc phòng, an ninh.", "correct": false },
+            { "text": "Là khả năng về khoa học (khoa học tự nhiên, khoa học xã hội - nhân văn) và công nghệ của quốc gia có thể khai thác, huy động để phục vụ cho quốc phòng, an ninh.", "correct": true },
+            { "text": "Là khả năng về khoa học xã hội - nhân văn của quốc gia có thể khai thác, huy động để phục vụ cho quốc phòng, an ninh.", "correct": false },
+            { "text": "Là khả năng về công nghệ thông tin của quốc gia có thể khai thác, huy động để phục vụ cho quốc phòng, an ninh.", "correct": false }
+        ]
+    },
+    {
+        "question": "Tiềm lực khoa học, công nghệ được biểu hiện ở đâu?",
+        "answers": [
+            { "text": "Ở số lượng, chất lượng đội ngũ cán bộ khoa học kĩ thuật, cơ sở vật chất có thể huy động phục vụ cho quốc phòng, an ninh.", "correct": false },
+            { "text": "Ở số lượng, chất lượng cơ sở vật chất kĩ thuật có thể huy động phục vụ cho quốc phòng, an ninh và năng lực sử dụng các loại vũ khí công nghệ cao cho quốc phòng, an ninh.", "correct": false },
+            { "text": "Ở số lượng, chất lượng đội ngũ cán bộ khoa học kĩ thuật, cơ sở vật chất kĩ thuật có thể huy động phục vụ cho quốc phòng, an ninh...", "correct": true },
+            { "text": "Cả 3 phương án trên.", "correct": false }
+        ]
+    },
+    {
+        "question": "Vị trí tiềm lực khoa học, công nghệ được biểu hiện ở nội dung nào?",
+        "answers": [
+            { "text": "Là tạo nên khả năng về khoa học, công nghệ của quốc gia có thể khai thác, huy động phục vụ cho quốc phòng, an ninh.", "correct": true },
+            { "text": "Là tạo nên khả năng về công nghệ thông tin của quốc gia có thể khai thác, huy động phục vụ cho quốc phòng, an ninh.", "correct": false },
+            { "text": "Là tạo nên khả năng về khoa học xã hội – nhân văn của quốc gia có thể khai thác, huy động phục vụ cho quốc phòng, an ninh.", "correct": false },
+            { "text": "Là tạo nên khả năng về khoa học tự nhiên của quốc gia có thể khai thác, huy động phục vụ cho quốc phòng, an ninh.", "correct": false }
+        ]
+    },
+    {
+        "question": "Xây dựng tiềm lực khoa học, công nghệ cần tập trung vào nội dung nào?",
+        "answers": [
+            { "text": "Huy động tổng lực công nghệ thông tin của quốc gia để nghiên cứu các loại vũ khí công nghệ cao và sửa chữa, cải tiến, sản xuất các loại vũ khí trang bị.", "correct": false },
+            { "text": "Phải huy động tổng lực khoa học xã hội và nhân văn để xây dựng con người cho sự nghiệp quốc phòng, an ninh và sửa chữa, cải tiến, sản xuất các loại vũ khí trang bị.", "correct": false },
+            { "text": "Phải huy động tổng lực các khoa học, công nghệ quốc gia, trong đó khoa học quân sự, an ninh làm nòng cốt để nghiên cứu các vấn đề về quân sự, an ninh...", "correct": true },
+            { "text": "Phải huy động tổng lực các khoa học, công nghệ quốc gia để nghiên cứu các vấn đề về quân sự, an ninh và mua sắm các loại vũ khí trang bị hiện đại.", "correct": false }
+        ]
+    },
+    {
+        "question": "Xây dựng tiềm lực khoa học, công nghệ cần tập trung vào biện pháp nào?",
+        "answers": [
+            { "text": "Phải thực hiện tốt nghiên cứu khoa học, kĩ thuật.", "correct": false },
+            { "text": "Phải thực hiện tốt công tác ứng dụng khoa học, kĩ thuật vào sản xuất loại vũ khí, trang bị.", "correct": false },
+            { "text": "Phải thực hiện tốt hợp tác khoa học, kĩ thuật với các nước tiên tiến trên thế giới.", "correct": false },
+            { "text": "Phải thực hiện tốt công tác đào tạo, bồi dưỡng, sử dụng có hiệu quả đội ngũ cán bộ khoa học, kĩ thuật.", "correct": true }
+        ]
+    },
+    {
+        "question": "Tiềm lực quân sự, an ninh của nền quốc phòng toàn dân, an ninh nhân dân là gì?",
+        "answers": [
+            { "text": "Là khả năng về vật chất và tinh thần có thể huy động tạo thành sức mạnh phục vụ cho nhiệm vụ quân sự, an ninh, cho chiến tranh.", "correct": true },
+            { "text": "Là khả năng về vũ khí trang bị có thể huy động tạo thành sức mạnh phục vụ cho nhiệm vụ quân sự, an ninh, cho chiến tranh.", "correct": false },
+            { "text": "Là khả năng về kinh tế và khoa học công nghệ có thể huy động tạo thành sức mạnh phục vụ cho nhiệm vụ quân sự, an ninh, cho chiến tranh.", "correct": false },
+            { "text": "Là khả năng của quân đội và công an có thể huy động tạo thành sức mạnh phục vụ cho nhiệm vụ quân sự, an ninh, cho chiến tranh.", "correct": false }
+        ]
+    },
+    {
+        "question": "Vị trí tiềm lực quân sự, an ninh được biểu hiện ở nội dung nào?",
+        "answers": [
+            { "text": "Là biểu hiện sức mạnh quân sự của Đảng để bảo vệ Tổ quốc.", "correct": false },
+            { "text": "Là nhân tố cơ bản, là biểu hiện tập trung, trực tiếp sức mạnh quân sự, an ninh của nhà nước giữ vai trò nòng cốt để bảo vệ Tổ quốc trong mọi tình huống.", "correct": true },
+            { "text": "Là biểu hiện tập trung, trực tiếp sức kinh tế, chính trị của nhà nước giữ vai trò nòng cốt để bảo vệ Tổ quốc.", "correct": false },
+            { "text": "Là biểu hiện sức mạnh quân sự, an ninh của Đảng giữ vai trò chủ đạo để bảo vệ Tổ quốc.", "correct": false }
+        ]
+    },
+    {
+        "question": "Xây dựng tiềm lực quân sự, an ninh cần tập trung vào nội dung nào?",
+        "answers": [
+            { "text": "Tiềm lực quân sự, an ninh được xây dựng trên nền tảng của các tiềm lực văn hóa - xã hội.", "correct": false },
+            { "text": "Tiềm lực quân sự, an ninh được xây dựng trên nền tảng của các tiềm lực đối ngoại, hợp tác kinh tế.", "correct": false },
+            { "text": "Tiềm lực quân sự, an ninh được xây dựng trên nền tảng của các tiềm lực chính trị tinh thần, kinh tế, khoa học công nghệ.", "correct": true },
+            { "text": "Tiềm lực quân sự, an ninh được xây dựng trên nền tảng của các tiềm lực khoa học công nghệ và môi trường.", "correct": false }
+        ]
+    },
+    {
+        "question": "Xây dựng tiềm lực quân sự, an ninh cần tập trung vào biện pháp nào?",
+        "answers": [
+            { "text": "Xây dựng lực lượng vũ trang nhân dân vững mạnh toàn diện.", "correct": true },
+            { "text": "Gắn quá trình công nghiệp hoá, hiện đại hoá đất nước với quá trình tăng cường vũ khí trang bị cho các lực lượng vũ trang nhân dân.", "correct": true },
+            { "text": "Gắn quá trình phát triển nông nghiệp với xây dựng con người mới xã hội chủ nghĩa.", "correct": false },
+            { "text": "Biện pháp a và b.", "correct": true }
+        ]
+    },
+    {
+        "question": "Xây dựng tiềm lực quân sự, an ninh cần tập trung vào biện pháp nào?",
+        "answers": [
+            { "text": "Xây dựng đội ngũ cán bộ trong lực lượng vũ trang nhân dân đáp ứng yêu cầu nhiệm vụ bảo vệ Tổ quốc trong tình hình mới.", "correct": true },
+            { "text": "Xây dựng đội ngũ cán bộ dân quân tự vệ đáp ứng yêu cầu nhiệm vụ bảo vệ Tổ quốc trong tình hình mới.", "correct": false },
+            { "text": "Xây dựng đội ngũ hạ sĩ quan, chiến sĩ trong quân đội nhân dân đáp ứng yêu cầu nhiệm vụ bảo vệ Tổ quốc trong tình hình mới.", "correct": false },
+            { "text": "Xây dựng đội ngũ chiến sĩ công an nhân dân đáp ứng yêu cầu nhiệm vụ bảo vệ Tổ quốc trong tình hình mới.", "correct": false }
+        ]
+    }
+
+        ];
+
+        let userAnswers = [];
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function initQuiz() {
+        shuffleArray(questions);
+        const questionsContainer = document.getElementById('questions');
+        questionsContainer.innerHTML = '';
+        
+        questions.forEach((q, qIndex) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question-container';
+            
+            shuffleArray(q.answers);
+            
+            questionDiv.innerHTML = `
+                <div class="question-text">${qIndex + 1}. ${q.question}</div>
+                <div class="answers-container"></div>
+            `;
+            
+            const answersContainer = questionDiv.querySelector('.answers-container');
+            
+            q.answers.forEach(answer => {
+                const button = document.createElement('button');
+                button.className = 'answer-btn';
+                button.textContent = answer.text;
+                button.addEventListener('click', () => {
+                    selectAnswer(qIndex, answer);
+                    showImmediateResult(qIndex, answer);
+                });
+                answersContainer.appendChild(button);
+            });
+            
+            questionsContainer.appendChild(questionDiv);
+        });
+
+        // Ẩn nút nộp bài vì không cần nữa
+        document.querySelector('.submit-btn').style.display = 'none';
+    }
+
+    function selectAnswer(qIndex, answer) {
+        const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+        const buttons = questionDiv.querySelectorAll('.answer-btn');
+        
+        buttons.forEach(btn => btn.classList.remove('selected'));
+        
+        const selectedBtn = [...buttons].find(btn => btn.textContent === answer.text);
+        selectedBtn.classList.add('selected');
+        
+        userAnswers[qIndex] = answer;
+    }
+
+    function showImmediateResult(qIndex, selectedAnswer) {
+        const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+        const buttons = questionDiv.querySelectorAll('.answer-btn');
+
+        buttons.forEach(btn => {
+            btn.disabled = true;
+            const answerObj = questions[qIndex].answers.find(a => a.text === btn.textContent);
+            if (answerObj.correct) {
+                btn.classList.add('correct');
+            } else if (btn.textContent === selectedAnswer.text) {
+                btn.classList.add('incorrect');
+            }
+        });
+    }
+
+    initQuiz();
+    </script>
+</body>
+</html>

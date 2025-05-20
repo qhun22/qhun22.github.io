@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="images/qhun22icon.png" />
+    <link rel="apple-touch-icon" href="images/qhun22icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>qhun22</title>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Quicksand', sans-serif;
+        }
+    
+        .quiz-container {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px 25px;
+            max-width: 700px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease;
+        }
+    
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+    
+        .question-container {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+    
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: #222;
+        }
+    
+        .answers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    
+        .answer-btn {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+        
+        .answer:hover {
+            background-color: #ffe6f0;
+            transform: scale(0.5);
+        } 
+        .answer-btn:hover {
+            background-color: #f1f1f1;
+            border-color: #aaa;
+        }
+    
+        .answer-btn.selected {
+            background-color: #ffd966;
+            border-color: #f1c40f;
+            font-weight: bold;
+        }
+    
+        .answer-btn.correct {
+            background-color: #b6e9b1;
+            border-color: #2ecc71;
+            color: #2c3e50;
+        }
+    
+        .answer-btn.incorrect {
+            background-color: #f9b3b3;
+            border-color: #e74c3c;
+            color: #2c3e50;
+        }
+    
+        .submit-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    
+        .submit-btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+    
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+    
+        .result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+    
+        .reset-btn {
+            margin-top: 15px;
+            background-color: #27ae60;
+        }
+    
+        .reset-btn:hover {
+            background-color: #1e8449;
+        }
+    
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        @media (max-width: 600px) {
+            .quiz-container {
+                padding: 15px 20px;
+            }
+    
+            h1 {
+                font-size: 1.5rem;
+            }
+    
+            .answer-btn {
+                font-size: 0.95rem;
+            }
+    
+            .submit-btn {
+                width: 100%;
+            }
+    
+            .result {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>GDQP</h1>
+        <div id="questions"></div>
+        <div class="submit-container">
+            <button class="submit-btn">Nộp Bài</button>
+            <div class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+        {
+        "question": "Cuộc chiến tranh giữ nước đầu tiên là cuộc kháng chiến chống quân nào?",
+        "answers": [
+            { "text": "Nhà Đường.", "correct": false },
+            { "text": "Nhà Tần.", "correct": true },
+            { "text": "Nhà Tỳ.", "correct": false },
+            { "text": "Nhà Nam Hán.", "correct": false }
+        ]
+    },
+    {
+        "question": "Cuộc khởi nghĩa của hai bà Trưng vào mùa xuân năm nào (TCN)?",
+        "answers": [
+            { "text": "40.", "correct": true },
+            { "text": "44.", "correct": false },
+            { "text": "50.", "correct": false },
+            { "text": "54.", "correct": false }
+        ]
+    },
+    {
+        "question": "Ba lần kháng chiến chống quân Nguyên của nhà Trần ở thế kỉ XIII vào những năm nào?",
+        "answers": [
+            { "text": "Cuộc kháng chiến lần thứ nhất vào năm 1258.", "correct": true },
+            { "text": "Cuộc kháng chiến lần thứ hai vào năm 1285.", "correct": true },
+            { "text": "Cuộc kháng chiến lần thứ ba vào năm 1287-1288.", "correct": true },
+            { "text": "Cả 3 phương án trên.", "correct": true }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc nghệ thuật đánh giặc của ông cha?",
+        "answers": [
+            { "text": "Về tư tưởng chỉ đạo tác chiến.", "correct": true },
+            { "text": "Về tư tưởng chỉ đạo quân sự.", "correct": false },
+            { "text": "Về tư tưởng chỉ đạo kỹ thuật.", "correct": false },
+            { "text": "Về tư tưởng chỉ đạo chính trị.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc nghệ thuật đánh giặc của ông cha?",
+        "answers": [
+            { "text": "Về mưu kế ngoại giao.", "correct": false },
+            { "text": "Về mưu kế giảng hòa.", "correct": false },
+            { "text": "Về mưu kế đánh giặc.", "correct": true },
+            { "text": "Về mưu kế tạo phản.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc nghệ thuật đánh giặc của ông cha?",
+        "answers": [
+            { "text": "Nghệ thuật chiến tranh nhân dân, lấy quân của địa phương đánh giặc.", "correct": false },
+            { "text": "Nghệ thuật chiến tranh du kích, lấy dân binh đánh giặc.", "correct": false },
+            { "text": "Nghệ thuật chiến tranh nhân dân, thực hiện toàn dân đánh giặc.", "correct": true },
+            { "text": "Cả 3 phương án trên.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc nghệ thuật đánh giặc của ông cha?",
+        "answers": [
+            { "text": "Nghệ thuật biết công, biết thủ.", "correct": false },
+            { "text": "Nghệ thuật biết tiến, biết thoái.", "correct": false },
+            { "text": "Nghệ thuật lấy lớn đánh nhỏ, lấy nhiều địch ít, lấy mạnh chống yếu.", "correct": false },
+            { "text": "Nghệ thuật lấy nhỏ đánh lớn, lấy ít địch nhiều, lấy yếu chống mạnh.", "correct": true }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc nghệ thuật đánh giặc của ông cha?",
+        "answers": [
+            { "text": "Nghệ thuật kết hợp đấu tranh giữa các mặt trận quân sự, chính trị, ngoại giao và binh vận.", "correct": true },
+            { "text": "Nghệ thuật kết hợp đấu tranh giữa các mặt trận quân sự và binh vận.", "correct": false },
+            { "text": "Nghệ thuật đấu tranh trên tất cả các mặt trận.", "correct": false },
+            { "text": "Nghệ thuật kết hợp đấu tranh giữa các mặt trận lấy mặt trận ngoại giao là chủ yếu.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc nghệ thuật đánh giặc của ông cha?",
+        "answers": [
+            { "text": "Về nghệ thuật tổ chức và thực hành các trận đánh nhỏ lẻ.", "correct": false },
+            { "text": "Về nghệ thuật tổ chức và thực hành các trận đánh lớn.", "correct": true },
+            { "text": "Về nghệ thuật tổ chức và thực hành các trận đánh du kích.", "correct": false },
+            { "text": "Về nghệ thuật tổ chức và thực hành các trận đánh phòng ngự.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc nghệ thuật đánh giặc của ông cha?",
+        "answers": [
+            { "text": "Về tư tưởng chỉ đạo tác chiến: Tích cực chủ động tiến công.", "correct": false },
+            { "text": "Về mưu kế đánh giặc.", "correct": false },
+            { "text": "Nghệ thuật chiến tranh nhân dân, thực hiện toàn dân đánh giặc.", "correct": false },
+            { "text": "Cả 3 phương án trên.", "correct": true }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc cơ sở hình thành nghệ thuật quân sự Việt Nam?",
+        "answers": [
+            { "text": "Truyền thống đánh giặc của ông cha.", "correct": true },
+            { "text": "Truyền thống đánh giặc của các đời vua Hùng.", "correct": false },
+            { "text": "Truyền thống đánh giặc của Nhà Lý.", "correct": false },
+            { "text": "Truyền thống đánh giặc của Nhà Trần.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc cơ sở hình thành nghệ thuật quân sự Việt Nam?",
+        "answers": [
+            { "text": "Chủ nghĩa Mác về chiến tranh, quân đội và bảo vệ Tổ quốc.", "correct": false },
+            { "text": "Quan điểm của Lênin về chiến tranh, quân đội và bảo vệ Tổ quốc.", "correct": false },
+            { "text": "Chủ nghĩa Mác - Ăng gen - Lênin về chiến tranh, quân đội và bảo vệ Tổ quốc.", "correct": false },
+            { "text": "Chủ nghĩa Mác - Lênin về chiến tranh, quân đội và bảo vệ Tổ quốc.", "correct": true }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc cơ sở hình thành nghệ thuật quân sự Việt Nam?",
+        "answers": [
+            { "text": "Tư tưởng quân sự Hồ Chí Minh.", "correct": true },
+            { "text": "Tư tưởng quân sự Phan Bội Châu.", "correct": false },
+            { "text": "Tư tưởng quân sự Phan Chu Trinh.", "correct": false },
+            { "text": "Tư tưởng quân sự Võ Nguyên Giáp.", "correct": false }
+        ]
+    },
+    {
+        "question": "Ý nào dưới đây là nội dung nghệ thuật quân sự Việt Nam từ khi có Đảng lãnh đạo?",
+        "answers": [
+            { "text": "Chiến lược quân sự.", "correct": true },
+            { "text": "Chiến tranh du kích.", "correct": false },
+            { "text": "Chiến tranh nhân dân.", "correct": false },
+            { "text": "Chiến tranh tự vệ.", "correct": false }
+        ]
+    },
+    {
+        "question": "Ý nào dưới đây là nội dung nghệ thuật quân sự Việt Nam từ khi có Đảng lãnh đạo?",
+        "answers": [
+            { "text": "Nghệ thuật đấu tranh quân sự.", "correct": false },
+            { "text": "Nghệ thuật chiến dịch.", "correct": true },
+            { "text": "Nghệ thuật binh vận.", "correct": false },
+            { "text": "Nghệ thuật địch vận.", "correct": false }
+        ]
+    },
+    {
+        "question": "Ý nào dưới đây là nội dung nghệ thuật quân sự Việt Nam từ khi có Đảng lãnh đạo?",
+        "answers": [
+            { "text": "Chiến sự.", "correct": false },
+            { "text": "Chiến thuật.", "correct": true },
+            { "text": "Chiến tranh.", "correct": false },
+            { "text": "Chiến binh.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc chiến lược quân sự?",
+        "answers": [
+            { "text": "Xác định đúng kẻ thù, đúng đối tượng tác chiến.", "correct": true },
+            { "text": "Xác định đúng đối tác giúp ta tác chiến.", "correct": false },
+            { "text": "Chuẩn bị tốt phương án chiến tranh.", "correct": false },
+            { "text": "Chuẩn bị tốt lực lượng chiến tranh.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc khái niệm chiến lược quân sự?",
+        "answers": [
+            { "text": "Chiến lược quân sự là tổng thể phương châm, chính sách và mưu lược được hoạch định để ngăn ngừa và sẵn sàng tiến hành chiến tranh thắng lợi.", "correct": true },
+            { "text": "Chiến lược quân sự là xác định cách đánh và phương thức sử dụng lực lượng chiến tranh.", "correct": false },
+            { "text": "Chiến lược quân sự là tổng thể các loại hình tác chiến.", "correct": false },
+            { "text": "Chiến lược quân sự là tổng thể phương án sẵn sàng tiến hành chiến tranh thắng lợi.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc khái niệm nghệ thuật chiến dịch?",
+        "answers": [
+            { "text": "Nghệ thuật chiến dịch là cách thức chuẩn bị các hoạt động tác chiến.", "correct": false },
+            { "text": "Nghệ thuật chiến dịch, lí luận và thực tiễn chuẩn bị, thực hành chiến dịch và các hoạt động tác chiến tương đương.", "correct": true },
+            { "text": "Nghệ thuật chiến dịch, lí luận và phương án thực hành chiến dịch và các hoạt động tác chiến tương đương.", "correct": false },
+            { "text": "Nghệ thuật chiến dịch là tiến hành một trận đánh cấp chiến dịch.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc loại hình chiến dịch?",
+        "answers": [
+            { "text": "Chiến dịch tiến công.", "correct": true },
+            { "text": "Chiến dịch tập kích.", "correct": false },
+            { "text": "Chiến dịch phục kích.", "correct": false },
+            { "text": "Cả 3 phương án trên.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc loại hình chiến dịch?",
+        "answers": [
+            { "text": "Chiến dịch pháo binh.", "correct": true },
+            { "text": "Chiến dịch phòng không.", "correct": false },
+            { "text": "Chiến dịch bộ binh.", "correct": false },
+            { "text": "Chiến dịch công binh.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc khái niệm chiến thuật?",
+        "answers": [
+            { "text": "Chiến thuật là lý luận và thực tiễn về tổ chức và thực hành trận chiến đấu của phân đội, binh đội, binh đoàn lực lượng vũ trang.", "correct": false },
+            { "text": "Chiến thuật là lý luận và thực tiễn về tổ chức và thực hành trận chiến đấu phòng ngự.", "correct": true },
+            { "text": "Chiến thuật là lý luận và thực tiễn về tổ chức và thực hành trận chiến đấu tiến công.", "correct": false },
+            { "text": "Chiến thuật là lý luận và thực tiễn về tổ chức và thực hành trận chiến đấu cấp trung đoàn lực lượng vũ trang.", "correct": false }
+        ]
+    }
+
+
+        ];
+
+        let userAnswers = [];
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function initQuiz() {
+        shuffleArray(questions);
+        const questionsContainer = document.getElementById('questions');
+        questionsContainer.innerHTML = '';
+        
+        questions.forEach((q, qIndex) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question-container';
+            
+            shuffleArray(q.answers);
+            
+            questionDiv.innerHTML = `
+                <div class="question-text">${qIndex + 1}. ${q.question}</div>
+                <div class="answers-container"></div>
+            `;
+            
+            const answersContainer = questionDiv.querySelector('.answers-container');
+            
+            q.answers.forEach(answer => {
+                const button = document.createElement('button');
+                button.className = 'answer-btn';
+                button.textContent = answer.text;
+                button.addEventListener('click', () => {
+                    selectAnswer(qIndex, answer);
+                    showImmediateResult(qIndex, answer);
+                });
+                answersContainer.appendChild(button);
+            });
+            
+            questionsContainer.appendChild(questionDiv);
+        });
+
+        // Ẩn nút nộp bài vì không cần nữa
+        document.querySelector('.submit-btn').style.display = 'none';
+    }
+
+    function selectAnswer(qIndex, answer) {
+        const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+        const buttons = questionDiv.querySelectorAll('.answer-btn');
+        
+        buttons.forEach(btn => btn.classList.remove('selected'));
+        
+        const selectedBtn = [...buttons].find(btn => btn.textContent === answer.text);
+        selectedBtn.classList.add('selected');
+        
+        userAnswers[qIndex] = answer;
+    }
+
+    function showImmediateResult(qIndex, selectedAnswer) {
+        const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+        const buttons = questionDiv.querySelectorAll('.answer-btn');
+
+        buttons.forEach(btn => {
+            btn.disabled = true;
+            const answerObj = questions[qIndex].answers.find(a => a.text === btn.textContent);
+            if (answerObj.correct) {
+                btn.classList.add('correct');
+            } else if (btn.textContent === selectedAnswer.text) {
+                btn.classList.add('incorrect');
+            }
+        });
+    }
+
+    initQuiz();
+    </script>
+</body>
+</html>
