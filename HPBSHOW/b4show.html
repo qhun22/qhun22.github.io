@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="images/qhun22icon.png" />
+    <link rel="apple-touch-icon" href="images/qhun22icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>qhun22</title>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Quicksand', sans-serif;
+        }
+    
+        .quiz-container {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px 25px;
+            max-width: 700px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease;
+        }
+    
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+    
+        .question-container {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+    
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: #222;
+        }
+    
+        .answers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    
+        .answer-btn {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+        
+        .answer:hover {
+            background-color: #ffe6f0;
+            transform: scale(0.5);
+        } 
+        .answer-btn:hover {
+            background-color: #f1f1f1;
+            border-color: #aaa;
+        }
+    
+        .answer-btn.selected {
+            background-color: #ffd966;
+            border-color: #f1c40f;
+            font-weight: bold;
+        }
+    
+        .answer-btn.correct {
+            background-color: #b6e9b1;
+            border-color: #2ecc71;
+            color: #2c3e50;
+        }
+    
+        .answer-btn.incorrect {
+            background-color: #f9b3b3;
+            border-color: #e74c3c;
+            color: #2c3e50;
+        }
+    
+        .submit-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    
+        .submit-btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+    
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+    
+        .result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+    
+        .reset-btn {
+            margin-top: 15px;
+            background-color: #27ae60;
+        }
+    
+        .reset-btn:hover {
+            background-color: #1e8449;
+        }
+    
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        @media (max-width: 600px) {
+            .quiz-container {
+                padding: 15px 20px;
+            }
+    
+            h1 {
+                font-size: 1.5rem;
+            }
+    
+            .answer-btn {
+                font-size: 0.95rem;
+            }
+    
+            .submit-btn {
+                width: 100%;
+            }
+    
+            .result {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>GDQP</h1>
+        <div id="questions"></div>
+        <div class="submit-container">
+            <button class="submit-btn">Nộp Bài</button>
+            <div class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+       {
+        "question": "Có bao nhiêu nội dung nhiệm vụ hoạt động phòng chống vi phạm pháp luật về đảm bảo TTATGT?",
+        "answers": [
+            { "text": "4 nội dung.", "correct": true },
+            { "text": "5 nội dung.", "correct": false },
+            { "text": "6 nội dung.", "correct": false },
+            { "text": "7 nội dung.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc nội dung nhiệm vụ hoạt động phòng chống vi phạm pháp luật về đảm bảo TTATGT?",
+        "answers": [
+            { "text": "Nghiên cứu, xác định các tình huống của vi phạm pháp luật về đảm bảo TTATGT.", "correct": false },
+            { "text": "Nghiên cứu, xác định rõ nguyên nhân, điều kiện của tình trạng vi phạm pháp luật về đảm bảo TTATGT.", "correct": true },
+            { "text": "Nghiên cứu nhiều khả năng hoạt động tội phạm vi phạm pháp luật về đảm bảo TTATGT.", "correct": false },
+            { "text": "Nghiên cứu nhiều khả năng và đưa ra các phương án phòng chống tội phạm về đảm bảo TTATGT.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc biện pháp phòng chống vi phạm pháp luật về đảm bảo TTATGT?",
+        "answers": [
+            { "text": "Tăng cường quy chuẩn hóa đối với các chủ thể có chức năng xử phạt vi phạm hành chính về đảm bảo TTATGT.", "correct": true },
+            { "text": "Tăng cường quy chuẩn hóa đối với các chủ thể có chức năng xử phạt vi phạm hình sự về đảm bảo TTATGT.", "correct": false },
+            { "text": "Tăng cường quy chuẩn hóa đối với các chủ thể có chức năng phát hiện, điều tra những vi phạm pháp luật về đảm bảo TTATGT.", "correct": false },
+            { "text": "Tăng cường quy chuẩn hóa đối với các chủ thể có chức năng xử phạt vi phạm dân sự về đảm bảo TTATGT.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc nội dung nhiệm vụ hoạt động phòng chống vi phạm pháp luật về đảm bảo TTATGT?",
+        "answers": [
+            { "text": "Tổ chức nghiên cứu nhiều khả năng hoạt động của tội phạm trật tự, an toàn giao thông.", "correct": false },
+            { "text": "Tổ chức tiến hành các hoạt động không để xảy ra vi phạm pháp luật về TTATGT.", "correct": false },
+            { "text": "Tổ chức tiến hành các hoạt động hạn chế vi phạm pháp luật về TTATGT.", "correct": true },
+            { "text": "Tổ chức tiến hành các hoạt động giải quyết vi phạm pháp luật về TTATGT.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc nội dung nhiệm vụ hoạt động phòng chống vi phạm pháp luật về đảm bảo TTATGT?",
+        "answers": [
+            { "text": "Tổ chức tiến hành các hoạt động đảm bảo TTATGT.", "correct": false },
+            { "text": "Tổ chức tiến hành các hoạt động điều tra, xử lý dân sự vi phạm pháp luật về đảm bảo TTATGT.", "correct": false },
+            { "text": "Tổ chức tiến hành các hoạt động khiếu nại, tố cáo, xử lý vi phạm pháp luật về đảm bảo TTATGT.", "correct": false },
+            { "text": "Tổ chức tiến hành các hoạt động phát hiện, điều tra, xử lý vi phạm pháp luật về đảm bảo TTATGT.", "correct": true }
+        ]
+    },
+    {
+        "question": "Có bao nhiêu chủ thể trong hoạt động phòng, chống vi phạm pháp luật về đảm bảo TTATGT?",
+        "answers": [
+            { "text": "4 chủ thể", "correct": false },
+            { "text": "5 chủ thể", "correct": false },
+            { "text": "6 chủ thể", "correct": false },
+            { "text": "7 chủ thể", "correct": true }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc chủ thể trong hoạt động phòng, chống vi phạm pháp luật về đảm bảo TTATGT?",
+        "answers": [
+            { "text": "Quốc hội, hội đồng nhân dân các cấp.", "correct": true },
+            { "text": "Văn phòng Quốc hội, hội đồng nhân dân.", "correct": false },
+            { "text": "Quốc hội, hội đồng nhân dân cấp xã, phường.", "correct": false },
+            { "text": "Quốc hội, hội đồng nhân dân cấp tỉnh, thành phố.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc chủ thể trong hoạt động phòng, chống vi phạm pháp luật về đảm bảo TTATGT?",
+        "answers": [
+            { "text": "Chính phủ và ủy ban nhân dân các cấp.", "correct": true },
+            { "text": "Văn phòng chính phủ và ủy ban nhân dân các cấp.", "correct": false },
+            { "text": "Chính phủ và ủy ban nhân dân cấp xã, phường, thị trấn.", "correct": false },
+            { "text": "Chính phủ và ủy ban nhân dân cấp tỉnh, thành phố.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc chủ thể trong hoạt động phòng, chống vi phạm pháp luật về đảm bảo TTATGT?",
+        "answers": [
+            { "text": "Các tổ chức xã hội, các tổ chức quần chúng tự quản.", "correct": true },
+            { "text": "Mặt trận Tổ quốc, các tổ chức quần chúng tự quản.", "correct": false },
+            { "text": "Công an cấp xã, các tổ chức quần chúng.", "correct": false },
+            { "text": "Các tổ chức xã hội và lực lượng dân quân tự vệ ở địa phương.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc chủ thể trong hoạt động phòng, chống vi phạm pháp luật về đảm bảo TTATGT?",
+        "answers": [
+            { "text": "Các cơ quan bảo vệ pháp luật: công an, viện kiểm soát, tòa án.", "correct": true },
+            { "text": "Các cơ quan bảo vệ pháp luật: công an, quân đội, tòa án.", "correct": false },
+            { "text": "Các cơ quan bảo vệ pháp luật: viện kiểm soát, quân đội, tòa án.", "correct": false },
+            { "text": "Các cơ quan bảo vệ pháp luật: công an, biên phòng, tòa án.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc chủ thể trong hoạt động phòng, chống vi phạm pháp luật về đảm bảo TTATGT?",
+        "answers": [
+            { "text": "Công dân.", "correct": true },
+            { "text": "Thanh niên xung kích.", "correct": false },
+            { "text": "Trật tự viên.", "correct": false },
+            { "text": "Bộ đội xuất ngũ.", "correct": false }
+        ]
+    },
+    {
+        "question": "Cơ quan bảo vệ pháp luật nào dưới đây thuộc chủ thể hoạt động phòng, chống vi phạm pháp luật về đảm bảo TTATGT?",
+        "answers": [
+            { "text": "Công an.", "correct": true },
+            { "text": "Viện kiểm soát.", "correct": true },
+            { "text": "Tòa án.", "correct": true },
+            { "text": "Cả 3 phương án trên.", "correct": true }
+        ]
+    },
+    {
+        "question": "Vi phạm pháp luật về đảm bảo TTATGT có các dạng vi phạm nào?",
+        "answers": [
+            { "text": "Vi phạm hành chính và vi phạm dân sự.", "correct": false },
+            { "text": "Vi phạm hành chính và vi phạm kinh tế.", "correct": false },
+            { "text": "Vi phạm hành chính và vi phạm hình sự.", "correct": true },
+            { "text": "Vi phạm dân sự và vi phạm hình sự.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc trách nhiệm của sinh viên trong hoạt động phòng, chống vi phạm pháp luật về đảm bảo TTATGT?",
+        "answers": [
+            { "text": "Nhận thức rõ hậu quả của việc vi phạm các quy định về bảo đảm TTATGT.", "correct": true },
+            { "text": "Không có các hành vi và biểu hiện vi phạm các quy định và pháp luật về bảo đảm TTATGT.", "correct": true },
+            { "text": "Cam kết chấp hành nghiêm các quy định của pháp luật khi tham gia giao thông.", "correct": true },
+            { "text": "Cả 3 phương án trên.", "correct": true }
+        ]
+    },
+    {
+        "question": "Có bao nhiêu nội dung cơ bản của pháp luật về đảm bảo TTATGT?",
+        "answers": [
+            { "text": "2 nội dung", "correct": false },
+            { "text": "3 nội dung", "correct": true },
+            { "text": "4 nội dung", "correct": false },
+            { "text": "5 nội dung", "correct": false }
+        ]
+    },
+    {
+        "question": "Có bao nhiêu nhiệm vụ phòng chống vi phạm pháp luật về đảm bảo TTATGT?",
+        "answers": [
+            { "text": "5 nhiệm vụ.", "correct": false },
+            { "text": "6 nhiệm vụ.", "correct": true },
+            { "text": "7 nhiệm vụ.", "correct": false },
+            { "text": "8 nhiệm vụ.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây nằm trong khái niệm đấu tranh chống vi phạm pháp luật về đảm bảo TTATGT?",
+        "answers": [
+            { "text": "Là hoạt động của các cơ quan quản lý Nhà nước có thẩm quyền...", "correct": true },
+            { "text": "Là hoạt động của các cơ quan Nhà nước, các tổ chức xã hội và công dân...", "correct": false },
+            { "text": "Là hoạt động của các cơ quan Nhà nước và các tổ chức xã hội...", "correct": false },
+            { "text": "Là hoạt động của các cơ quan Nhà nước, tập thể và cá nhân...", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây nằm trong khái niệm phòng ngừa vi phạm pháp luật về đảm bảo TTATGT?",
+        "answers": [
+            { "text": "Là hoạt động của các cơ quan quản lý Nhà nước có thẩm quyền...", "correct": false },
+            { "text": "Là hoạt động của các cơ quan Nhà nước, các tổ chức xã hội và công dân...", "correct": true },
+            { "text": "Là hoạt động của các lực lượng Cảnh sát giao thông...", "correct": false },
+            { "text": "Là hoạt động của Quân đội, Công an và dân quân tự vệ...", "correct": false }
+        ]
+    },
+    {
+        "question": "Trật tự an toàn giao thông là gì?",
+        "answers": [
+            { "text": "Là sự an toàn, thông suốt và không bị xâm hại đối với người và phương tiện khi tham gia giao thông...", "correct": false },
+            { "text": "Là hoạt động của các cơ quan Nhà nước, các tổ chức xã hội và công dân bằng nhiều hình thức, biện pháp khác nhau...", "correct": false },
+            { "text": "Là trạng thái giao thông công cộng ổn định, văn minh, không có sự cố đột xuất bất ngờ xảy ra đối với hoạt động giao thông công cộng...", "correct": true },
+            { "text": "Là một bộ phận của hệ thống pháp luật hành chính Nhà nước, bao gồm hệ thống các văn bản quy phạm pháp luật do Nhà nước ban hành...", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc biện pháp phòng chống vi phạm pháp luật về đảm bảo TTATGT?",
+        "answers": [
+            { "text": "Rà soát, bổ sung, hoàn thiện các quy định của pháp luật về xử phạt vi phạm hình sự trong lĩnh vực vi phạm về đảm bảo TTATGT.", "correct": false },
+            { "text": "Rà soát, bổ sung, hoàn thiện các quy định của pháp luật về xử phạt vi phạm dân sự trong lĩnh vực vi phạm về đảm bảo TTATGT.", "correct": false },
+            { "text": "Rà soát, bổ sung, hoàn thiện các quy định của pháp luật về xử phạt vi phạm pháp luật trong lĩnh vực vi phạm về đảm bảo TTATGT.", "correct": false },
+            { "text": "Rà soát, bổ sung, hoàn thiện các quy định của pháp luật về xử phạt vi phạm hành chính trong lĩnh vực vi phạm về đảm bảo TTATGT.", "correct": true }
+        ]
+    }
+
+        ];
+
+        let userAnswers = [];
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+    }
+
+    function initQuiz() {
+        shuffleArray(questions);
+        const questionsContainer = document.getElementById('questions');
+        questionsContainer.innerHTML = '';
+        
+        questions.forEach((q, qIndex) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question-container';
+            
+            shuffleArray(q.answers);
+            
+            questionDiv.innerHTML = `
+                <div class="question-text">${qIndex + 1}. ${q.question}</div>
+                <div class="answers-container"></div>
+            `;
+            
+            const answersContainer = questionDiv.querySelector('.answers-container');
+            
+            q.answers.forEach(answer => {
+                const button = document.createElement('button');
+                button.className = 'answer-btn';
+                button.textContent = answer.text;
+                button.addEventListener('click', () => {
+                    selectAnswer(qIndex, answer);
+                    showImmediateResult(qIndex, answer);
+                });
+                answersContainer.appendChild(button);
+            });
+            
+            questionsContainer.appendChild(questionDiv);
+        });
+
+        // Ẩn nút nộp bài vì không cần nữa
+        document.querySelector('.submit-btn').style.display = 'none';
+    }
+
+    function selectAnswer(qIndex, answer) {
+        const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+        const buttons = questionDiv.querySelectorAll('.answer-btn');
+        
+        buttons.forEach(btn => btn.classList.remove('selected'));
+        
+        const selectedBtn = [...buttons].find(btn => btn.textContent === answer.text);
+        selectedBtn.classList.add('selected');
+        
+        userAnswers[qIndex] = answer;
+    }
+
+    function showImmediateResult(qIndex, selectedAnswer) {
+        const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+        const buttons = questionDiv.querySelectorAll('.answer-btn');
+
+        buttons.forEach(btn => {
+            btn.disabled = true;
+            const answerObj = questions[qIndex].answers.find(a => a.text === btn.textContent);
+            if (answerObj.correct) {
+                btn.classList.add('correct');
+            } else if (btn.textContent === selectedAnswer.text) {
+                btn.classList.add('incorrect');
+            }
+        });
+    }
+
+    initQuiz();
+    </script>
+</body>
+</html>

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="images/qhun22icon.png" />
+    <link rel="apple-touch-icon" href="images/qhun22icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>qhun22</title>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Quicksand', sans-serif;
+        }
+    
+        .quiz-container {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px 25px;
+            max-width: 700px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease;
+        }
+    
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+    
+        .question-container {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+    
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: #222;
+        }
+    
+        .answers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    
+        .answer-btn {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+        
+        .answer:hover {
+            background-color: #ffe6f0;
+            transform: scale(0.5);
+        } 
+        .answer-btn:hover {
+            background-color: #f1f1f1;
+            border-color: #aaa;
+        }
+    
+        .answer-btn.selected {
+            background-color: #ffd966;
+            border-color: #f1c40f;
+            font-weight: bold;
+        }
+    
+        .answer-btn.correct {
+            background-color: #b6e9b1;
+            border-color: #2ecc71;
+            color: #2c3e50;
+        }
+    
+        .answer-btn.incorrect {
+            background-color: #f9b3b3;
+            border-color: #e74c3c;
+            color: #2c3e50;
+        }
+    
+        .submit-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    
+        .submit-btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+    
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+    
+        .result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+    
+        .reset-btn {
+            margin-top: 15px;
+            background-color: #27ae60;
+        }
+    
+        .reset-btn:hover {
+            background-color: #1e8449;
+        }
+    
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        @media (max-width: 600px) {
+            .quiz-container {
+                padding: 15px 20px;
+            }
+    
+            h1 {
+                font-size: 1.5rem;
+            }
+    
+            .answer-btn {
+                font-size: 0.95rem;
+            }
+    
+            .submit-btn {
+                width: 100%;
+            }
+    
+            .result {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>GDQP</h1>
+        <div id="questions"></div>
+        <div class="submit-container">
+            <button class="submit-btn">Nộp Bài</button>
+            <div class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+       {
+        "question": "Nội dung nào dưới đây được nêu trong khái niệm pháp luật về bảo vệ môi trường?",
+        "answers": [
+            { "text": "Bảo vệ môi trường là hệ thống các văn bản pháp luật quy định quy tắc xử sự do Quốc hội ban hành hoặc thừa nhận...", "correct": false },
+            { "text": "Bảo vệ môi trường là hệ thống các văn bản pháp luật quy định những quy tắc xử sự do Nhà nước ban hành hoặc thừa nhận...", "correct": true },
+            { "text": "Bảo vệ môi trường là hệ thống các văn bản pháp luật quy định những quy tắc xử sự do Đảng Cộng sản Việt Nam ban hành hoặc thừa nhận...", "correct": false },
+            { "text": "Bảo vệ môi trường là hệ thống các văn bản pháp luật quy định những quy tắc xử sự do các Chính phủ ban hành hoặc thừa nhận...", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây là vai trò của pháp luật về bảo vệ môi trường?",
+        "answers": [
+            { "text": "Pháp luật quy định những quy tắc xử sự mà con người không phải thực hiện khi khai thác và sử dụng các yếu tố của môi trường.", "correct": false },
+            { "text": "Pháp luật quy định những quy tắc xử sự mà con người phải thực hiện khi bảo vệ môi trường.", "correct": false },
+            { "text": "Pháp luật quy định những quy tắc xử sự mà con người có thể thực hiện khi khai thác và sử dụng các yếu tố của môi trường.", "correct": false },
+            { "text": "Pháp luật quy định những quy tắc xử sự mà con người phải thực hiện khi khai thác và sử dụng các yếu tố của môi trường.", "correct": true }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây là vai trò của pháp luật về bảo vệ môi trường?",
+        "answers": [
+            { "text": "Pháp luật xây dựng hệ thống các quy chuẩn môi trường, tiêu chuẩn môi trường để bảo vệ môi trường.", "correct": true },
+            { "text": "Pháp luật đề ra hệ thống các quy chuẩn môi trường, tiêu chuẩn môi trường để bảo vệ môi trường.", "correct": false },
+            { "text": "Pháp luật quy định hệ thống các quy chuẩn môi trường, tiêu chuẩn môi trường để khai thác và sử dụng các yếu tố của môi trường.", "correct": false },
+            { "text": "Pháp luật áp dụng hệ thống các quy chuẩn môi trường, tiêu chuẩn môi trường để bảo vệ môi trường.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây là vai trò của pháp luật về bảo vệ môi trường?",
+        "answers": [
+            { "text": "PL quy định các chế tài hình sự buộc các cá nhân, tổ chức phải thực hiện đầy đủ các đòi hỏi của PL trong việc khai thác, sử dụng các yếu tố của môi trường.", "correct": false },
+            { "text": "PL quy định các chế tài kinh tế buộc các cá nhân, tổ chức phải thực hiện đầy đủ các đòi hỏi của PL trong việc khai thác, sử dụng các yếu tố của môi trường.", "correct": false },
+            { "text": "PL quy định các chế tài hành chính dân sự buộc các cá nhân, tổ chức phải thực hiện đầy đủ các đòi hỏi của PL trong việc khai thác, sử dụng các yếu tố của môi trường.", "correct": false },
+            { "text": "Tất cả các ý nêu trên.", "correct": true }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây là vai trò của pháp luật về bảo vệ môi trường?",
+        "answers": [
+            { "text": "Pháp luật quy định chức năng, nhiệm vụ, quyền hạn của các cơ quan, tổ chức, cá nhân tham gia bảo vệ môi trường.", "correct": true },
+            { "text": "Pháp luật quy định chức năng, nhiệm vụ, quyền hạn của các cơ quan, tổ chức, cá nhân tham gia làm sạch môi trường.", "correct": false },
+            { "text": "Pháp luật quy định chức năng, nhiệm vụ, quyền hạn của các cơ quan, tổ chức, cá nhân tham gia gìn giữ môi trường.", "correct": false },
+            { "text": "Pháp luật quy định chức năng, nhiệm vụ, quyền hạn của các cơ quan, tổ chức, cá nhân tham gia làm đẹp môi trường.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây là vai trò của pháp luật về bảo vệ môi trường?",
+        "answers": [
+            { "text": "Giải quyết các tranh giành liên quan đến bảo vệ môi trường.", "correct": false },
+            { "text": "Giải quyết các tranh chấp liên quan đến bảo vệ môi trường.", "correct": true },
+            { "text": "Giải quyết các mâu thuẫn liên quan đến bảo vệ môi trường.", "correct": false },
+            { "text": "Giải quyết các chế độ liên quan đến bảo vệ môi trường.", "correct": false }
+        ]
+    },
+    {
+        "question": "Khi vi phạm pháp luật trong lĩnh vực bảo vệ môi trường, có thể bị pháp luật xử lý bằng hình thức nào dưới đây?",
+        "answers": [
+            { "text": "Xử lý hình sự.", "correct": true },
+            { "text": "Xử lý vi phạm hành chính.", "correct": true },
+            { "text": "Xử lý trách nhiệm dân sự.", "correct": true },
+            { "text": "Tất cả các hình thức nêu trên.", "correct": true }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây được nêu trong khái niệm tội phạm về môi trường?",
+        "answers": [
+            { "text": "Là hành vi nguy hiểm cho xã hội được quy định trong Bộ luật hình sự, do người không có năng lực trách nhiệm hình sự hoặc...", "correct": false },
+            { "text": "Là hành vi nguy hiểm cho xã hội được quy định trong Bộ luật hình sự, do người có năng lực trách nhiệm hình sự...", "correct": true },
+            { "text": "Là hành vi nguy hiểm cho xã hội được quy định trong Bộ luật hình sự, do mọi công dân thực hiện...", "correct": false },
+            { "text": "Là hành vi nguy hiểm cho xã hội được quy định trong Bộ luật hình sự, do người chưa đủ tuổi vị thành niên thực hiện...", "correct": false }
+        ]
+    },
+    {
+        "question": "Có bao nhiêu dấu hiệu pháp lý của tội phạm về môi trường?",
+        "answers": [
+            { "text": "2 dấu hiệu", "correct": false },
+            { "text": "3 dấu hiệu", "correct": false },
+            { "text": "4 dấu hiệu", "correct": true },
+            { "text": "5 dấu hiệu", "correct": false }
+        ]
+    },
+    {
+        "question": "Chủ thể của tội phạm về môi trường là ai?",
+        "answers": [
+            { "text": "Cá nhân.", "correct": false },
+            { "text": "Pháp nhân thương mại.", "correct": false },
+            { "text": "Cá nhân và pháp nhân thương mại.", "correct": true },
+            { "text": "Cá nhân và tập thể.", "correct": false }
+        ]
+    },
+    {
+        "question": "Có bao nhiêu nội dung về phòng, chống vi phạm pháp luật về bảo vệ môi trường?",
+        "answers": [
+            { "text": "3 nội dung", "correct": false },
+            { "text": "4 nội dung", "correct": false },
+            { "text": "5 nội dung", "correct": true },
+            { "text": "6 nội dung", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây là nội dung về phòng, chống vi phạm pháp luật về bảo vệ môi trường?",
+        "answers": [
+            { "text": "Nắm tình hình vi phạm pháp luật về BVMT, nghiên cứu làm rõ những vấn đề có tính quy luật trong hoạt động vi phạm pháp luật của các đối tượng.", "correct": true },
+            { "text": "Nắm tình hình chấp hành pháp luật về BVMT, nghiên cứu làm rõ những vấn đề có tính quy luật trong hoạt động vi phạm pháp luật của các đối tượng.", "correct": false },
+            { "text": "Nắm tình hình thực hiện pháp luật về BVMT, nghiên cứu làm rõ những vấn đề có tính quy luật trong hoạt động vi phạm pháp luật của các đối tượng.", "correct": false },
+            { "text": "Nắm tình hình tuyên truyền pháp luật về BVMT, nghiên cứu làm rõ những vấn đề có tính quy luật trong hoạt động vi phạm pháp luật của các đối tượng.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây là nội dung về phòng, chống vi phạm pháp luật về bảo vệ môi trường?",
+        "answers": [
+            { "text": "Xác định và làm rõ các tình huống của vi phạm pháp luật về bảo vệ môi trường.", "correct": false },
+            { "text": "Xác định và làm rõ các nguyên nhân, điều kiện của vi phạm pháp luật về bảo vệ môi trường.", "correct": true },
+            { "text": "Xác định và làm rõ các hành vi của vi phạm pháp luật về bảo vệ môi trường.", "correct": false },
+            { "text": "Xác định và làm rõ chủ thể của vi phạm pháp luật về bảo vệ môi trường.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây là nội dung về phòng, chống vi phạm pháp luật về bảo vệ môi trường?",
+        "answers": [
+            { "text": "Xây dựng kế hoạch tích cực hạn chế các nguyên nhân, khắc phục các điều kiện của ô nhiễm môi trường.", "correct": false },
+            { "text": "Xây dựng biện pháp chủ động hạn chế các nguyên nhân, khắc phục các điều kiện để bảo vệ môi trường.", "correct": false },
+            { "text": "Xây dựng các giải pháp thường xuyên hạn chế các điều kiện, khắc phục các nguyên nhân của vi phạm pháp luật về bảo vệ môi trường.", "correct": false },
+            { "text": "Xây dựng các giải pháp chủ động hạn chế các nguyên nhân, khắc phục các điều kiện của vi phạm pháp luật về bảo vệ môi trường.", "correct": true }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây là nội dung về phòng, chống vi phạm pháp luật về bảo vệ môi trường?",
+        "answers": [
+            { "text": "Tổ chức lực lượng tiến hành các hoạt động điều tra tội phạm về môi trường, từng bước kiềm chế, đẩy lùi tình trạng vi phạm pháp luật về BVMT.", "correct": true },
+            { "text": "Tổ chức lực lượng tiến hành xét xử tội phạm về môi trường, từng bước kiềm chế, đẩy lùi tình trạng vi phạm pháp luật về BVMT.", "correct": false },
+            { "text": "Tổ chức lực lượng tiến hành các hoạt động khắc phục các nguyên nhân, điều kiện của tội phạm về môi trường...", "correct": false },
+            { "text": "Tổ chức lực lượng tiến hành bắt giữ tội phạm về môi trường, từng bước kiềm chế, đẩy lùi tình trạng vi phạm pháp luật về BVMT.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây là nội dung về phòng, chống vi phạm pháp luật về bảo vệ môi trường?",
+        "answers": [
+            { "text": "Tiến hành các hoạt động tuyên truyền vi phạm pháp luật về bảo vệ môi trường.", "correct": false },
+            { "text": "Tiến hành các hoạt động giáo dục vi phạm pháp luật về bảo vệ môi trường.", "correct": false },
+            { "text": "Tiến hành các hoạt động cưỡng chế khi vi phạm pháp luật về bảo vệ môi trường.", "correct": false },
+            { "text": "Tiến hành các hoạt động điều tra, xử lý vi phạm pháp luật về bảo vệ môi trường.", "correct": true }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây là biện pháp chung trong phòng, chống vi phạm pháp luật về bảo vệ môi trường?",
+        "answers": [
+            { "text": "Biện pháp tổ chức - hành chính.", "correct": true },
+            { "text": "Biện pháp tổ chức - chính trị.", "correct": false },
+            { "text": "Biện pháp văn phòng - hành chính.", "correct": false },
+            { "text": "Biện pháp tổ chức - xã hội.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây là biện pháp chung trong phòng, chống vi phạm pháp luật về bảo vệ môi trường?",
+        "answers": [
+            { "text": "Biện pháp văn hóa - tư tưởng.", "correct": false },
+            { "text": "Biện pháp đối ngoại.", "correct": false },
+            { "text": "Biện pháp chính trị.", "correct": false },
+            { "text": "Biện pháp kinh tế.", "correct": true }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây là trách nhiệm của sinh viên trong việc phòng, chống vi phạm pháp luật về bảo vệ môi trường?",
+        "answers": [
+            { "text": "Nắm vững các quy định của pháp luật về phòng, chống vi phạm pháp luật về bảo vệ môi trường.", "correct": false },
+            { "text": "Xây dựng ý thức, trách nhiệm trong các hoạt động bảo vệ môi trường.", "correct": false },
+            { "text": "Tham gia tích cực vào các hoạt động bảo vệ môi trường.", "correct": false },
+            { "text": "Tất cả các nội dung nêu trên.", "correct": true }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây được nêu trong khái niệm phòng chống vi phạm pháp luật về bảo vệ môi trường?",
+        "answers": [
+            { "text": "Phòng chống vi phạm pháp luật về bảo vệ môi trường là hoạt động của các cơ quan nhà nước có thẩm quyền...", "correct": false },
+            { "text": "Phòng chống vi phạm pháp luật về bảo vệ môi trường là hoạt động của các tổ chức xã hội và công dân...", "correct": false },
+            { "text": "Phòng chống vi phạm pháp luật về bảo vệ môi trường là hoạt động của các cơ quan nhà nước, các tổ chức xã hội và công dân...", "correct": true },
+            { "text": "Phòng chống vi phạm pháp luật về bảo vệ môi trường là hoạt động của Đảng Cộng sản Việt Nam, các tổ chức xã hội và công dân...", "correct": false }
+        ]
+    }
+
+        ];
+
+        let userAnswers = [];
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function initQuiz() {
+            shuffleArray(questions);
+            const questionsContainer = document.getElementById('questions');
+            questionsContainer.innerHTML = '';
+            
+            questions.forEach((q, qIndex) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container';
+                
+                shuffleArray(q.answers);
+                
+                questionDiv.innerHTML = `
+                    <div class="question-text">${qIndex + 1}. ${q.question}</div>
+                    <div class="answers-container"></div>
+                `;
+                
+                const answersContainer = questionDiv.querySelector('.answers-container');
+                
+                q.answers.forEach(answer => {
+                    const button = document.createElement('button');
+                    button.className = 'answer-btn';
+                    button.textContent = answer.text;
+                    button.addEventListener('click', () => selectAnswer(qIndex, answer));
+                    answersContainer.appendChild(button);
+                });
+                
+                questionsContainer.appendChild(questionDiv);
+            });
+        }
+
+        function selectAnswer(qIndex, answer) {
+            const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+            const buttons = questionDiv.querySelectorAll('.answer-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('selected'));
+            
+            const selectedBtn = [...buttons].find(btn => btn.textContent === answer.text);
+            selectedBtn.classList.add('selected');
+            
+            userAnswers[qIndex] = answer;
+        }
+
+        function showResult() {
+            let score = 0;
+            const resultDiv = document.querySelector('.result');
+            
+            questions.forEach((q, qIndex) => {
+                const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+                const buttons = questionDiv.querySelectorAll('.answer-btn');
+                
+                buttons.forEach(btn => {
+                    btn.disabled = true;
+                    const answer = q.answers.find(a => a.text === btn.textContent);
+                    if (answer.correct) {
+    btn.classList.add('correct');
+} else if (btn.classList.contains('selected')) {
+    btn.classList.add('incorrect');
+}
+
+                });
+                
+                if (userAnswers[qIndex]?.correct) {
+                    score += 10;
+                }
+            });
+            
+            resultDiv.innerHTML = `
+                <p>Điểm của bạn: ${score}/${questions.length * 10}</p>
+                <button class="submit-btn reset-btn" onclick="location.reload()">Làm lại</button>
+            `;
+            resultDiv.style.display = 'block';
+            document.querySelector('.submit-btn').style.display = 'none';
+        }
+
+        document.querySelector('.submit-btn').addEventListener('click', showResult);
+        initQuiz();
+    </script>
+</body>
+</html>

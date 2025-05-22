@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="images/qhun22icon.png" />
+    <link rel="apple-touch-icon" href="images/qhun22icon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>qhun22</title>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Quicksand', sans-serif;
+        }
+    
+        .quiz-container {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px 25px;
+            max-width: 700px;
+            width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            animation: fadeIn 1s ease;
+        }
+    
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+    
+        .question-container {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+    
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            color: #222;
+        }
+    
+        .answers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+    
+        .answer-btn {
+            padding: 10px 15px;
+            font-size: 1rem;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+        
+        .answer:hover {
+            background-color: #ffe6f0;
+            transform: scale(0.5);
+        } 
+        .answer-btn:hover {
+            background-color: #f1f1f1;
+            border-color: #aaa;
+        }
+    
+        .answer-btn.selected {
+            background-color: #ffd966;
+            border-color: #f1c40f;
+            font-weight: bold;
+        }
+    
+        .answer-btn.correct {
+            background-color: #b6e9b1;
+            border-color: #2ecc71;
+            color: #2c3e50;
+        }
+    
+        .answer-btn.incorrect {
+            background-color: #f9b3b3;
+            border-color: #e74c3c;
+            color: #2c3e50;
+        }
+    
+        .submit-container {
+            text-align: center;
+            margin-top: 20px;
+        }
+    
+        .submit-btn {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            background-color: #3498db;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+    
+        .submit-btn:hover {
+            background-color: #2980b9;
+        }
+    
+        .result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+    
+        .reset-btn {
+            margin-top: 15px;
+            background-color: #27ae60;
+        }
+    
+        .reset-btn:hover {
+            background-color: #1e8449;
+        }
+    
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    
+        @media (max-width: 600px) {
+            .quiz-container {
+                padding: 15px 20px;
+            }
+    
+            h1 {
+                font-size: 1.5rem;
+            }
+    
+            .answer-btn {
+                font-size: 0.95rem;
+            }
+    
+            .submit-btn {
+                width: 100%;
+            }
+    
+            .result {
+                font-size: 1rem;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>GDQP</h1>
+        <div id="questions"></div>
+        <div class="submit-container">
+            <button class="submit-btn">Nộp Bài</button>
+            <div class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+       {
+        "question": "Các dân tộc ở Việt Nam có mấy đặc điểm?",
+        "answers": [
+            { "text": "2 đặc điểm", "correct": false },
+            { "text": "3 đặc điểm", "correct": true },
+            { "text": "4 đặc điểm", "correct": false },
+            { "text": "5 đặc điểm", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc đặc điểm các dân tộc ở Việt Nam?",
+        "answers": [
+            { "text": "Các dân tộc ở Việt Nam có truyền thống đoàn kết, gắn bó xây dựng quốc gia dân tộc thống nhất.", "correct": true },
+            { "text": "Các dân tộc ở Việt Nam xây dựng phát triển, về mọi mặt trên biên giới.", "correct": false },
+            { "text": "Các dân tộc ở Việt Nam đấu tranh để phát triển một cách toàn diện.", "correct": false },
+            { "text": "Các dân tộc ở Việt Nam mở rộng đấu tranh để làm thất bại mọi âm mưu và hành động xâm lược.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc đặc điểm các dân tộc ở Việt Nam?",
+        "answers": [
+            { "text": "Các dân tộc thiểu số ở Việt Nam cư trú tập trung trên một địa bàn rộng lớn.", "correct": false },
+            { "text": "Các dân tộc thiểu số ở Việt Nam cư trú phân tán và xen kẽ trên địa bàn rộng lớn, chủ yếu là miền núi, biên giới, hải đảo.", "correct": true },
+            { "text": "Các dân tộc thiểu số ở Việt Nam cư trú tập trung và thống nhất trên địa bàn rộng lớn, chủ yếu là miền núi, biên giới, hải đảo.", "correct": false },
+            { "text": "Các dân tộc thiểu số ở Việt Nam cư trú phân tán và xen kẽ trên địa bàn rộng lớn, chủ yếu là vùng đồng bằng và Tây Nguyên.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc đặc điểm các dân tộc ở Việt Nam?",
+        "answers": [
+            { "text": "Các dân tộc ở nước ta có quy mô dân số và trình độ phát triển không đều.", "correct": true },
+            { "text": "Các dân tộc ở nước ta có quy mô dân số và trình độ phát triển đồng đều.", "correct": false },
+            { "text": "Các dân tộc ở nước ta có quy mô dân số và trình độ phát triển giống nhau.", "correct": false },
+            { "text": "Các dân tộc ở nước ta có quy mô dân số đồng đều và trình độ phát triển không đều.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc đặc điểm các dân tộc ở Việt Nam?",
+        "answers": [
+            { "text": "Mỗi dân tộc ở Việt Nam có sắc thái văn hóa thống nhất, góp phần tạo nên sự đa dạng, phong phú, thống nhất của văn hóa Việt Nam.", "correct": true },
+            { "text": "Mỗi dân tộc ở Việt Nam đều có sắc thái văn hóa giống nhau, góp phần tạo nên sự đa dạng, phong phú, thống nhất của văn hóa Việt Nam.", "correct": false },
+            { "text": "Mỗi dân tộc ở Việt Nam đều có sắc thái văn hóa chung, góp phần tạo nên sự đa dạng, phong phú, thống nhất của văn hóa Việt Nam.", "correct": false },
+            { "text": "Mỗi dân tộc ở Việt Nam đều có sắc thái văn hóa riêng, góp phần tạo nên sự đa dạng, phong phú, thống nhất của văn hóa Việt Nam.", "correct": false }
+        ]
+    },
+    {
+        "question": "Ở Việt Nam có bao nhiêu dân tộc chính?",
+        "answers": [
+            { "text": "54 dân tộc", "correct": true },
+            { "text": "56 dân tộc", "correct": false },
+            { "text": "55 dân tộc", "correct": false },
+            { "text": "57 dân tộc", "correct": false }
+        ]
+    },
+    {
+        "question": "Tôn giáo có bao nhiêu nguồn gốc?",
+        "answers": [
+            { "text": "2 nguồn gốc", "correct": false },
+            { "text": "3 nguồn gốc", "correct": true },
+            { "text": "4 nguồn gốc", "correct": false },
+            { "text": "5 nguồn gốc", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc nguồn gốc của tôn giáo?",
+        "answers": [
+            { "text": "Tôn giáo có nguồn gốc từ mọi mặt trong đất nước.", "correct": false },
+            { "text": "Tôn giáo có nguồn gốc từ kinh tế - văn hóa.", "correct": true },
+            { "text": "Tôn giáo có nguồn gốc từ kinh tế - chính trị.", "correct": false },
+            { "text": "Tôn giáo có nguồn gốc từ kinh tế - xã hội.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc nguồn gốc của tôn giáo?",
+        "answers": [
+            { "text": "Nguồn gốc nhận thức xã hội tôn giáo.", "correct": true },
+            { "text": "Nguồn gốc nhận thức của tôn giáo.", "correct": false },
+            { "text": "Tôn giáo có nguồn gốc từ ý chí con người.", "correct": false },
+            { "text": "Tôn giáo có nguồn gốc từ tâm linh nhân loại.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc nguồn gốc của tôn giáo?",
+        "answers": [
+            { "text": "Nguồn gốc cảm xúc của tôn giáo.", "correct": false },
+            { "text": "Nguồn gốc tâm lý của tôn giáo.", "correct": true },
+            { "text": "Nguồn gốc tình cảm của tôn giáo.", "correct": false },
+            { "text": "Nguồn gốc tâm trạng của tôn giáo.", "correct": false }
+        ]
+    },
+    {
+        "question": "Có bao nhiêu tính chất của tôn giáo?",
+        "answers": [
+            { "text": "2 tính chất", "correct": false },
+            { "text": "3 tính chất", "correct": true },
+            { "text": "4 tính chất", "correct": false },
+            { "text": "5 tính chất", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc tính chất của tôn giáo?",
+        "answers": [
+            { "text": "Tính nhân văn của tôn giáo.", "correct": false },
+            { "text": "Tính triết học của tôn giáo.", "correct": false },
+            { "text": "Tính xã hội của tôn giáo.", "correct": false },
+            { "text": "Tính lịch sử của tôn giáo.", "correct": true }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc tính chất của tôn giáo?",
+        "answers": [
+            { "text": "Tính nhân dân của tôn giáo.", "correct": false },
+            { "text": "Tính cá nhân của tôn giáo.", "correct": false },
+            { "text": "Tính tập thể của tôn giáo.", "correct": false },
+            { "text": "Tính quần chúng của tôn giáo.", "correct": true }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây thuộc tính chất của tôn giáo?",
+        "answers": [
+            { "text": "Tính giáo dục của tôn giáo.", "correct": false },
+            { "text": "Tính văn hóa của tôn giáo.", "correct": false },
+            { "text": "Tính chính trị của tôn giáo.", "correct": true },
+            { "text": "Tính kinh tế của tôn giáo.", "correct": false }
+        ]
+    },
+    {
+        "question": "Theo V.I.Lênin có bao nhiêu quan điểm về giải quyết vấn đề dân tộc?",
+        "answers": [
+            { "text": "2 quan điểm", "correct": false },
+            { "text": "3 quan điểm", "correct": true },
+            { "text": "4 quan điểm", "correct": false },
+            { "text": "5 quan điểm", "correct": false }
+        ]
+    },
+    {
+        "question": "Giải quyết vấn đề dân tộc theo quan điểm V.I.Lênin là nội dung nào dưới đây?",
+        "answers": [
+            { "text": "Các dân tộc hoàn toàn tự do.", "correct": true },
+            { "text": "Các dân tộc không có quyền bình đẳng.", "correct": false },
+            { "text": "Các dân tộc sống biệt lập.", "correct": false },
+            { "text": "Các dân tộc hoàn toàn bình đẳng.", "correct": false }
+        ]
+    },
+    {
+        "question": "Giải quyết vấn đề dân tộc theo quan điểm V.I.Lênin là nội dung nào dưới đây?",
+        "answers": [
+            { "text": "Các dân tộc không được quyền tự quyết.", "correct": false },
+            { "text": "Các dân tộc được tự do.", "correct": true },
+            { "text": "Các dân tộc không được tự do.", "correct": false },
+            { "text": "Các dân tộc được quyền tự quyết.", "correct": true }
+        ]
+    },
+    {
+        "question": "Giải quyết vấn đề dân tộc theo quan điểm V.I.Lênin là nội dung nào dưới đây?",
+        "answers": [
+            { "text": "Tập hợp các tầng lớp trong xã hội và mọi đất nước.", "correct": false },
+            { "text": "Liên hiệp công nhân tất cả các dân tộc.", "correct": true },
+            { "text": "Liên hiệp lực lượng thanh niên ở các dân tộc.", "correct": false },
+            { "text": "Tập hợp các công nhân ở các nước trên thế giới.", "correct": false }
+        ]
+    },
+    {
+        "question": "Nội dung nào dưới đây là quan điểm của Đảng, Nhà nước ta về dân tộc?",
+        "answers": [
+            { "text": "Thực hiện bình đẳng, đoàn kết tương trợ giữa các dân tộc.", "correct": true },
+            { "text": "Thực hiện bình đẳng trong các dân tộc.", "correct": false },
+            { "text": "Thực hiện thống nhất với các dân tộc trên thế giới.", "correct": false },
+            { "text": "Thực hiện đoàn kết với các dân tộc khác.", "correct": false }
+        ]
+    },
+    {
+        "question": "Để giải quyết vấn đề tôn giáo, chủ nghĩa Mác - Lênin đưa ra bao nhiêu nguyên tắc?",
+        "answers": [
+            { "text": "4 nguyên tắc.", "correct": false },
+            { "text": "5 nguyên tắc.", "correct": true },
+            { "text": "6 nguyên tắc.", "correct": false },
+            { "text": "7 nguyên tắc.", "correct": false }
+        ]
+    }
+
+        ];
+
+        let userAnswers = [];
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+        }
+
+        function initQuiz() {
+            shuffleArray(questions);
+            const questionsContainer = document.getElementById('questions');
+            questionsContainer.innerHTML = '';
+            
+            questions.forEach((q, qIndex) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container';
+                
+                shuffleArray(q.answers);
+                
+                questionDiv.innerHTML = `
+                    <div class="question-text">${qIndex + 1}. ${q.question}</div>
+                    <div class="answers-container"></div>
+                `;
+                
+                const answersContainer = questionDiv.querySelector('.answers-container');
+                
+                q.answers.forEach(answer => {
+                    const button = document.createElement('button');
+                    button.className = 'answer-btn';
+                    button.textContent = answer.text;
+                    button.addEventListener('click', () => selectAnswer(qIndex, answer));
+                    answersContainer.appendChild(button);
+                });
+                
+                questionsContainer.appendChild(questionDiv);
+            });
+        }
+
+        function selectAnswer(qIndex, answer) {
+            const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+            const buttons = questionDiv.querySelectorAll('.answer-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('selected'));
+            
+            const selectedBtn = [...buttons].find(btn => btn.textContent === answer.text);
+            selectedBtn.classList.add('selected');
+            
+            userAnswers[qIndex] = answer;
+        }
+
+        function showResult() {
+            let score = 0;
+            const resultDiv = document.querySelector('.result');
+            
+            questions.forEach((q, qIndex) => {
+                const questionDiv = document.querySelectorAll('.question-container')[qIndex];
+                const buttons = questionDiv.querySelectorAll('.answer-btn');
+                
+                buttons.forEach(btn => {
+                    btn.disabled = true;
+                    const answer = q.answers.find(a => a.text === btn.textContent);
+                    if (answer.correct) {
+    btn.classList.add('correct');
+} else if (btn.classList.contains('selected')) {
+    btn.classList.add('incorrect');
+}
+
+                });
+                
+                if (userAnswers[qIndex]?.correct) {
+                    score += 10;
+                }
+            });
+            
+            resultDiv.innerHTML = `
+                <p>Điểm của bạn: ${score}/${questions.length * 10}</p>
+                <button class="submit-btn reset-btn" onclick="location.reload()">Làm lại</button>
+            `;
+            resultDiv.style.display = 'block';
+            document.querySelector('.submit-btn').style.display = 'none';
+        }
+
+        document.querySelector('.submit-btn').addEventListener('click', showResult);
+        initQuiz();
+    </script>
+</body>
+</html>
